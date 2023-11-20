@@ -1,7 +1,6 @@
 package com.example.SalesManagment.Controller.productController;
 
 import com.example.SalesManagment.Model.Product.Product;
-
 import java.util.List;
 import java.util.Optional;
 

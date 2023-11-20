@@ -2,19 +2,19 @@ package com.example.SalesManagment.Controller.userController;
 
 import com.example.SalesManagment.Controller.Aut.AuthenticateRequest;
 import com.example.SalesManagment.Controller.Aut.AuthenticationResponse;
+import com.example.SalesManagment.Controller.Aut.RegistrationRequest;
 import com.example.SalesManagment.DAO.ProductRepository;
 import com.example.SalesManagment.DAO.UserRepository;
 import com.example.SalesManagment.DAO.VerificationTokenRepository;
 import com.example.SalesManagment.Exception.Exception;
 import com.example.SalesManagment.Model.Product.Product;
 import com.example.SalesManagment.Model.User.User;
-import com.example.SalesManagment.Controller.Aut.RegistrationRequest;
 import com.example.SalesManagment.Model.token.VerificationToken;
 import com.example.SalesManagment.Security.JwtService;
 import com.example.SalesManagment.Security.UserAuthDetails;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,7 +22,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.*;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 
 @Service

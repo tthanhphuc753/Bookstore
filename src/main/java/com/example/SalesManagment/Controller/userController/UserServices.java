@@ -2,8 +2,8 @@ package com.example.SalesManagment.Controller.userController;
 
 import com.example.SalesManagment.Controller.Aut.AuthenticateRequest;
 import com.example.SalesManagment.Controller.Aut.AuthenticationResponse;
-import com.example.SalesManagment.Model.User.User;
 import com.example.SalesManagment.Controller.Aut.RegistrationRequest;
+import com.example.SalesManagment.Model.User.User;
 
 import java.util.List;
 import java.util.Optional;

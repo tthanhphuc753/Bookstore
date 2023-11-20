@@ -1,16 +1,10 @@
 package com.example.SalesManagment.Model.User;
 
 import com.example.SalesManagment.Model.Product.Product;
-
-import javax.persistence.*;
-
 import lombok.*;
 import org.hibernate.annotations.NaturalId;
 
-import javax.persistence.CascadeType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.HashSet;

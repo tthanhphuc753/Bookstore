@@ -1,17 +1,16 @@
 package com.example.SalesManagment.Controller.Aut;
 
+import com.example.SalesManagment.Controller.userController.UserServices;
 import com.example.SalesManagment.DAO.VerificationTokenRepository;
 import com.example.SalesManagment.Model.User.User;
 import com.example.SalesManagment.Model.token.VerificationToken;
-import com.example.SalesManagment.Controller.userController.UserServices;
 import com.example.SalesManagment.event.RegistrationCompleteEvent;
-
-import javax.servlet.http.HttpServletRequest;
-
 import lombok.AllArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("api/auth")

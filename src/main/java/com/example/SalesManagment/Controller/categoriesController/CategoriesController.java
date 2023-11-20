@@ -1,11 +1,8 @@
 package com.example.SalesManagment.Controller.categoriesController;
 
 import com.example.SalesManagment.Model.Product.Categories;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController

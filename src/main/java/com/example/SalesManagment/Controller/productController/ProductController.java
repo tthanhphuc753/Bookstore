@@ -3,7 +3,6 @@ package com.example.SalesManagment.Controller.productController;
 import com.example.SalesManagment.Model.Product.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController

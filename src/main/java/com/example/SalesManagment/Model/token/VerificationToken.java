@@ -1,9 +1,6 @@
 package com.example.SalesManagment.Model.token;
 
 import com.example.SalesManagment.Model.User.User;
-
-import javax.persistence.*;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

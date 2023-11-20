@@ -1,9 +1,9 @@
 package com.example.SalesManagment.event.listener;
 
+import com.example.SalesManagment.Controller.Aut.EmailSender;
+import com.example.SalesManagment.Controller.userController.UserServices;
 import com.example.SalesManagment.DAO.UserRepository;
 import com.example.SalesManagment.Model.User.User;
-import com.example.SalesManagment.Controller.userController.UserServices;
-import com.example.SalesManagment.Controller.Aut.EmailSender;
 import com.example.SalesManagment.event.RegistrationCompleteEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
