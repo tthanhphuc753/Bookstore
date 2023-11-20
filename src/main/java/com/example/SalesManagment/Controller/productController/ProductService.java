@@ -14,4 +14,6 @@ public interface ProductService {
 
     long countProduct();
 
+    void addCategories(long productID, long categoriesID);
+
 }

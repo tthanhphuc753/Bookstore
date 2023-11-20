@@ -10,18 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 
 import lombok.AllArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("register")
+@RequestMapping("api/auth")
 @AllArgsConstructor
-public class RegistrationController {
+public class AuthenticationController {
 
     private final UserServices userServices;
     private final ApplicationEventPublisher publisher;
     private final VerificationTokenRepository tokenRepository;
 
-    @PostMapping()
+    @PostMapping("/register")
     public String registerUser(@RequestBody RegistrationRequest registrationRequest,
                                final HttpServletRequest request) {
         User user = userServices.registerUser(registrationRequest);
@@ -42,6 +43,15 @@ public class RegistrationController {
         }
         return "invalid verification Token";
     }
+
+    @PostMapping("/authenticate")
+    public ResponseEntity<AuthenticationResponse> authenticate(
+            @RequestBody AuthenticateRequest request
+    )
+    {
+        return ResponseEntity.ok(userServices.authenticate(request));
+    }
+
 
 
     public String applicationUrl(HttpServletRequest request) {

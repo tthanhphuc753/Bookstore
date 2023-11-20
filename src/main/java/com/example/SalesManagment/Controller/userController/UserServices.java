@@ -1,5 +1,7 @@
 package com.example.SalesManagment.Controller.userController;
 
+import com.example.SalesManagment.Controller.Aut.AuthenticateRequest;
+import com.example.SalesManagment.Controller.Aut.AuthenticationResponse;
 import com.example.SalesManagment.Model.User.User;
 import com.example.SalesManagment.Controller.Aut.RegistrationRequest;
 
@@ -12,6 +14,8 @@ public interface UserServices {
     List<User> getUser();
 
     User registerUser(RegistrationRequest request);
+
+    AuthenticationResponse authenticate(AuthenticateRequest request);
 
     Optional<User> findByEmail(String email);
 

@@ -20,7 +20,8 @@ public class Categories {
     private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "categories")
+    @ManyToMany(mappedBy = "categoriesSet", cascade = CascadeType.ALL)
     private Set<Product> productSet = new HashSet<>();
+
 
 }

@@ -4,10 +4,7 @@ import com.example.SalesManagment.Model.Product.Product;
 
 import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.CascadeType;
@@ -24,6 +21,7 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 
 @Table(name = "user")
 public class User {
@@ -40,6 +38,7 @@ public class User {
     private String email;
     private String password;
     private String role;
+    private String token;
     private boolean isEnabled = false;
 
     @ManyToMany(cascade = CascadeType.ALL)

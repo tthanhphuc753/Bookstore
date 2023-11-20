@@ -1,4 +1,4 @@
-package com.example.SalesManagment.Security;
+package com.example.SalesManagment.Controller.Aut;
 
 import com.example.SalesManagment.Model.User.User;
 

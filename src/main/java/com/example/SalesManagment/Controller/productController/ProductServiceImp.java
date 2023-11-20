@@ -33,4 +33,10 @@ public class ProductServiceImp implements ProductService {
     public long countProduct() {
         return productRepository.count();
     }
+
+    @Override
+    public void addCategories(long productID, long categoriesID)
+    {
+
+    }
 }

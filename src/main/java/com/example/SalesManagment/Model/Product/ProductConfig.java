@@ -28,7 +28,7 @@ public class ProductConfig {
             Product Mops = new Product(15, "Mops");
             productList.add(Mops);
 
-            //productRepository.saveAll(productList);
+            productRepository.saveAll(productList);
         };
     }
 }

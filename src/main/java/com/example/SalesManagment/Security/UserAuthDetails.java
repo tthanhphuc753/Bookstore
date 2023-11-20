@@ -12,18 +12,26 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
-public class UserRegistrationDetails implements UserDetails {
+public class UserAuthDetails implements UserDetails {
 
     private String userName;
     private String password;
     private boolean isEnabled;
+    private String token;
     private List<GrantedAuthority> authorities;
 
-    public UserRegistrationDetails(User user) {
+    public UserAuthDetails(User user) {
         this.userName = user.getEmail();
         this.password = user.getPassword();
         this.isEnabled = user.isEnabled();
+        this.token = token;
         this.authorities = Arrays.stream(user.getRole().split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+    }
+
+    public UserAuthDetails(String token)
+    {
+
+        this.token = token;
     }
 
     @Override

@@ -25,10 +25,15 @@ public class    Product {
     @ManyToMany(mappedBy = "productList", cascade = CascadeType.ALL)
     private Set<User> userList = new HashSet<>();
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "categoriesID", referencedColumnName = "categoriesID")
-    private Categories categories;
 
+    @JsonIgnore
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "product_cate",
+            joinColumns = @JoinColumn(name = "productID"),
+            inverseJoinColumns = @JoinColumn(name = "categoriesID")
+    )
+    private Set<Categories> categoriesSet = new HashSet<>();
     public Product(double price, String name) {
         this.price = price;
         this.name = name;

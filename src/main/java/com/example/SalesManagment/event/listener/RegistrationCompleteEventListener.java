@@ -3,12 +3,11 @@ package com.example.SalesManagment.event.listener;
 import com.example.SalesManagment.DAO.UserRepository;
 import com.example.SalesManagment.Model.User.User;
 import com.example.SalesManagment.Controller.userController.UserServices;
-import com.example.SalesManagment.Security.EmailSender;
+import com.example.SalesManagment.Controller.Aut.EmailSender;
 import com.example.SalesManagment.event.RegistrationCompleteEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
 import javax.mail.MessagingException;
@@ -33,7 +32,7 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
         //3.Save the verification token for the user
         userServices.saveUserVerificationToken(theUser, verificationToken);
         //4.Build the verification url to be sent to the user
-        String url = event.getApplicationUrl() + "/register/verifyEmail?token=" + verificationToken;
+        String url = event.getApplicationUrl() + "/api/auth/verifyEmail?token=" + verificationToken;
         //5.send the email.
         log.info("Click the link to verify your registration: {}", url);
         try {
