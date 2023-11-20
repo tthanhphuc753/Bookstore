@@ -19,22 +19,21 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
-public class JwtService   {
+public class JwtService {
 
-    private static  final String SECRET_KEY = "3ec56fb4e2cf3e053e75d27b7fb4bbb50a7e8a79784c2bdf5ab89ea2aeb6c554";
+    private static final String SECRET_KEY = "3ec56fb4e2cf3e053e75d27b7fb4bbb50a7e8a79784c2bdf5ab89ea2aeb6c554";
+
     public String extractUsername(String token) {
 
-        return extractClaim(token,Claims::getSubject);
+        return extractClaim(token, Claims::getSubject);
     }
 
-    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver)
-    {
-        final Claims claims =extractAllClaims(token);
+    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+        final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
 
-    public String generateToken(UserDetails userDetails)
-    {
+    public String generateToken(UserDetails userDetails) {
         return generateToken(new HashMap<>(), userDetails);
     }
 
@@ -50,10 +49,9 @@ public class JwtService   {
     }
 
 
-    public Boolean isTokenValid(String token , UserDetails userDetails)
-    {
+    public Boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername()))&& !isTokenExpired(token);
+        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 
     private boolean isTokenExpired(String token) {
@@ -61,11 +59,10 @@ public class JwtService   {
     }
 
     private Date extractExpiration(String token) {
-        return extractClaim(token,Claims::getExpiration);
+        return extractClaim(token, Claims::getExpiration);
     }
 
-    private  Claims extractAllClaims(String token)
-    {
+    private Claims extractAllClaims(String token) {
         return Jwts
                 .parserBuilder()
                 .setSigningKey(getSignInKey())

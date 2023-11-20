@@ -22,7 +22,8 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
     private final UserServices userServices;
     private final UserRepository userRepository;
     private User theUser;
-    private final EmailSender emailSender ;
+    private final EmailSender emailSender;
+
     @Override
     public void onApplicationEvent(RegistrationCompleteEvent event) {
         //1.get the newly registered user
@@ -36,7 +37,7 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
         //5.send the email.
         log.info("Click the link to verify your registration: {}", url);
         try {
-            emailSender.send(url,theUser);
+            emailSender.send(url, theUser);
         } catch (MessagingException e) {
             userRepository.delete(theUser);
             throw new RuntimeException("Gặp vấn đề khi gửi email xác minh", e);

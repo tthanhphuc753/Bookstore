@@ -22,7 +22,7 @@ import java.io.UnsupportedEncodingException;
 public class EmailService implements EmailSender {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
-    private  JavaMailSender mailSender ;
+    private JavaMailSender mailSender;
 
     @Override
     @Async

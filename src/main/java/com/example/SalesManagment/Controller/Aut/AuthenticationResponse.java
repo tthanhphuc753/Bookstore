@@ -7,5 +7,6 @@ import lombok.NoArgsConstructor;
 
 
 @Builder
-public record AuthenticationResponse(String username, String name, String role, String token) {
+public record AuthenticationResponse(String username
+        , String name, String role, String token) {
 }

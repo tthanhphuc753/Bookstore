@@ -28,8 +28,7 @@ public class UserAuthDetails implements UserDetails {
         this.authorities = Arrays.stream(user.getRole().split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
-    public UserAuthDetails(String token)
-    {
+    public UserAuthDetails(String token) {
 
         this.token = token;
     }

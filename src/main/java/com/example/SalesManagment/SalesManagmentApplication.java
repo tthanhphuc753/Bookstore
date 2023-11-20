@@ -17,21 +17,19 @@ import java.util.Date;
 @SpringBootApplication
 public class SalesManagmentApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SalesManagmentApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(SalesManagmentApplication.class, args);
+    }
 
-	@Autowired
-	private ApplicationConfig applicationConfig;
-	@Bean
-	CommandLineRunner commandLineRunner (UserRepository userRepository)
-	{
-		return  args -> {
-			User Phuc = new User(null, "Phuc", 10, null
-					,"tthanhphuc753@gmail.com", applicationConfig.passwordEncoder().encode("123456")
-					,"USER", null, true,null);
-			userRepository.save(Phuc);
-		};
+    @Autowired
+    private ApplicationConfig applicationConfig;
 
-	}
+    @Bean
+    CommandLineRunner commandLineRunner(UserRepository userRepository) {
+        return args -> {
+            User Phuc = new User(null, "Phuc", 10, null, "tthanhphuc753@gmail.com", applicationConfig.passwordEncoder().encode("123456"), "USER", null, true, null);
+            userRepository.save(Phuc);
+        };
+
+    }
 }

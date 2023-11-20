@@ -13,7 +13,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Table(name = "Product")
-public class    Product {
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +34,7 @@ public class    Product {
             inverseJoinColumns = @JoinColumn(name = "categoriesID")
     )
     private Set<Categories> categoriesSet = new HashSet<>();
+
     public Product(double price, String name) {
         this.price = price;
         this.name = name;
