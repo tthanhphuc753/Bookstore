@@ -26,7 +26,7 @@ public class SecurityConfig {
                 .authorizeRequests(authorizeRequests -> authorizeRequests
                         .antMatchers("/api/auth/**")
                         .permitAll()
-                        .antMatchers("/api/user/**").hasRole("ADMIN")
+                        .antMatchers("/api/user/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

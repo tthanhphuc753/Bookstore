@@ -18,12 +18,12 @@ public class UserController {
         this.userServices = userServices;
     }
 
-    @GetMapping("listuser")
+    @GetMapping("list")
     public List<User> getUser() {
         return userServices.getUser();
     }
 
-    @GetMapping("countuser")
+    @GetMapping("count")
     public long countUser() {
         return userServices.countUser();
     }
@@ -33,7 +33,7 @@ public class UserController {
         return userServices.findUserByID(id);
     }
 
-    @PostMapping("adduser")
+    @PostMapping("add")
     public ResponseEntity<String> addUser(@RequestBody User user) {
         userServices.addUser(user);
         return ResponseEntity.ok("Data saved");

@@ -47,9 +47,12 @@ public class User {
     // Getters and Setters
 
     public int getAge() {
-        return Period.between(this.dateOfBirth, LocalDate.now()).getYears();
+        if (dateOfBirth != null) {
+            return Period.between(dateOfBirth, LocalDate.now()).getYears();
+        } else {
+            return 0 ;
+        }
     }
-
 
     public void setProductList(Set<Product> productList) {
         this.productList = productList;

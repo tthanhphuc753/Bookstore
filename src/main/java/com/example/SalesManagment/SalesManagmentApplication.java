@@ -27,6 +27,12 @@ public class SalesManagmentApplication {
                     , applicationConfig.passwordEncoder().encode("123456")
                     , "ADMIN", null, true, null);
             userRepository.save(Phuc);
+
+            User Sor = new User(null, "Sor", 10, null
+                    , "tthanhphuc752@gmail.com"
+                    , applicationConfig.passwordEncoder().encode("123456")
+                    , "USER", null, true, null);
+            userRepository.save(Sor);
         };
 
     }
