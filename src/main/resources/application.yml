@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/salesmanagment
+    url: jdbc:mysql://localhost:3306/bookstore
     username: root
     password: 2104110080A
   jpa:
