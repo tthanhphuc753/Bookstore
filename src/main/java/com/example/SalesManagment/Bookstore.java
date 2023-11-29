@@ -10,10 +10,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class SalesManagmentApplication {
+public class Bookstore {
 
     public static void main(String[] args) {
-        SpringApplication.run(SalesManagmentApplication.class, args);
+        SpringApplication.run(Bookstore.class, args);
     }
 
     @Autowired
