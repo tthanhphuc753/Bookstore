@@ -1,4 +1,4 @@
-package com.example.SalesManagment.Controller.Aut;
+package com.example.SalesManagment.Service.Mailsender;
 
 import com.example.SalesManagment.Model.User.User;
 import lombok.AllArgsConstructor;
@@ -24,12 +24,12 @@ public class EmailService implements EmailSender {
     @Async
     public void send(String url, User theUser) throws MessagingException, UnsupportedEncodingException {
         String subject = "Email Verification";
-        String senderName = "Sales Management Registration Portal Service";
-        String content = "<p> Hi, " + theUser.getName() + ", </p> " +
+        String senderName = "Bookstores Registration Portal Service";
+        String content = "<p> Hi, " + theUser.getLastName() + ", </p> " +
                 "<p> Thanks you for Registering with us, " +
                 "Please, follow the link below to complete your registration.</p>" +
                 "<a href=\"" + url + "\">Verify your email to activate your account</a>" +
-                " Thanks you <br> User Sales Management Registration Portal Service";
+                " Thanks you <br> User Bookstores Registration Portal Service";
         MimeMessage message = mailSender.createMimeMessage();
         var messageHelper = new MimeMessageHelper(message);
         messageHelper.setFrom("thenghia25022003@gmail.com", senderName);

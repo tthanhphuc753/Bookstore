@@ -1,6 +1,5 @@
-package com.example.SalesManagment.Controller.Aut;
+package com.example.SalesManagment.Security;
 
-import com.example.SalesManagment.Security.JwtService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -47,6 +46,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String authorities = userDetails.getAuthorities().toString();
             logger.info("User '{}' has authorities: {}", userEmail, authorities);
             if (jwtService.isTokenValid(jwt, userDetails)) {
+
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null,
                         userDetails.getAuthorities()

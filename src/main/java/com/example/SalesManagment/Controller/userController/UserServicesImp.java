@@ -20,6 +20,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Calendar;
@@ -40,11 +41,14 @@ public class UserServicesImp implements UserServices {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final Logger logger = LoggerFactory.getLogger(UserServicesImp.class);
-    private  User user;
+    private User user;
 
     public List<User> getUser() {
         return userrepos.findAll();
     }
+
+
+
 
     @Override
     public User registerUser(RegistrationRequest request) {
@@ -54,14 +58,15 @@ public class UserServicesImp implements UserServices {
         }
 
         User newUser = new User();
-        newUser.setName(request.name());
+        newUser.setFirstName(request.firstName());
+        newUser.setLastName(request.lastName());
         newUser.setEmail(request.email());
         newUser.setPassword(passwordEncoder.encode(request.password()));
-        newUser.setRole(request.Role()); //
+        newUser.setRole("USER"); //
 
         var user1 = new UserAuthDetails(newUser);
         var jwtToken = jwtService.generateToken(user1);
-        logger.info("JWT:" +jwtToken);
+        logger.info("JWT:" + jwtToken);
         return userrepos.save(newUser);
     }
 
@@ -72,14 +77,13 @@ public class UserServicesImp implements UserServices {
                         request.password()
                 )
         );
-
         User user = userrepos.findByEmail(request.email())
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng cho email: " + request.email()));
 
         var user1 = new UserAuthDetails(user);
         logger.info("JWT: " + jwtService.generateToken(user1));
         String role = user.getRole();
-        String name = user.getName();
+        String name = user.getLastName();
         String username = user.getEmail();
         String jwtToken = jwtService.generateToken(user1);
         return AuthenticationResponse.builder().username(username).role(role).name(name).token(jwtToken).build();

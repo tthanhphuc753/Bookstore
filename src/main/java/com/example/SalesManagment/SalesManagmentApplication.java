@@ -22,13 +22,13 @@ public class SalesManagmentApplication {
     @Bean
     CommandLineRunner commandLineRunner(UserRepository userRepository) {
         return args -> {
-            User Phuc = new User(null, "Phuc", 10, null
+            User Phuc = new User(null, "Phuc", "Tran", 10, null
                     , "tthanhphuc753@gmail.com"
                     , applicationConfig.passwordEncoder().encode("123456")
                     , "ADMIN", null, true, null);
             userRepository.save(Phuc);
 
-            User Sor = new User(null, "Sor", 10, null
+            User Sor = new User(null, "Sor", "Q", 10, null
                     , "tthanhphuc752@gmail.com"
                     , applicationConfig.passwordEncoder().encode("123456")
                     , "USER", null, true, null);

@@ -22,7 +22,8 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userID;
-    private String name;
+    private String firstName;
+    private String lastName;
     @Transient
     private int age;
     private LocalDate dateOfBirth;
@@ -62,7 +63,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + userID +
-                ", name='" + name + '\'' +
+                ", name='" + firstName + '\'' +
                 ", age=" + age +
                 ", dateOfBirth=" + dateOfBirth +
                 ", email='" + email + '\'' +

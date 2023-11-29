@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Registration Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+          crossorigin="anonymous">
+    <style>
+
+
+        body {
+            background-color: #ffffff;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .m-4 {
+            text-align: center;
+            font-weight: bold;
+            font-size: 24px;
+            color: #0066ff;
+        }
+
+        .btn-success {
+            background-color: #0066ff;
+            color: #ffffff;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        .password-mismatch {
+            color: #ff0000;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<div class="container col-md-offset-3 col-md-8 mt-lg-5">
+    <div class="row mt-2">
+        <div th:if="${param.success}">
+            <fp th:text="${'Registration Success, Please check your email to complete registration.'}"></fp>
+        </div>
+        <div class="m-4" th:unless="${param.success}">User Registration Form</div>
+    </div>
+    <form th:action="@{/api/auth/register}" method="post" th:object="${user}" class="px-4" th:unless="${param.success}">
+        <div class="mb-3">
+            <label for="firstName" class="form-label">First Name</label>
+            <input type="text" id="firstName"
+                   class="form-control" autofocus="autofocus"
+                   required name="firstName" th:field="*{firstName}"
+                   placeholder="Enter your firstName">
+        </div>
+
+        <div class="mb-3">
+            <label for="lastName" class="form-label">Last Name</label>
+            <input type="text" id="lastName"
+                   class="form-control" autofocus="autofocus"
+                   required name="lastName" th:field="*{lastName}"
+                   placeholder="Enter your Last Name">
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="text" id="email"
+                   class="form-control" autofocus="autofocus"
+                   required name="email" th:field="*{email}"
+                   placeholder="Enter your Email">
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" id="password"
+                   class="form-control" autofocus="autofocus"
+                   required name="password" th:field="*{password}"
+                   placeholder="Enter your password">
+        </div>
+
+        <div class="mb-3">
+            <label for="confirmPassword" class="form-label">Confirm Password</label>
+            <input type="password" id="confirmPassword"
+                   class="form-control" autofocus="autofocus"
+                   required name="confirmPassword" placeholder="Confirm your password">
+            <div id="passwordMismatch" class="password-mismatch"></div>
+        </div>
+
+        <div>
+            <button type="button" class="btn btn-success" onclick="validatePassword()">Register</button>
+            <span>Registered already? <a href="/static" th:href="@{/api/auth/login}">
+               Login here.
+           </a></span>
+        </div>
+    </form>
+
+    <script>
+        function validatePassword() {
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirmPassword").value;
+            var mismatchDiv = document.getElementById("passwordMismatch");
+
+            if (password !== confirmPassword) {
+                mismatchDiv.innerText = "Passwords do not match!";
+            } else {
+                mismatchDiv.innerText = "";
+                document.forms[0].submit(); // Submit the form if passwords match
+            }
+        }
+    </script>
+
+</div>
+</body>
+</html>

@@ -10,7 +10,6 @@ import java.util.Optional;
 
 public interface UserServices {
 
-
     List<User> getUser();
 
     User registerUser(RegistrationRequest request);
@@ -33,4 +32,6 @@ public interface UserServices {
     void saveUserVerificationToken(User theUser, String verificationToken);
 
     String validateToken(String theToken);
+
+
 }

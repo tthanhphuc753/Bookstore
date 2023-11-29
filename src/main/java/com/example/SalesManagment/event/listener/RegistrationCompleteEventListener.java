@@ -1,6 +1,6 @@
 package com.example.SalesManagment.event.listener;
 
-import com.example.SalesManagment.Controller.Aut.EmailSender;
+import com.example.SalesManagment.Service.Mailsender.EmailSender;
 import com.example.SalesManagment.Controller.userController.UserServices;
 import com.example.SalesManagment.DAO.UserRepository;
 import com.example.SalesManagment.Model.User.User;

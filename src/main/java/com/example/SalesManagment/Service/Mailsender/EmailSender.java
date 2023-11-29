@@ -1,4 +1,4 @@
-package com.example.SalesManagment.Controller.Aut;
+package com.example.SalesManagment.Service.Mailsender;
 
 import com.example.SalesManagment.Model.User.User;
 
