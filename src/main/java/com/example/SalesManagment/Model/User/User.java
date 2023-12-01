@@ -51,7 +51,7 @@ public class User {
         if (dateOfBirth != null) {
             return Period.between(dateOfBirth, LocalDate.now()).getYears();
         } else {
-            return 0 ;
+            return 0;
         }
     }
 

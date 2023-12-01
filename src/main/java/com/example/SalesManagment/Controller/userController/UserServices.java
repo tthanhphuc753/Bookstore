@@ -4,13 +4,14 @@ import com.example.SalesManagment.Controller.Aut.AuthenticateRequest;
 import com.example.SalesManagment.Controller.Aut.AuthenticationResponse;
 import com.example.SalesManagment.Controller.Aut.RegistrationRequest;
 import com.example.SalesManagment.Model.User.User;
+import org.springframework.ui.Model;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface UserServices {
 
-    List<User> getUser();
+    String getUser(Model model);
 
     User registerUser(RegistrationRequest request);
 

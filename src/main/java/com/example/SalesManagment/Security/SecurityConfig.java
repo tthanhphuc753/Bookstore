@@ -12,6 +12,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import javax.servlet.http.HttpServletResponse;
+
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -27,6 +29,7 @@ public class SecurityConfig {
         http.csrf().disable()
                 .authorizeRequests(authorizeRequests -> {
                     try {
+
                         authorizeRequests
                                 .antMatchers("/api/user/**").hasAuthority("ADMIN")
                                 .antMatchers("/api/auth/**")
@@ -37,12 +40,16 @@ public class SecurityConfig {
                                 .loginPage("/api/auth/login")
                                 .loginProcessingUrl("/api/auth/authenticate")
                                 .usernameParameter("email")
-                                .defaultSuccessUrl("/api/auth/homepage")
+                                .successHandler(new JwtAuthenticationSuccessHandler(jwtService, userrepos))
                                 .failureUrl("/api/auth/login?error=true")
-                                //.successHandler(new JwtAuthenticationSuccessHandler(jwtService, userrepos))
                                 .permitAll()
                                 .and()
                                 .logout()
+                                .logoutUrl("/api/auth/logout")
+                                .logoutSuccessHandler((httpServletRequest, httpServletResponse, authentication) -> {
+                                    httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+                                })
+                                .deleteCookies("JWT_TOKEN")  // Xóa cookie chứa JWT
                                 .invalidateHttpSession(true)
                                 .clearAuthentication(true)
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))

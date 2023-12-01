@@ -1,17 +1,22 @@
 package com.example.SalesManagment.Controller.userController;
 
+import com.example.SalesManagment.DAO.UserRepository;
 import com.example.SalesManagment.Model.User.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("api/user")
+
 public class UserController {
 
     private final UserServices userServices;
+
 
     @Autowired
     public UserController(UserServices userServices) {
@@ -19,8 +24,8 @@ public class UserController {
     }
 
     @GetMapping("list")
-    public List<User> getUser() {
-        return userServices.getUser();
+    public String getUser(Model model ) {
+        return userServices.getUser(model);
     }
 
     @GetMapping("count")
@@ -48,5 +53,6 @@ public class UserController {
     public User addProductForUser(@PathVariable Long userID, @PathVariable Long productID) {
         return userServices.addProduct(userID, productID);
     }
+
 
 }

@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/api/auth")
@@ -78,17 +80,18 @@ public class AuthenticationController {
         return "homePage";
     }
 
-    @RequestMapping("/success")
-    public String success(Model model) {
-        String redirectPath = (String) model.asMap().get("redirectPath");
+    @PostMapping("/api/auth/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
 
-        if (redirectPath != null) {
-            return "redirect:" + redirectPath;
-        } else {
-            // Xử lý trường hợp không có đường dẫn chuyển hướng
-            return "redirect:/api/auth/defaultRedirectPath";
-        }
+        Cookie cookie = new Cookie("JWT_TOKEN", null);
+        cookie.setMaxAge(0);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+
+
+        return "redirect:/api/auth/login";
     }
+
 
     public String applicationUrl(HttpServletRequest request) {
         return "http://" + request.getServerName() + ":"
@@ -97,11 +100,7 @@ public class AuthenticationController {
     }
 
 
-    @GetMapping("/user")
-    public String getUs(Model model) {
-        model.addAttribute("user", userrepos.findAll());
-        return "user";
-    }
+
 
 
 }

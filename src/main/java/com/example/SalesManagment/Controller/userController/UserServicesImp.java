@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.Cookie;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
@@ -43,8 +44,10 @@ public class UserServicesImp implements UserServices {
     private final Logger logger = LoggerFactory.getLogger(UserServicesImp.class);
     private User user;
 
-    public List<User> getUser() {
-        return userrepos.findAll();
+    @Override
+    public String getUser(Model model ) {
+        model.addAttribute("user", userrepos.findAll());
+        return "user";
     }
 
 
@@ -82,10 +85,13 @@ public class UserServicesImp implements UserServices {
 
         var user1 = new UserAuthDetails(user);
         logger.info("JWT: " + jwtService.generateToken(user1));
+
         String role = user.getRole();
         String name = user.getLastName();
         String username = user.getEmail();
         String jwtToken = jwtService.generateToken(user1);
+        logger.info("Role: "+ user1.getAuthorities());
+        System.out.println("ROLE: "+ user1.getAuthorities());
         return AuthenticationResponse.builder().username(username).role(role).name(name).token(jwtToken).build();
     }
 

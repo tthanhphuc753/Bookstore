@@ -2,10 +2,9 @@ package com.example.SalesManagment.Security;
 
 import com.example.SalesManagment.DAO.UserRepository;
 import com.example.SalesManagment.Model.User.User;
-import com.example.SalesManagment.Security.JwtService;
-import com.example.SalesManagment.Security.UserAuthDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
 import javax.servlet.ServletException;
@@ -16,7 +15,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-public class JwtAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+public class JwtAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
     private final JwtService jwtService;
     private final UserRepository userrepos;
@@ -39,13 +38,14 @@ public class JwtAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucc
 
             Cookie cookie = new Cookie("JWT_TOKEN", token);
             cookie.setMaxAge(3600);
-            cookie.setPath("/"); // Đảm bảo cookie được gửi với mọi request
+            cookie.setPath("/");
 
             response.addCookie(cookie);
+            getRedirectStrategy().sendRedirect(request, response, "/api/auth/homepage");
 
             super.onAuthenticationSuccess(request, response, authentication);
         } else {
-            throw new RuntimeException("Không tìm thấy người dùng cho email: " + email);
+            throw new RuntimeException("User not found: " + email);
         }
     }
 }
