@@ -51,7 +51,7 @@
         </div>
         <div class="m-4" th:unless="${param.success}">User Registration Form</div>
     </div>
-    <form th:action="@{/api/auth/register}" method="post" th:object="${user}" class="px-4" th:unless="${param.success}">
+    <form th:action="@{/auth/register}" method="post" th:object="${user}" class="px-4" th:unless="${param.success}">
         <div class="mb-3">
             <label for="firstName" class="form-label">First Name</label>
             <input type="text" id="firstName"
@@ -94,7 +94,7 @@
 
         <div>
             <button type="button" class="btn btn-success" onclick="validatePassword()">Register</button>
-            <span>Registered already? <a href="/static" th:href="@{/api/auth/login}">
+            <span>Registered already? <a href="/static" th:href="@{/auth/login}">
                Login here.
            </a></span>
         </div>

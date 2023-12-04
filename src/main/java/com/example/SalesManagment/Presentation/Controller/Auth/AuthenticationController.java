@@ -1,7 +1,6 @@
-package com.example.SalesManagment.Presentation.Controller.Aut;
+package com.example.SalesManagment.Presentation.Controller.Auth;
 
 import com.example.SalesManagment.Domain.UserServices;
-import com.example.SalesManagment.Persistence.DAO.UserRepository;
 import com.example.SalesManagment.Persistence.DAO.VerificationTokenRepository;
 import com.example.SalesManagment.Domain.Model.User.User;
 import com.example.SalesManagment.Domain.Model.token.VerificationToken;
@@ -19,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 @AllArgsConstructor
 public class AuthenticationController {
 
@@ -31,7 +30,7 @@ public class AuthenticationController {
     public String registerUser(@ModelAttribute("user") RegistrationRequest registrationRequest, final HttpServletRequest request) {
         User user = userServices.registerUser(registrationRequest);
         publisher.publishEvent(new RegistrationCompleteEvent(user, applicationUrl(request)));
-        return "redirect:/api/auth/registration-form?success";
+        return "redirect:/auth/registration-form?success";
     }
 
     @GetMapping("/registration-form")
@@ -69,7 +68,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticateRequest request) {
+    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
         return ResponseEntity.ok(userServices.authenticate(request));
     }
 
@@ -86,9 +85,8 @@ public class AuthenticationController {
         cookie.setPath("/");
         response.addCookie(cookie);
 
-        return "redirect:/api/auth/login";
+        return "redirect:/auth/login";
     }
-
 
     public String applicationUrl(HttpServletRequest request) {
         return "http://" + request.getServerName() + ":"

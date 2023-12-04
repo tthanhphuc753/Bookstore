@@ -1,4 +1,4 @@
-package com.example.SalesManagment.Presentation.Controller.Aut;
+package com.example.SalesManagment.Presentation.Controller.Auth;
 
 import com.example.SalesManagment.Domain.Model.User.User;
 

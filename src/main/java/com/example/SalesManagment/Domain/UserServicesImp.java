@@ -1,8 +1,8 @@
 package com.example.SalesManagment.Domain;
 
-import com.example.SalesManagment.Presentation.Controller.Aut.AuthenticateRequest;
-import com.example.SalesManagment.Presentation.Controller.Aut.AuthenticationResponse;
-import com.example.SalesManagment.Presentation.Controller.Aut.RegistrationRequest;
+import com.example.SalesManagment.Presentation.Controller.Auth.AuthenticationRequest;
+import com.example.SalesManagment.Presentation.Controller.Auth.AuthenticationResponse;
+import com.example.SalesManagment.Presentation.Controller.Auth.RegistrationRequest;
 import com.example.SalesManagment.Persistence.DAO.ProductRepository;
 import com.example.SalesManagment.Persistence.DAO.UserRepository;
 import com.example.SalesManagment.Persistence.DAO.VerificationTokenRepository;
@@ -68,7 +68,7 @@ public class UserServicesImp implements UserServices {
         return userrepos.save(newUser);
     }
 
-    public AuthenticationResponse authenticate(AuthenticateRequest request) {
+    public AuthenticationResponse authenticate(AuthenticationRequest request) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.email(),

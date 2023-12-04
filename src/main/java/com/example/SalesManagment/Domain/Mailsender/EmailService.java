@@ -1,7 +1,7 @@
 package com.example.SalesManagment.Domain.Mailsender;
 
 import com.example.SalesManagment.Domain.Model.User.User;
-import com.example.SalesManagment.Presentation.Controller.Aut.EmailSender;
+import com.example.SalesManagment.Presentation.Controller.Auth.EmailSender;
 import lombok.AllArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;

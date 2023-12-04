@@ -38,7 +38,7 @@ public class JwtAuthenticationSuccessHandler extends SavedRequestAwareAuthentica
             cookie.setPath("/");
 
             response.addCookie(cookie);
-            getRedirectStrategy().sendRedirect(request, response, "/api/auth/homepage");
+            getRedirectStrategy().sendRedirect(request, response, "/auth/homepage");
 
             super.onAuthenticationSuccess(request, response, authentication);
         } else {

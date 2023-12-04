@@ -34,21 +34,21 @@ public class SecurityConfig {
                     try {
 
                         authorizeRequests
-                                .antMatchers("/api/user/**").hasAuthority("ADMIN")
-                                .antMatchers("/api/auth/**")
+                                .antMatchers("/user/**").hasAuthority("ADMIN")
+                                .antMatchers("/auth/**")
                                 .permitAll()
                                 .anyRequest().authenticated()
                                 .and()
                                 .formLogin()
-                                .loginPage("/api/auth/login")
-                                .loginProcessingUrl("/api/auth/authenticate")
+                                .loginPage("/auth/login")
+                                .loginProcessingUrl("/auth/authenticate")
                                 .usernameParameter("email")
                                 .successHandler(new JwtAuthenticationSuccessHandler(jwtService, userrepos))
-                                .failureUrl("/api/auth/login?error=true")
+                                .failureUrl("/auth/login?error=true")
                                 .permitAll()
                                 .and()
                                 .logout()
-                                .logoutUrl("/api/auth/logout")
+                                .logoutUrl("/auth/logout")
                                 .logoutSuccessHandler((httpServletRequest, httpServletResponse, authentication) -> {
                                     httpServletResponse.setStatus(HttpServletResponse.SC_OK);
                                 })

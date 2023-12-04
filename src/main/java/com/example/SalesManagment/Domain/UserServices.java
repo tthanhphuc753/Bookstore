@@ -1,8 +1,8 @@
 package com.example.SalesManagment.Domain;
 
-import com.example.SalesManagment.Presentation.Controller.Aut.AuthenticateRequest;
-import com.example.SalesManagment.Presentation.Controller.Aut.AuthenticationResponse;
-import com.example.SalesManagment.Presentation.Controller.Aut.RegistrationRequest;
+import com.example.SalesManagment.Presentation.Controller.Auth.AuthenticationRequest;
+import com.example.SalesManagment.Presentation.Controller.Auth.AuthenticationResponse;
+import com.example.SalesManagment.Presentation.Controller.Auth.RegistrationRequest;
 import com.example.SalesManagment.Domain.Model.User.User;
 import org.springframework.ui.Model;
 
@@ -14,7 +14,7 @@ public interface UserServices {
 
     User registerUser(RegistrationRequest request);
 
-    AuthenticationResponse authenticate(AuthenticateRequest request);
+    AuthenticationResponse authenticate(AuthenticationRequest request);
 
     Optional<User> findByEmail(String email);
 
