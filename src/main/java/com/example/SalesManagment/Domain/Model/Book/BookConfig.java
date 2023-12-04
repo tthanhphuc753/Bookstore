@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-public class ProductConfig {
+public class BookConfig {
 
     private final List<Book> bookList = new ArrayList<>();
 

@@ -19,6 +19,7 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long bookID;
     private double price;
+    private String image;
     private String name;
 
     @JsonIgnore
