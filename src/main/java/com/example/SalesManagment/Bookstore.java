@@ -1,8 +1,8 @@
 package com.example.SalesManagment;
 
-import com.example.SalesManagment.DAO.UserRepository;
-import com.example.SalesManagment.Model.User.User;
-import com.example.SalesManagment.Security.ApplicationConfig;
+import com.example.SalesManagment.Persistence.DAO.UserRepository;
+import com.example.SalesManagment.Domain.Model.User.User;
+import com.example.SalesManagment.Domain.Security.ApplicationConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

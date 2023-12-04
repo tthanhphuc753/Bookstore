@@ -1,0 +1,18 @@
+package com.example.SalesManagment.Domain;
+
+import com.example.SalesManagment.Domain.Model.Book.Categories;
+import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public interface CategoriesService {
+    void addCategory(Categories categories);
+
+    List<Categories> getAllCategory();
+
+    Optional<Categories> findByName(String name);
+
+    long countCategory();
+
+}
