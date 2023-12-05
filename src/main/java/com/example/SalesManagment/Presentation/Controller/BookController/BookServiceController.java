@@ -1,4 +1,4 @@
-package com.example.SalesManagment.Presentation.Controller.productController;
+package com.example.SalesManagment.Presentation.Controller.BookController;
 
 import com.example.SalesManagment.Domain.BookService;
 import com.example.SalesManagment.Domain.Model.Book.Book;
@@ -10,7 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/product")
 @RequiredArgsConstructor
-public class ProductServiceController {
+public class BookServiceController {
     private final BookService bookService;
 
 

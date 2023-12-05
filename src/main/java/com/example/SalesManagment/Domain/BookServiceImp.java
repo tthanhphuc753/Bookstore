@@ -4,6 +4,7 @@ import com.example.SalesManagment.Domain.Model.Book.Book;
 import com.example.SalesManagment.Persistence.DAO.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,4 +39,8 @@ public class BookServiceImp implements BookService {
     public void addCategories(long bookID, long categoriesID) {
 
     }
+//    public String getUser(Model model) {
+//        model.addAttribute("book",bookRepository.findAll());
+//        return "user";
+//    }
 }
