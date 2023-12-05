@@ -35,7 +35,7 @@ public class SecurityConfig {
 
                         authorizeRequests
                                 .antMatchers("/user/**").hasAuthority("ADMIN")
-                                .antMatchers("/auth/**","/shopping-cart/**")
+                                .antMatchers("/auth/**","/shopping-cart/**","/book/**")
                                 .permitAll()
                                 .anyRequest().authenticated()
                                 .and()

@@ -19,7 +19,6 @@ public class BookConfig {
             Book ThinkAndGrowRich = new Book(24, "Think And Grow Rich");
             bookList.add(ThinkAndGrowRich);
 
-
             bookRepository.saveAll(bookList);
         };
     }
