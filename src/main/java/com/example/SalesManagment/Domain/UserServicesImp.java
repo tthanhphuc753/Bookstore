@@ -43,7 +43,7 @@ public class UserServicesImp implements UserServices {
 
     @Override
     public String getUser(Model model) {
-        model.addAttribute("user", bookRepository.findAll());
+        model.addAttribute("user", userrepos.findAll());
         return "user";
     }
 
