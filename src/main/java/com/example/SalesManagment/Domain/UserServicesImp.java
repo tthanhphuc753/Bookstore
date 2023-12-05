@@ -3,7 +3,7 @@ package com.example.SalesManagment.Domain;
 import com.example.SalesManagment.Presentation.Controller.Auth.AuthenticationRequest;
 import com.example.SalesManagment.Presentation.Controller.Auth.AuthenticationResponse;
 import com.example.SalesManagment.Presentation.Controller.Auth.RegistrationRequest;
-import com.example.SalesManagment.Persistence.DAO.ProductRepository;
+import com.example.SalesManagment.Persistence.DAO.BookRepository;
 import com.example.SalesManagment.Persistence.DAO.UserRepository;
 import com.example.SalesManagment.Persistence.DAO.VerificationTokenRepository;
 import com.example.SalesManagment.Domain.Exception.Exception;
@@ -34,7 +34,7 @@ import java.util.Set;
 public class UserServicesImp implements UserServices {
 
     private final UserRepository userrepos;
-    private final ProductRepository productRepository;
+    private final BookRepository bookRepository;
     private final PasswordEncoder passwordEncoder;
     private final VerificationTokenRepository tokenRepository;
     private final JwtService jwtService;
@@ -133,7 +133,7 @@ public class UserServicesImp implements UserServices {
     public User addProduct(Long userID, Long productID) {
         Set<Book> bookList = null;
         User user = userrepos.findById(userID).get();
-        Book book = productRepository.findById(productID).get();
+        Book book = bookRepository.findById(productID).get();
         bookList = user.getBookList();
         bookList.add(book);
         user.setBookList(bookList);

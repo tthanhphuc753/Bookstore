@@ -17,10 +17,12 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long bookID;
+    @Column(name = "bookID")
+    private long id;
     private double price;
     private String image;
     private String name;
+    private String author;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "bookList", cascade = CascadeType.ALL)
@@ -53,7 +55,7 @@ public class Book {
     @Override
     public String toString() {
         return "Product{" +
-                "id=" + bookID +
+                "id=" + id +
                 ", price=" + price +
                 ", name='" + name + '\'' +
                 '}';

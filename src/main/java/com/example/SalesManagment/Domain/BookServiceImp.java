@@ -1,7 +1,7 @@
 package com.example.SalesManagment.Domain;
 
-import com.example.SalesManagment.Persistence.DAO.ProductRepository;
 import com.example.SalesManagment.Domain.Model.Book.Book;
+import com.example.SalesManagment.Persistence.DAO.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,33 +10,32 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class ProductServiceImp implements ProductService {
+public class BookServiceImp implements BookService {
 
-    private final ProductRepository productRepository;
+    private final BookRepository bookRepository;
 
     @Override
     public void addProduct(Book book) {
-        productRepository.save(book);
+        bookRepository.save(book);
     }
 
     @Override
     public List<Book> getAllProduct() {
-        return productRepository.findAll();
+        return bookRepository.findAll();
     }
 
     @Override
     public Optional<Book> findByName(String name) {
-        return productRepository.findByName(name);
+        return bookRepository.findByName(name);
     }
 
     @Override
     public long countProduct() {
-        return productRepository.count();
+        return bookRepository.count();
     }
 
     @Override
-    public void addCategories(long productID, long categoriesID)
-    {
+    public void addCategories(long bookID, long categoriesID) {
 
     }
 }

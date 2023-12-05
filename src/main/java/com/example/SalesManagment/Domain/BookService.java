@@ -4,7 +4,7 @@ import com.example.SalesManagment.Domain.Model.Book.Book;
 import java.util.List;
 import java.util.Optional;
 
-public interface ProductService {
+public interface BookService {
     void addProduct(Book book);
 
     List<Book> getAllProduct();
@@ -13,6 +13,6 @@ public interface ProductService {
 
     long countProduct();
 
-    void addCategories(long productID, long categoriesID);
+    void addCategories(long bookID, long categoriesID);
 
 }
