@@ -1,7 +1,7 @@
 package com.example.SalesManagment.Presentation.Controller.productController;
 
-import com.example.SalesManagment.Domain.Model.Book.Book;
 import com.example.SalesManagment.Domain.BookService;
+import com.example.SalesManagment.Domain.Model.Book.Book;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

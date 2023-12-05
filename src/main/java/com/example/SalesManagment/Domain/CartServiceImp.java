@@ -23,40 +23,34 @@ public class CartServiceImp implements CartService {
     @Override
     public void addToCart(Cart item) {
         Cart cartItem = cartMap.get(item.getBookID());
-        if(cartItem == null)
-        {
-            cartMap.put(item.getBookID(),item );
-        }else
-        {
-            cartItem.setQuantity(cartItem.getQuantity()+1);
+        if (cartItem == null) {
+            cartMap.put(item.getBookID(), item);
+        } else {
+            cartItem.setQuantity(cartItem.getQuantity() + 1);
         }
         cartRepository.save(cartItem);
 
     }
 
     @Override
-    public void removeFromCart(long id)
-    {
+    public void removeFromCart(long id) {
         cartMap.remove(id);
     }
 
     @Override
-    public Cart updateCart(Long bookId, int quantity)
-    {
+    public Cart updateCart(Long bookId, int quantity) {
         Cart cartItem = cartMap.get(bookId);
         cartItem.setQuantity(quantity);
         return cartItem;
     }
 
     @Override
-    public void clearAll()
-    {
+    public void clearAll() {
         cartMap.clear();
     }
 
     @Override
-    public Collection<Cart> getAlls()
-    {
+    public Collection<Cart> getAlls() {
         return cartMap.values();
     }
 }

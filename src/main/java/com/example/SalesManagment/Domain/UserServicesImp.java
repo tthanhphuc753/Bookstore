@@ -1,17 +1,17 @@
 package com.example.SalesManagment.Domain;
 
-import com.example.SalesManagment.Presentation.Controller.Auth.AuthenticationRequest;
-import com.example.SalesManagment.Presentation.Controller.Auth.AuthenticationResponse;
-import com.example.SalesManagment.Presentation.Controller.Auth.RegistrationRequest;
-import com.example.SalesManagment.Persistence.DAO.BookRepository;
-import com.example.SalesManagment.Persistence.DAO.UserRepository;
-import com.example.SalesManagment.Persistence.DAO.VerificationTokenRepository;
 import com.example.SalesManagment.Domain.Exception.Exception;
 import com.example.SalesManagment.Domain.Model.Book.Book;
 import com.example.SalesManagment.Domain.Model.User.User;
+import com.example.SalesManagment.Domain.Model.User.UserAuthDetails;
 import com.example.SalesManagment.Domain.Model.token.VerificationToken;
 import com.example.SalesManagment.Domain.Security.JWTAuth.JwtService;
-import com.example.SalesManagment.Domain.Model.User.UserAuthDetails;
+import com.example.SalesManagment.Persistence.DAO.BookRepository;
+import com.example.SalesManagment.Persistence.DAO.UserRepository;
+import com.example.SalesManagment.Persistence.DAO.VerificationTokenRepository;
+import com.example.SalesManagment.Presentation.Controller.Auth.AuthenticationRequest;
+import com.example.SalesManagment.Presentation.Controller.Auth.AuthenticationResponse;
+import com.example.SalesManagment.Presentation.Controller.Auth.RegistrationRequest;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

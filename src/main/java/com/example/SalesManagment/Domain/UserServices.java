@@ -1,9 +1,9 @@
 package com.example.SalesManagment.Domain;
 
+import com.example.SalesManagment.Domain.Model.User.User;
 import com.example.SalesManagment.Presentation.Controller.Auth.AuthenticationRequest;
 import com.example.SalesManagment.Presentation.Controller.Auth.AuthenticationResponse;
 import com.example.SalesManagment.Presentation.Controller.Auth.RegistrationRequest;
-import com.example.SalesManagment.Domain.Model.User.User;
 import org.springframework.ui.Model;
 
 import java.util.Optional;
