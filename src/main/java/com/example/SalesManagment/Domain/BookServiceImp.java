@@ -20,10 +20,6 @@ public class BookServiceImp implements BookService {
         bookRepository.save(book);
     }
 
-    @Override
-    public List<Book> getAllProduct() {
-        return bookRepository.findAll();
-    }
 
     @Override
     public Optional<Book> findByName(String name) {
@@ -39,8 +35,8 @@ public class BookServiceImp implements BookService {
     public void addCategories(long bookID, long categoriesID) {
 
     }
-//    public String getUser(Model model) {
-//        model.addAttribute("book",bookRepository.findAll());
-//        return "user";
-//    }
+    public String getAllBook(Model model) {
+        model.addAttribute("book",bookRepository.findAll());
+        return "booklist";
+    }
 }
