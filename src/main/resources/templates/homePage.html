@@ -20,7 +20,7 @@
           }
 
         *{
-            box-sizing: inherit;++
+            box-sizing: inherit;
         }
 
         .html{
@@ -125,6 +125,7 @@
             background-color: #f4f4f4;
             margin-left: 20px;
             margin-top: 10px;
+            border-radius: 8px;
         }
 
         .category-list ul{
@@ -231,6 +232,7 @@
             height: auto;
             text-align: fixed;
             border: none;
+            width: 90%;
         }
 
         .modal-content h2{
@@ -256,6 +258,7 @@
         #cartItems {
             list-style: none;
             padding: 0;
+            position: relative;
         }
 
         #cartItems li {
@@ -282,35 +285,43 @@
             border-radius: 10px;
             cursor: pointer;
             transition: background-color 0.3s;
+            margin-left: 5px;
         }
 
         #cartItems li button:hover {
             background-color: #cc0000;
         }
 
-        button.delete-button {
-            background-color: #ff5555;
-            color: #fff;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin-left: 10px;
-        }
-
         button.delete-button:hover {
             background-color: #cc0000;
         }
 
-        .footer {
-            background-color: #4b81d0;
+        .total-amount {
+            position: absolute;
+            top: -70px;
+            right: 0;
+            margin: 10px;
+            font-weight: bold;
+        }
+
+        footer {
+            background-color: #0bb7c4;
             color: #fff;
             text-align: center;
-            padding: 1em;
+            padding: 15px;
             position: fixed;
-            width: 100%;
             bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        footer p{
+            margin-top: 0px;
+            margin-bottom: auto;
+            font-family: 'Poppins', sans-serif;
+        }
+        body{
+            margin-bottom: 60px;
         }
     </style>
 </head>
@@ -352,56 +363,13 @@
         </ul>
     </div>
 
-    <div class="book-container" id="product-list">
-
-<!--            <div class="book">-->
-<!--                <img src="../static/img/Book1.jfif" alt="Book 1">-->
-<!--                <h2>Book Title 1</h2>-->
-<!--                <p>Author: Author Name</p>-->
-<!--                <p>Price: $19.99</p>-->
-<!--                <button onclick="addToCart(1)">Add to Cart</button>-->
-<!--            </div>-->
-
-<!--            <div class="book">-->
-<!--                <img src="book2.jpg" alt="Book 2">-->
-<!--                <h2>Book Title 2</h2>-->
-<!--                <p>Author: Author Name</p>-->
-<!--                <p>Price: $24.99</p>-->
-<!--                <button onclick="addToCart(2)">Add to Cart</button>-->
-<!--            </div>-->
-
-<!--            <div class="book">-->
-<!--                <img src="book2.jpg" alt="Book 2">-->
-<!--                <h2>Book Title 2</h2>-->
-<!--                <p>Author: Author Name</p>-->
-<!--                <p>Price: $24.99</p>-->
-<!--                <button>Add to Cart</button>-->
-<!--            </div>-->
-
-<!--            <div class="book">-->
-<!--                <img src="book2.jpg" alt="Book 2">-->
-<!--                <h2>Book Title 2</h2>-->
-<!--                <p>Author: Author Name</p>-->
-<!--                <p>Price: $24.99</p>-->
-<!--                <button>Add to Cart</button>-->
-<!--            </div>-->
-
-<!--            <div class="book">-->
-<!--                <img src="book2.jpg" alt="Book 2">-->
-<!--                <h2>Book Title 2</h2>-->
-<!--                <p>Author: Author Name</p>-->
-<!--                <p>Price: $24.99</p>-->
-<!--                <button>Add to Cart</button>-->
-<!--            </div>-->
-
-    </div>
+    <div class="book-container" id="product-list"></div>
 
     <!-- Thêm div này cho nội dung giỏ hàng -->
     <div id="cartModal" class="modal">
         <div class="modal-content">
             <h2>Giỏ hàng của bạn</h2>
             <ul id="cartItems"></ul>
-            <span id="totalAmount"></span>
         </div>
         <span class="close" onclick="closeCartModal()">&times;</span>
 
@@ -420,6 +388,11 @@
           { id: 3, title: 'Book Title 3', price: 14.99, category: 'Tiểu Thuyết' },
           { id: 4, title: 'Book Title 4', price: 20.99, category: 'Sách Lập Trình' },
           { id: 5, title: 'Book Title 5', price: 12.99, category: 'Sách Tiếng Anh' },
+          { id: 6, title: 'Book Title 6', price: 9.99, category: 'Sách Tiếng Anh' },
+          { id: 7, title: 'Book Title 7', price: 10.99, category: 'Tiểu Thuyết' },
+          { id: 8, title: 'Book Title 8', price: 11.99, category: 'Sách Huyền Bí' },
+          { id: 9, title: 'Book Title 9', price: 21.99, category: 'Sách Khoa Học' },
+          { id: 10, title: 'Book Title 10', price: 13.99, category: 'Sách Lập Trình' },
         ];
 
         // Giỏ hàng để lưu trữ các mục đã chọn
@@ -436,6 +409,7 @@
 
         function updateCartItemQuantity(index, newQuantity) {
             const item = cart[index];
+            newQuantity = Math.max(1, Math.min(newQuantity, 20));
             item.quantity = newQuantity;
             displayCartItems();
             updateCartItemCount();
@@ -443,19 +417,19 @@
 
         // Hàm để mở modal giỏ hàng
         function openCartModal() {
-        console.log("Open cart modal");
-          const modal = document.getElementById('cartModal');
-          modal.style.display = 'block';
-          displayCartItems();
-          updateCartItemCount();
+            console.log("Open cart modal");
+            const modal = document.getElementById('cartModal');
+            modal.style.display = 'block';
+            displayCartItems();
+            updateCartItemCount();
         }
 
         // Hàm để đóng modal giỏ hàng
         function closeCartModal() {
-        console.log("Close cart modal");
-          const modal = document.getElementById('cartModal');
-          modal.style.display = 'none';
-          updateCartItemCount();
+            console.log("Close cart modal");
+            const modal = document.getElementById('cartModal');
+            modal.style.display = 'none';
+            updateCartItemCount();
         }
 
         // Hàm để thêm một cuốn sách vào giỏ hàng
@@ -466,13 +440,16 @@
                 const existingItem = cart.find(item => item.book.id === book.id);
 
                 if (existingItem) {
-                    // Nếu sách đã tồn tại, tăng số lượng
-                    existingItem.quantity += 1;
+                    // Nếu sách đã tồn tại, kiểm tra số lượng
+                    if (existingItem.quantity < 20) {
+                        existingItem.quantity += 1;
+                    } else {
+                        window.alert('Số lượng tối đa là 20 cho mỗi sản phẩm!');
+                    }
                 } else {
                     // Nếu sách chưa tồn tại, thêm vào giỏ hàng với số lượng là 1
                     cart.push({ book, quantity: 1 });
                 }
-
                 displayCartItems();
                 updateCartItemCount();
             } else {
@@ -483,13 +460,8 @@
         function removeCartItem(bookId) {
             const bookIndex = cart.findIndex(item => item.book.id === bookId);
             if (bookIndex !== -1) {
-                const item = cart[bookIndex];
-                // Giảm số lượng sách nếu số lượng > 1, ngược lại xóa khỏi giỏ hàng
-                if (item.quantity > 1) {
-                    item.quantity -= 1;
-                } else {
-                    cart.splice(bookIndex, 1);
-                }
+                // Xóa ngay lập tức không quan tâm đến số lượng
+                cart.splice(bookIndex, 1);
                 displayCartItems();
                 updateCartItemCount();
             }
@@ -523,31 +495,61 @@
             console.log('Displaying cart items:', cart);
             const cartItemsElement = document.getElementById('cartItems');
             cartItemsElement.innerHTML = '';
+
+            let totalAmount = 0; // Tổng số tiền trong giỏ hàng
+
             cart.forEach((item, index) => {
                 const li = document.createElement('li');
 
                 const bookInfo = document.createElement('span');
-                bookInfo.textContent = `${item.book.title} - $${item.book.price.toFixed(2)} `;
+                bookInfo.textContent = `${item.book.title} - $${(item.book.price * item.quantity).toFixed(2)} `;
                 li.appendChild(bookInfo);
+
+                // Thêm nút trừ
+                const decrementButton = document.createElement('button');
+                decrementButton.innerHTML = '<i class="fa-solid fa-minus"></i>';
+                decrementButton.onclick = () => updateCartItemQuantity(index, item.quantity - 1);
+                li.appendChild(decrementButton);
 
                 const quantityInput = document.createElement('input');
                 quantityInput.type = 'number';
                 quantityInput.value = item.quantity;
                 quantityInput.min = 1;
-                quantityInput.addEventListener('input', (event) => {
-                    updateCartItemQuantity(index, parseInt(event.target.value, 10));
+                quantityInput.max = 20;
+                // Sử dụng sự kiện change để cập nhật giá trị khi có thay đổi
+                quantityInput.addEventListener('change', (event) => {
+                    const newValue = parseInt(event.target.value, 10);
+                    // Nếu giá trị là rỗng hoặc null, đặt giá trị mặc định là 1
+                    updateCartItemQuantity(index, isNaN(newValue) ? 1 : newValue);
                 });
                 li.appendChild(quantityInput);
 
+                // Thêm nút cộng
+                const incrementButton = document.createElement('button');
+                incrementButton.innerHTML = '<i class="fa-solid fa-plus"></i>';
+                incrementButton.onclick = () => updateCartItemQuantity(index, item.quantity + 1);
+                li.appendChild(incrementButton);
+
                 const deleteButton = document.createElement('button');
-                deleteButton.textContent = 'Xóa';
+                deleteButton.innerHTML = '<i class="fa-solid fa-trash"></i>';
                 deleteButton.className = 'delete-button';
                 deleteButton.onclick = () => removeCartItem(item.book.id);
                 li.appendChild(deleteButton);
 
                 cartItemsElement.appendChild(li);
+
+                // Cộng thêm vào tổng số tiền
+                totalAmount += item.book.price * item.quantity;
             });
+
+            // Hiển thị tổng số tiền
+            const totalAmountElement = document.createElement('p');
+            totalAmountElement.textContent = `Tổng số tiền: $${totalAmount.toFixed(2)}`;
+            totalAmountElement.className = 'total-amount'; // Thêm class để tùy chỉnh CSS
+            cartItemsElement.insertBefore(totalAmountElement, cartItemsElement.firstChild);
         }
+
+
 
     // Hàm để hiển thị danh sách danh mục sách
         function displayCategoryList() {
