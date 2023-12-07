@@ -43,10 +43,15 @@ public class Book {
         this.name = name;
     }
 
-    public Book() {
-
+    public Book(double price, String name, String author, Set<Categories> categoriesSet) {
+        this.price = price;
+        this.name = name;
+        this.author = author;
+        this.categoriesSet = categoriesSet;
     }
 
+    public Book() {
+    }
 
     public void setUserList(Set<User> userList) {
         this.userList = userList;

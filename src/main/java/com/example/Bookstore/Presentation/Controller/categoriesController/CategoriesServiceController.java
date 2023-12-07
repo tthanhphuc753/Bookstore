@@ -3,8 +3,8 @@ package com.example.Bookstore.Presentation.Controller.categoriesController;
 import com.example.Bookstore.Domain.CategoriesService;
 import com.example.Bookstore.Domain.Model.Book.Categories;
 import lombok.RequiredArgsConstructor;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 @RestController
 @RequestMapping("/category")
@@ -14,18 +14,16 @@ public class CategoriesServiceController {
     private final CategoriesService categoriesService;
 
     @GetMapping("list")
-    public List<Categories> getAllCategory() {
-        return categoriesService.getAllCategory();
-    }
-
-    @GetMapping("count")
-    public Long countProduct() {
-        return categoriesService.countCategory();
+    public String getAllCategory(Model model) {
+        model.addAttribute("categories", categoriesService.getAllCategory());
+        return "category";
     }
 
     @PostMapping("add")
-    public void addCategory(@RequestBody Categories categories) {
+    public String addBook(@ModelAttribute("categories") Categories categories) {
         categoriesService.addCategory(categories);
+        return "redirect:/category/list";
     }
+
 
 }

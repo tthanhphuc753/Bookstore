@@ -34,6 +34,5 @@ public class Bookstore {
                     , "USER", null, true, null);
             userRepository.save(Sor);
         };
-
     }
 }
