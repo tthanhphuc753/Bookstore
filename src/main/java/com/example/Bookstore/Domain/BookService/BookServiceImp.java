@@ -1,8 +1,9 @@
-package com.example.Bookstore.Domain;
+package com.example.Bookstore.Domain.BookService;
 
 import com.example.Bookstore.Domain.Model.Book.Book;
 import com.example.Bookstore.Persistence.DAO.BookRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,6 +34,17 @@ public class BookServiceImp implements BookService {
     @Override
     public Book addBook(Book book) {
         return bookRepository.save(book);
+    }
+
+    public Book updateBook(Long id, Book newBook) {
+        Optional<Book> bookOptional = bookRepository.findById(id);
+        if (bookOptional.isPresent()) {
+            Book existingBook = bookOptional.get();
+            BeanUtils.copyProperties(newBook, existingBook, "id");
+            return bookRepository.save(existingBook);
+        } else {
+            throw new RuntimeException("Book not found with id: " + id);
+        }
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.example.Bookstore.Presentation.Controller.ShoppingCartController;
 
-import com.example.Bookstore.Domain.CartService;
+import com.example.Bookstore.Domain.CartService.CartService;
 import com.example.Bookstore.Domain.Model.Book.Book;
 import com.example.Bookstore.Domain.Model.Cart.Cart;
 import com.example.Bookstore.Persistence.DAO.BookRepository;

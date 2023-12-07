@@ -5,7 +5,7 @@ import com.example.Bookstore.Domain.Model.token.VerificationToken;
 import com.example.Bookstore.Domain.Security.AuthenService;
 import com.example.Bookstore.Domain.Security.AuthenticationRequest;
 import com.example.Bookstore.Domain.Security.RegistrationRequest;
-import com.example.Bookstore.Domain.UserServices;
+import com.example.Bookstore.Domain.UserService.UserServices;
 import com.example.Bookstore.Domain.event.RegistrationCompleteEvent;
 import com.example.Bookstore.Persistence.DAO.VerificationTokenRepository;
 import lombok.AllArgsConstructor;
