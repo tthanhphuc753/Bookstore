@@ -1,23 +1,18 @@
 package com.example.Bookstore.Domain;
 
 import com.example.Bookstore.Domain.Model.User.User;
-import com.example.Bookstore.Presentation.Controller.Auth.AuthenticationRequest;
-import com.example.Bookstore.Presentation.Controller.Auth.AuthenticationResponse;
-import com.example.Bookstore.Presentation.Controller.Auth.RegistrationRequest;
+import com.example.Bookstore.Domain.Security.RegistrationRequest;
 import org.springframework.ui.Model;
 
 import java.util.Optional;
 
 public interface UserServices {
 
-    String getUser(Model model);
+    String getAllUser(Model model);
 
     User registerUser(RegistrationRequest request);
 
-    AuthenticationResponse authenticate(AuthenticationRequest request);
-
     Optional<User> findByEmail(String email);
-
 
     long countUser();
 
@@ -31,7 +26,7 @@ public interface UserServices {
 
     void saveUserVerificationToken(User theUser, String verificationToken);
 
-    String validateToken(String theToken);
+  //  String validateToken(String theToken);
 
 
 }
