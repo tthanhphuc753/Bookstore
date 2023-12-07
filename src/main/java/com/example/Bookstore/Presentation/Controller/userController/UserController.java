@@ -23,7 +23,7 @@ public class UserController {
 
     @GetMapping("list")
     public String getUser(Model model) {
-        return userServices.getUser(model);
+        return userServices.getAllUser(model);
     }
 
     @GetMapping("count")
