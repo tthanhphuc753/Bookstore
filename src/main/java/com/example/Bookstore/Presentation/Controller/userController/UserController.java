@@ -1,7 +1,7 @@
 package com.example.Bookstore.Presentation.Controller.userController;
 
 import com.example.Bookstore.Domain.Model.User.User;
-import com.example.Bookstore.Domain.UserServices;
+import com.example.Bookstore.Domain.UserService.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

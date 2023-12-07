@@ -1,6 +1,6 @@
 package com.example.Bookstore.Presentation.Controller.BookController;
 
-import com.example.Bookstore.Domain.BookService;
+import com.example.Bookstore.Domain.BookService.BookService;
 import com.example.Bookstore.Domain.Model.Book.Book;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

@@ -1,4 +1,4 @@
-package com.example.Bookstore.Domain;
+package com.example.Bookstore.Domain.CartService;
 
 import com.example.Bookstore.Domain.Model.Cart.Cart;
 import com.example.Bookstore.Persistence.DAO.BookRepository;

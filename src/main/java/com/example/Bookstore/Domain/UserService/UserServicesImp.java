@@ -1,4 +1,4 @@
-package com.example.Bookstore.Domain;
+package com.example.Bookstore.Domain.UserService;
 
 import com.example.Bookstore.Domain.Exception.Exception;
 import com.example.Bookstore.Domain.Model.Book.Book;
