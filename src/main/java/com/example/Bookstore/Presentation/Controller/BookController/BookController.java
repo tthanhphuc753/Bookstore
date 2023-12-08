@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/book")
 @RequiredArgsConstructor
@@ -33,16 +35,30 @@ public class BookController {
         return "redirect:/book/homepage";
     }
 
-    @DeleteMapping("remove")
-    public String removeBook(@ModelAttribute("bookId") Long id) {
+    @PostMapping("/books/delete/{id}")
+    public String removeBook(@PathVariable Long id) {
+
         bookService.removeBook(id);
-        return "redirect:/book/homepage";
+        return "redirect:list";
     }
 
     @GetMapping("/homepage")
     public String showHomePage(Model model) {
         model.addAttribute("books", bookService.getAllBook());
         return "homePage";
+    }
+
+    @GetMapping("/update-form/{id}")
+    public String showUpdateForm(@PathVariable Long id, Model model) {
+        Optional<Book> bookOptional = bookService.findById(id);
+        bookOptional.ifPresent(book -> model.addAttribute("book", book));
+        return "book/updatebook";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateBook(@PathVariable Long id, @ModelAttribute("book") Book newBook) {
+        bookService.updateBook(id, newBook);
+        return "redirect:/book/list";
     }
 
 

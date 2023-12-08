@@ -21,6 +21,11 @@ public class BookServiceImp implements BookService {
         return bookRepository.findByName(name);
     }
 
+    @Override
+    public Optional<Book> findById(Long id) {
+        return bookRepository.findById(id);
+    }
+
 
     @Override
     public void addCategories(long bookID, long categoriesID) {

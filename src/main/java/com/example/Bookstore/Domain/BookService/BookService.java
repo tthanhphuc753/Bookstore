@@ -10,6 +10,8 @@ public interface BookService {
 
     Optional<Book> findByName(String name);
 
+    Optional<Book> findById(Long id);
+
     Book updateBook(Long id, Book newBook);
 
     void addCategories(long bookID, long categoriesID);
@@ -19,5 +21,6 @@ public interface BookService {
     Book addBook(Book book);
 
     void removeBook(Long id);
+
 
 }
