@@ -4,11 +4,12 @@ import com.example.Bookstore.Domain.Model.User.User;
 import com.example.Bookstore.Domain.Security.RegistrationRequest;
 import org.springframework.ui.Model;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserServices {
 
-    String getAllUser(Model model);
+    List<User> getAllUser();
 
     User registerUser(RegistrationRequest request);
 

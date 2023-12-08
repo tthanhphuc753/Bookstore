@@ -1,6 +1,6 @@
 package com.example.Bookstore.Presentation.Controller.categoriesController;
 
-import com.example.Bookstore.Domain.CategoriesService;
+import com.example.Bookstore.Domain.CategoriesService.CategoriesService;
 import com.example.Bookstore.Domain.Model.Book.Categories;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ui.Model;

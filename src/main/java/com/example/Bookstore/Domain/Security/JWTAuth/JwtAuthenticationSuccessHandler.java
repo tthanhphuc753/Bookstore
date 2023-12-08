@@ -20,6 +20,7 @@ public class JwtAuthenticationSuccessHandler extends SavedRequestAwareAuthentica
     private final JwtService jwtService;
     private final UserRepository userrepos;
 
+
     @Override
     public void onAuthenticationSuccess(
             HttpServletRequest request, HttpServletResponse response,
@@ -38,7 +39,12 @@ public class JwtAuthenticationSuccessHandler extends SavedRequestAwareAuthentica
             cookie.setPath("/");
 
             response.addCookie(cookie);
-            getRedirectStrategy().sendRedirect(request, response, "/book/homepage");
+            if (userAuthDetails.getAuthorities().stream().anyMatch(role -> role.getAuthority().equals("USER"))) {
+                getRedirectStrategy().sendRedirect(request, response, "/book/homepage");
+            } else {
+                getRedirectStrategy().sendRedirect(request, response, "/book/admin");
+            }
+
 
             super.onAuthenticationSuccess(request, response, authentication);
         } else {

@@ -48,6 +48,12 @@ public class BookController {
         return "homePage";
     }
 
+    @GetMapping("/admin")
+    public String showAdminPage(Model model) {
+        model.addAttribute("books", bookService.getAllBook());
+        return "admin";
+    }
+
     @GetMapping("/update-form/{id}")
     public String showUpdateForm(@PathVariable Long id, Model model) {
         Optional<Book> bookOptional = bookService.findById(id);

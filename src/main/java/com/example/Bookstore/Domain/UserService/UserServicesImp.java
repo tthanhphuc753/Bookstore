@@ -1,7 +1,6 @@
 package com.example.Bookstore.Domain.UserService;
 
 import com.example.Bookstore.Domain.Exception.Exception;
-import com.example.Bookstore.Domain.Model.Book.Book;
 import com.example.Bookstore.Domain.Model.User.User;
 import com.example.Bookstore.Domain.Model.User.UserAuthDetails;
 import com.example.Bookstore.Domain.Model.token.VerificationToken;
@@ -18,8 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 
 @Service
@@ -35,9 +34,8 @@ public class UserServicesImp implements UserServices {
     private final Logger logger = LoggerFactory.getLogger(UserServicesImp.class);
 
     @Override
-    public String getAllUser(Model model) {
-        model.addAttribute("user", userrepos.findAll());
-        return "user";
+    public List<User> getAllUser() {
+       return  userrepos.findAll();
     }
 
     @Override
@@ -86,6 +84,7 @@ public class UserServicesImp implements UserServices {
         return userrepos.existsByEmail(email);
     }
 
+    @Override
     public void deleteUser(long userID) {
         boolean isExist = userrepos.existsById(userID);
         if (isExist) {

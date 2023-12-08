@@ -1,4 +1,4 @@
-package com.example.Bookstore.Domain;
+package com.example.Bookstore.Domain.CategoriesService;
 
 import com.example.Bookstore.Domain.Model.Book.Categories;
 import com.example.Bookstore.Persistence.DAO.CategoriesRepository;

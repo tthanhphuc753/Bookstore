@@ -3,7 +3,6 @@ package com.example.Bookstore.Presentation.Controller.userController;
 import com.example.Bookstore.Domain.Model.User.User;
 import com.example.Bookstore.Domain.UserService.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +22,8 @@ public class UserController {
 
     @GetMapping("list")
     public String getAllUser(Model model) {
-        return userServices.getAllUser(model);
+        model.addAttribute("user", userServices.getAllUser());
+        return "user";
     }
 
     @GetMapping("findbyid")
@@ -35,8 +35,6 @@ public class UserController {
     public void deleteUser(@PathVariable long userID) {
         userServices.deleteUser(userID);
     }
-
-
 
 
 }
