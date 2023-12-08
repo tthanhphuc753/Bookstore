@@ -42,7 +42,7 @@ public class JwtAuthenticationSuccessHandler extends SavedRequestAwareAuthentica
             if (userAuthDetails.getAuthorities().stream().anyMatch(role -> role.getAuthority().equals("USER"))) {
                 getRedirectStrategy().sendRedirect(request, response, "/book/homepage");
             } else {
-                getRedirectStrategy().sendRedirect(request, response, "/book/admin");
+                getRedirectStrategy().sendRedirect(request, response, "/admin/homepage");
             }
 
 

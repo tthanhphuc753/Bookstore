@@ -22,49 +22,12 @@ public class BookController {
         return "booklist";
     }
 
-    @GetMapping("/add-form")
-    public String showAddForm(Model model) {
-        model.addAttribute("book", new Book());
-        return "addbook";
-    }
 
-
-    @PostMapping("add")
-    public String addBook(@ModelAttribute("book") Book book) {
-        bookService.addBook(book);
-        return "redirect:/book/homepage";
-    }
-
-    @PostMapping("/books/delete/{id}")
-    public String removeBook(@PathVariable Long id) {
-
-        bookService.removeBook(id);
-        return "redirect:list";
-    }
 
     @GetMapping("/homepage")
     public String showHomePage(Model model) {
         model.addAttribute("books", bookService.getAllBook());
         return "homePage";
-    }
-
-    @GetMapping("/admin")
-    public String showAdminPage(Model model) {
-        model.addAttribute("books", bookService.getAllBook());
-        return "admin";
-    }
-
-    @GetMapping("/update-form/{id}")
-    public String showUpdateForm(@PathVariable Long id, Model model) {
-        Optional<Book> bookOptional = bookService.findById(id);
-        bookOptional.ifPresent(book -> model.addAttribute("book", book));
-        return "book/updatebook";
-    }
-
-    @PostMapping("/update/{id}")
-    public String updateBook(@PathVariable Long id, @ModelAttribute("book") Book newBook) {
-        bookService.updateBook(id, newBook);
-        return "redirect:/book/list";
     }
 
 
