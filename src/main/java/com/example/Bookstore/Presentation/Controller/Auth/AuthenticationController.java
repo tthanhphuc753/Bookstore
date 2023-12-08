@@ -2,7 +2,7 @@ package com.example.Bookstore.Presentation.Controller.Auth;
 
 import com.example.Bookstore.Domain.Model.User.User;
 import com.example.Bookstore.Domain.Model.token.VerificationToken;
-import com.example.Bookstore.Domain.Security.AuthenService;
+import com.example.Bookstore.Domain.AuthService.AuthenService;
 import com.example.Bookstore.Domain.Security.AuthenticationRequest;
 import com.example.Bookstore.Domain.Security.RegistrationRequest;
 import com.example.Bookstore.Domain.UserService.UserServices;

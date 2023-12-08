@@ -14,19 +14,14 @@ public interface UserServices {
 
     Optional<User> findByEmail(String email);
 
-    long countUser();
 
     User findUserByID(long id);
 
-    void addUser(User user);
 
     void deleteUser(long userID);
 
-    User addProduct(Long userID, Long productID);
 
     void saveUserVerificationToken(User theUser, String verificationToken);
-
-  //  String validateToken(String theToken);
 
 
 }

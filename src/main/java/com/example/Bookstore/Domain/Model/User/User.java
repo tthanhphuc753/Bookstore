@@ -24,9 +24,6 @@ public class User {
     private Long userID;
     private String firstName;
     private String lastName;
-    @Transient
-    private int age;
-    private LocalDate dateOfBirth;
     @Column(name = "email",
             unique = true)
     @NaturalId(mutable = true)
@@ -43,18 +40,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "productID")
     )
     private Set<Book> bookList = new HashSet<>();
-
-
     // Getters and Setters
-
-    public int getAge() {
-        if (dateOfBirth != null) {
-            return Period.between(dateOfBirth, LocalDate.now()).getYears();
-        } else {
-            return 0;
-        }
-    }
-
     public void setBookList(Set<Book> bookList) {
         this.bookList = bookList;
     }
@@ -64,9 +50,7 @@ public class User {
         return "User{" +
                 "id=" + userID +
                 ", name='" + firstName + '\'' +
-                ", age=" + age +
-                ", dateOfBirth=" + dateOfBirth +
-                ", email='" + email + '\'' +
+                " email='" + email + '\'' +
                 '}';
     }
 }

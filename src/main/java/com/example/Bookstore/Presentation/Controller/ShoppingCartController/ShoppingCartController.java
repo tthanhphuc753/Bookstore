@@ -6,11 +6,13 @@ import com.example.Bookstore.Domain.Model.Cart.Cart;
 import com.example.Bookstore.Persistence.DAO.BookRepository;
 import com.example.Bookstore.Persistence.DAO.CartRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 @RequestMapping("/shopping-cart")
 public class ShoppingCartController {
@@ -19,8 +21,8 @@ public class ShoppingCartController {
     private final CartRepository cartRepository;
     private final BookRepository bookRepository;
 
-    @GetMapping("add/{id}")
-    public String addToCart(@PathVariable("id") Long id)
+    @GetMapping("add")
+    public String addToCart(@ModelAttribute("bookID") Long id)
     {
         Book book = bookRepository.findById(id).get();
         if(book!=null)
@@ -37,9 +39,10 @@ public class ShoppingCartController {
             return "Fail";
     }
     @GetMapping("list")
-    public List<Cart> getAll()
+    public String getAll(Model model)
     {
-        return cartRepository.findAll();
+        model.addAttribute("cartitem",cartRepository.findAll());
+        return "";
     }
 
 }

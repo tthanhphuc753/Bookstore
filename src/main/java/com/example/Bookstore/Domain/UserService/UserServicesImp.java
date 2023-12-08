@@ -82,13 +82,6 @@ public class UserServicesImp implements UserServices {
         }
     }
 
-    public void addUser(User user) {
-        if (isEmailExists(user.getEmail())) {
-            throw new IllegalStateException("email taken");
-        }
-        userrepos.save(user);
-    }
-
     public boolean isEmailExists(String email) {
         return userrepos.existsByEmail(email);
     }
@@ -100,16 +93,6 @@ public class UserServicesImp implements UserServices {
         } else throw new IllegalStateException("User with ID: " + userID + " does not exist");
     }
 
-    @Override
-    public User addProduct(Long userID, Long productID) {
-        Set<Book> bookList = null;
-        User user = userrepos.findById(userID).get();
-        Book book = bookRepository.findById(productID).get();
-        bookList = user.getBookList();
-        bookList.add(book);
-        user.setBookList(bookList);
-        return userrepos.save(user);
-    }
 
     @Override
     public void saveUserVerificationToken(User theUser, String token) {

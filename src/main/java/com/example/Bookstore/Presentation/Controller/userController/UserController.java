@@ -22,24 +22,13 @@ public class UserController {
     }
 
     @GetMapping("list")
-    public String getUser(Model model) {
+    public String getAllUser(Model model) {
         return userServices.getAllUser(model);
     }
 
-    @GetMapping("count")
-    public long countUser() {
-        return userServices.countUser();
-    }
-
-    @GetMapping("findbyid/{id}")
-    public User findByID(@PathVariable long id) {
+    @GetMapping("findbyid")
+    public User findByID(@ModelAttribute("userID") Long id) {
         return userServices.findUserByID(id);
-    }
-
-    @PostMapping("add")
-    public ResponseEntity<String> addUser(@RequestBody User user) {
-        userServices.addUser(user);
-        return ResponseEntity.ok("Data saved");
     }
 
     @DeleteMapping(path = "{userID}")
@@ -47,10 +36,7 @@ public class UserController {
         userServices.deleteUser(userID);
     }
 
-    @PutMapping("/{userID}/product/{productID}")
-    public User addProductForUser(@PathVariable Long userID, @PathVariable Long productID) {
-        return userServices.addProduct(userID, productID);
-    }
+
 
 
 }
