@@ -33,13 +33,13 @@ public class BookServiceController {
     @PostMapping("add")
     public String addBook(@ModelAttribute("book") Book book) {
         bookService.addBook(book);
-        return "redirect:/book/homePage";
+        return "redirect:/book/homepage";
     }
 
     @PostMapping("remove")
     public String removeBook(@ModelAttribute("bookId") Long id) {
         bookService.removeBook(id);
-        return "redirect:/book/homePage";
+        return "redirect:/book/homepage";
     }
 
     @GetMapping("/homepage")
