@@ -17,7 +17,7 @@
             --black: #000000;
             --text-color: #333333;
             --border: 0.1rem solid rgba(0, 0, 0, 0.1);
-          }
+        }
 
         *{
             box-sizing: inherit;
@@ -232,7 +232,7 @@
             height: auto;
             text-align: fixed;
             border: none;
-            width: 90%;
+            width: 93%;
         }
 
         .modal-content h2{
@@ -273,7 +273,7 @@
         }
 
         #cartItems li input {
-            width: 40px;
+            width: 35px;
             margin: 0 10px;
         }
 
@@ -281,7 +281,7 @@
             background-color: #ff5555;
             color: #fff;
             border: none;
-            padding: 5px 10px;
+            padding: 5px 8px;
             border-radius: 10px;
             cursor: pointer;
             transition: background-color 0.3s;
@@ -302,6 +302,66 @@
             right: 0;
             margin: 10px;
             font-weight: bold;
+        }
+
+        #quantityLimitModal {
+            box-sizing: content-box;
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            z-index: 2;
+            padding: 20px;
+            border-radius: 8px;
+            width: 300px;
+            height: 150px;
+            text-align: center; /* Đặt chữ giữa theo chiều ngang */
+        }
+
+        #quantityLimitModal p {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #quantityLimitModal .modal-content1 {
+            padding: 10px;
+            background-color: none;
+            border-radius: 4px;
+        }
+
+        .closeNotice{
+            box-sizing: content-box;
+            position: absolute;
+            width: 70px;
+            height: 30px;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 16px;
+            line-height: 30px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border:none;
+            border-radius: 4px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Thêm hiệu ứng đẹp mắt cho modal */
+        #quantityLimitModal .modal-content1 {
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
         footer {
@@ -333,7 +393,7 @@
 
         <div class="search-form">
             <input type="search" id="search-input" placeholder="Search here..">
-            <button type="submit" class="fas fa-search"></button>
+            <button type="submit" onclick="searchBook()" class="fas fa-search"></button>
         </div>
 
         <div class="header_cart_icon" onclick="openCartModal()">
@@ -363,7 +423,9 @@
         </ul>
     </div>
 
-    <div class="book-container" id="product-list"></div>
+    <div class="book-container" id="product-list">
+
+    </div>
 
     <!-- Thêm div này cho nội dung giỏ hàng -->
     <div id="cartModal" class="modal">
@@ -372,10 +434,15 @@
             <ul id="cartItems"></ul>
         </div>
         <span class="close" onclick="closeCartModal()">&times;</span>
-
     </div>
 
 </section>
+    <div id="quantityLimitModal" class="modal">
+        <div class="modal-content1">
+            <p>Số lượng tối đa là 20 cho mỗi sản phẩm!</p>
+        </div>
+        <button class="closeNotice" onclick="closeQuantityLimitModal()">Đã hiểu</button>
+    </div>
 
 <footer>
     <p>&copy; 2023 Bookstore. All rights reserved.</p>
@@ -432,19 +499,28 @@
             updateCartItemCount();
         }
 
-        // Hàm để thêm một cuốn sách vào giỏ hàng
+        function openQuantityLimitModal() {
+            const modal = document.getElementById('quantityLimitModal');
+            modal.style.display = 'block';
+        }
+
+        function closeQuantityLimitModal() {
+            const modal = document.getElementById('quantityLimitModal');
+            modal.style.display = 'none';
+        }
+
+    // Hàm để thêm một cuốn sách vào giỏ hàng
         function addToCart(bookId) {
             const book = books.find(item => item.id === bookId);
             if (book) {
                 // Kiểm tra xem sách đã tồn tại trong giỏ hàng chưa
                 const existingItem = cart.find(item => item.book.id === book.id);
-
                 if (existingItem) {
                     // Nếu sách đã tồn tại, kiểm tra số lượng
                     if (existingItem.quantity < 20) {
                         existingItem.quantity += 1;
                     } else {
-                        window.alert('Số lượng tối đa là 20 cho mỗi sản phẩm!');
+                        openQuantityLimitModal();
                     }
                 } else {
                     // Nếu sách chưa tồn tại, thêm vào giỏ hàng với số lượng là 1
@@ -545,7 +621,7 @@
             // Hiển thị tổng số tiền
             const totalAmountElement = document.createElement('p');
             totalAmountElement.textContent = `Tổng số tiền: $${totalAmount.toFixed(2)}`;
-            totalAmountElement.className = 'total-amount'; // Thêm class để tùy chỉnh CSS
+            totalAmountElement.className = 'total-amount';
             cartItemsElement.insertBefore(totalAmountElement, cartItemsElement.firstChild);
         }
 
