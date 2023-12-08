@@ -24,9 +24,8 @@ public class BookServiceController {
     }
 
     @GetMapping("/add-form")
-    public String showAddForm(Model model)
-    {
-        model.addAttribute("book",new Book());
+    public String showAddForm(Model model) {
+        model.addAttribute("book", new Book());
         return "addbook";
     }
 
@@ -34,13 +33,19 @@ public class BookServiceController {
     @PostMapping("add")
     public String addBook(@ModelAttribute("book") Book book) {
         bookService.addBook(book);
-        return "redirect:/book/list";
+        return "redirect:/book/homePage";
     }
 
     @PostMapping("remove")
     public String removeBook(@ModelAttribute("bookId") Long id) {
         bookService.removeBook(id);
-        return "redirect:/book/list";
+        return "redirect:/book/homePage";
+    }
+
+    @GetMapping("/homepage")
+    public String showHomePage(Model model) {
+        model.addAttribute("books", bookService.getAllBook());
+        return "homePage";
     }
 
 

@@ -75,11 +75,6 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenService.authenticate(request));
     }
 
-    @GetMapping("/homepage")
-    public String showHomePage() {
-        return "homePage";
-    }
-
     @PostMapping("/logout")
     public String logout(HttpServletResponse response) {
 
