@@ -1,6 +1,6 @@
 package com.example.Bookstore.Domain.CartService;
 
-import com.example.Bookstore.Domain.Model.Cart.Cart;
+import com.example.Bookstore.Domain.Model.Cart.CartItem;
 import com.example.Bookstore.Persistence.DAO.BookRepository;
 import com.example.Bookstore.Persistence.DAO.CartRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,12 +17,12 @@ public class CartServiceImp implements CartService {
     private final BookRepository bookRepository;
     private final CartRepository cartRepository;
 
-    private final Map<Long, Cart> cartMap = new HashMap<>();
+    private final Map<Long, CartItem> cartMap = new HashMap<>();
 
 
     @Override
-    public void addToCart(Cart item) {
-        Cart cartItem = cartMap.get(item.getBookID());
+    public void addToCart(CartItem item) {
+        CartItem cartItem = cartMap.get(item.getBookID());
         if (cartItem == null) {
             cartMap.put(item.getBookID(), item);
         } else {
@@ -38,8 +38,8 @@ public class CartServiceImp implements CartService {
     }
 
     @Override
-    public Cart updateCart(Long bookId, int quantity) {
-        Cart cartItem = cartMap.get(bookId);
+    public CartItem updateCart(Long bookId, int quantity) {
+        CartItem cartItem = cartMap.get(bookId);
         cartItem.setQuantity(quantity);
         return cartItem;
     }
@@ -50,7 +50,7 @@ public class CartServiceImp implements CartService {
     }
 
     @Override
-    public Collection<Cart> getAlls() {
+    public Collection<CartItem> getAlls() {
         return cartMap.values();
     }
 }

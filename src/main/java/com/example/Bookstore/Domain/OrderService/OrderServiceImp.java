@@ -1,11 +1,10 @@
 package com.example.Bookstore.Domain.OrderService;
 
-import com.example.Bookstore.Domain.Model.Cart.Cart;
+import com.example.Bookstore.Domain.Model.Cart.CartItem;
 import com.example.Bookstore.Domain.Model.Order.Order;
 import com.example.Bookstore.Persistence.DAO.CartRepository;
 import com.example.Bookstore.Persistence.DAO.OrderdetailRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +16,7 @@ public class OrderServiceImp implements OrderService{
     private final OrderdetailRepository orderdetailRepository;
     @Override
     public Order addOrder(Long cartId) {
-        Cart cartItem = cartRepository.findById(cartId).get();
+        CartItem cartItem = cartRepository.findById(cartId).get();
 
             Order newOrder = new Order();
             newOrder.setQuantity(cartItem.getQuantity());

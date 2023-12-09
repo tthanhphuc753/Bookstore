@@ -1,19 +1,19 @@
 package com.example.Bookstore.Domain.CartService;
 
-import com.example.Bookstore.Domain.Model.Cart.Cart;
+import com.example.Bookstore.Domain.Model.Cart.CartItem;
 
 import java.util.Collection;
 
 public interface CartService {
 
 
-    void addToCart(Cart item);
+    void addToCart(CartItem item);
 
     void removeFromCart(long id);
 
-    Cart updateCart(Long bookId, int quantity);
+    CartItem updateCart(Long bookId, int quantity);
 
     void clearAll();
 
-    Collection<Cart> getAlls();
+    Collection<CartItem> getAlls();
 }
