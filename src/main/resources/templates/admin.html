@@ -1,10 +1,365 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>ADMIN</title>
-</head>
-<body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
+    <style>
+        :root {
+            --blue: #4e73df;
+            --indigo: #6610f2;
+            --purple: #6f42c1;
+            --pink: #e83e8c;
+            --red: #e74a3b;
+            --orange: #fd7e14;
+            --yellow: #f6c23e;
+            --green: #1cc88a;
+            --teal: #20c9a6;
+            --cyan: #36b9cc;
+            --white: #fff;
+            --gray: #a1a2a6;
+            --gray-dark: #5a5c69;
+            --primary: #4e73df;
+            --secondary: #858796;
+            --success: #1cc88a;
+            --info: #36b9cc;
+            --warning: #f6c23e;
+            --danger: #e74a3b;
+            --light: #f8f9fc;
+            --dark: #5a5c69;
+            --breakpoint-xs: 0;
+            --breakpoint-sm: 576px;
+            --breakpoint-md: 768px;
+            --breakpoint-lg: 992px;
+            --breakpoint-xl: 1200px;
+            --font-family-sans-serif: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        }
 
+        html {
+            position: relative;
+            min-height: 100%;
+        }
+
+        html {
+            font-family: sans-serif;
+            line-height: 1.15;
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
+            display: block;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #858796;
+            text-align: left;
+            background-color: #fff;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+        }
+        hr {
+            color: inherit;
+            border: 0;
+            border-top: 1px solid;
+            opacity: 25;
+        }
+
+        p {
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        #wrapper {
+            display: flex;
+        }
+        .conten-wrapper {
+            width: 100rem;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .modal-close {
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .navbar-var {
+            display: flex;
+        }
+        .navbar-expand {
+            flex-direction: row-reverse;
+        }
+        .sidebar {
+            background-color: var(--primary);
+            color: var(--white);
+            width: 25rem;
+            padding: 0 30px;
+
+        }
+        .sidebar-brand {
+            display: flex;
+            color: var(--white);
+            justify-content: center;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 30px;
+            font-size: x-large;
+            text-decoration: none;
+        }
+        .sidebar-brand-text {
+        }
+        .sidebar-divider {
+            margin: 0;
+        }
+        .sidebar-item {
+            padding: 30px 0;
+            display: flex;
+            flex-direction: column;
+        }
+        .item-heading {
+            color: #94a8e7;
+            font-weight: 800;
+            margin-bottom: 10px;
+            cursor: default;
+        }
+        .item-link {
+            color: var(--white);
+            text-decoration: none;
+            cursor: pointer;
+            padding: 1px;
+        }
+        .user, .user-item {
+            margin-left: 10px;
+            text-decoration: none;
+            color: var(--gray-dark);
+
+        }
+        .user {
+            cursor: default;
+        }
+
+        .user-item {
+            cursor: pointer;
+        }
+
+
+        footer {
+            display: flex;
+            justify-content: center;
+        }
+        .noidung {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .noidung-item {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .book {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+        }
+        .book-detail {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .book-detail-v {
+            padding-right: 5px;
+        }
+        .book-detail-c {
+            display: flex;
+            justify-content: flex-end;
+        }
+        .book-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+        .add{
+            display: flex;
+            justify-content: center;
+            flex: 1;
+            font-size: large;
+            padding: 10px 0;
+        }
+
+
+
+    </style>
+
+</head>
+<body id="page-top">
+<div id="wrapper">
+    <div class="navbar-nav sidebar  " >
+
+        <a class="sidebar-brand " href="/admin/homepage">
+            <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fa-solid fa-book"></i>
+            </div>
+            <div href="#" class="sidebar-brand-text mx-3">Bookstore</div>
+        </a>
+
+        <hr class="sidebar-divider">
+
+        <div class="block sidebar-item">
+            <span class="item-heading">Quản lý sản phẩm/ loại sản phẩm</span>
+            <a href="/category/list" class="item-link">Xem danh sách loại sản phẩm</a>
+            <a href="/admin/homepage"  class="item-link">Xem danh sách sản phẩm</a>
+        </div>
+
+        <hr class="sidebar-divider">
+
+        <div class="block sidebar-item">
+            <span class="item-heading">Quản lý đơn hàng</span>
+            <a class="item-link" href="/order/list">Xem danh sách đơn hàng</a>
+        </div>
+
+        <hr class="sidebar-divider">
+
+        <div class="block sidebar-item">
+            <span class="item-heading">Quản lý tài khoản</span>
+            <a href="/user/list" class="item-link">Xem danh sách tài khoản</a>
+        </div>
+    </div>
+    <div class="conten-wrapper">
+        <div class="content">
+            <!-- topbar -->
+            <nav class="navbar navbar-expand ">
+                <div class="navbar-var">
+                    <a class="user ">
+                        <span class="r-2 d-none d-lg-inline text-gray-600 small">nghiapham</span>
+                        <img class="img-profile rounded-circle" src="" alt="">
+                    </a>
+                    <a href="#" class="user-item" onclick="openModal()">
+                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Đăng xuất
+                    </a>
+                </div>
+            </nav>
+            <div class="noidung">
+                <div class="noidung-item" th:if="${not #lists.isEmpty(books)}">
+
+                    <div class="book" th:each="item : ${books}">
+                        <div class="book-detail">
+                            <h5 class="book-detail-v">tên sách:</h5>
+                            <h5 class="book-detail-c" th:text="${item.name}"></h5>
+                        </div>
+                        <div class="book-detail">
+                            <p class="book-detail-v">tác giả:</p>
+                            <p class="book-detail-c" th:text="${item.author}"></p>
+                        </div>
+                        <div class="book-detail">
+                            <p class="book-detail-v">giá:</p>
+                            <p class="book-detail-c" th:text="${item.price}"></p>
+                        </div>
+                        <div class="book-actions">
+
+                            <form class="book-actions-update" th:action="@{/admin/book/update-form/{id}(id=${item.id})}" method="get">
+                                <button type="submit">Update</button>
+                            </form>
+
+                            <form class="book-actions-delete" th:method="post" th:action="@{/admin/books/delete/{id}(id=${item.id})}">
+                                <button type="submit">Delete</button>
+                            </form>
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="add">
+                    <a class="add-link" href="/admin/book/add-form">Add book</a>
+                </div>
+
+            </div>
+
+        </div>
+
+        <footer class="sticky-footer bg-white">
+            <span>Copyright &copy; Your Website 2021</span>
+        </footer>
+    </div>
+
+    <!-- Logout Modal-->
+    <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <h2>Bạn có chắc muốn đăng xuất?</h2>
+            <p>Chọn "Hủy" nếu bạn muốn tiếp tục phiên làm việc.</p>
+            <button onclick="closeModal()">Hủy</button>
+            <a href="/auth/login">Đăng xuất</a>
+        </div>
+    </div>
+    <script>
+
+        function openModal() {
+            document.getElementById("logoutModal").style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("logoutModal").style.display = "none";
+        }
+
+        // Đóng modal nếu người dùng nhấn vào nền đen
+        window.onclick = function (event) {
+            if (event.target === document.getElementById("logoutModal")) {
+                closeModal();
+            }
+        };
+    </script>
+
+</div>
 </body>
 </html>

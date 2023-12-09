@@ -256,24 +256,24 @@
             </nav>
             <div class="card-body">
                 <div class="card-responsive">
-                    <div th:if="${not #lists.isEmpty(user)}"></div>
+                    <div th:if="${not #lists.isEmpty(orders)}"></div>
                     <table class="table">
                         <thead>
                         <tr>
                             <th>Id</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
+                            <th>Book name</th>
+                            <th>Date</th>
+                            <th>Quantity</th>
+                            <th>User</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="item : ${user}">
-                            <td th:text="${item.userID}"></td>
-                            <td th:text="${item.firstName}"></td>
-                            <td th:text="${item.lastName}"></td>
-                            <td th:text="${item.email}"></td>
-                            <td th:text="${item.role}"></td>
+                        <tr th:each="item : ${orders}">
+                            <td th:text="${item.id}"></td>
+                            <td th:text="${item.bookName}"></td>
+                            <td th:text="${item.date}"></td>
+                            <td th:text="${item.quantity}"></td>
+                            <td th:text="${item.user.email}"></td>
                         </tr>
                         </tbody>
                     </table>

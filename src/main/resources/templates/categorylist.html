@@ -206,115 +206,109 @@
     </style>
 
 </head>
-<body id="page-top">
-<div id="wrapper">
-    <div class="navbar-nav sidebar  " >
+    <body id="page-top">
+        <div id="wrapper">
+            <div class="navbar-nav sidebar  " >
 
-        <a class="sidebar-brand " href="/admin/homepage">
-            <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fa-solid fa-book"></i>
-            </div>
-            <div href="#" class="sidebar-brand-text mx-3">Bookstore</div>
-        </a>
+                <a class="sidebar-brand " href="/admin/homepage">
+                    <div class="sidebar-brand-icon rotate-n-15">
+                        <i class="fa-solid fa-book"></i>
+                    </div>
+                    <div href="#" class="sidebar-brand-text mx-3">Bookstore</div>
+                </a>
 
-        <hr class="sidebar-divider">
+                <hr class="sidebar-divider">
 
-        <div class="block sidebar-item">
-            <span class="item-heading">Quản lý sản phẩm/ loại sản phẩm</span>
-            <a href="/category/list" class="item-link">Xem danh sách loại sản phẩm</a>
-            <a href="/admin/homepage"  class="item-link">Xem danh sách sản phẩm</a>
-        </div>
-
-        <hr class="sidebar-divider">
-
-        <div class="block sidebar-item">
-            <span class="item-heading">Quản lý đơn hàng</span>
-            <a class="item-link" href="/order/list">Xem danh sách đơn hàng</a>
-        </div>
-
-        <hr class="sidebar-divider">
-
-        <div class="block sidebar-item">
-            <span class="item-heading">Quản lý tài khoản</span>
-            <a href="/user/list" class="item-link">Xem danh sách tài khoản</a>
-        </div>
-    </div>
-    <div class="conten-wrapper">
-        <div class="content">
-            <!-- topbar -->
-            <nav class="navbar navbar-expand ">
-                <div class="navbar-var">
-                    <a class="user ">
-                        <span class="r-2 d-none d-lg-inline text-gray-600 small">nghiapham</span>
-                        <img class="img-profile rounded-circle" src="" alt="">
-                    </a>
-                    <a href="#" class="user-item" onclick="openModal()">
-                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Đăng xuất
-                    </a>
+                <div class="block sidebar-item">
+                    <span class="item-heading">Quản lý sản phẩm/ loại sản phẩm</span>
+                    <a href="/category/list" class="item-link">Xem danh sách loại sản phẩm</a>
+                    <a href="/admin/homepage"  class="item-link">Xem danh sách sản phẩm</a>
                 </div>
-            </nav>
-            <div class="card-body">
-                <div class="card-responsive">
-                    <div th:if="${not #lists.isEmpty(user)}"></div>
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="item : ${user}">
-                            <td th:text="${item.userID}"></td>
-                            <td th:text="${item.firstName}"></td>
-                            <td th:text="${item.lastName}"></td>
-                            <td th:text="${item.email}"></td>
-                            <td th:text="${item.role}"></td>
-                        </tr>
-                        </tbody>
-                    </table>
+
+                <hr class="sidebar-divider">
+
+                <div class="block sidebar-item">
+                    <span class="item-heading">Quản lý đơn hàng</span>
+                    <a class="item-link" href="/order/list">Xem danh sách đơn hàng</a>
+                </div>
+
+                <hr class="sidebar-divider">
+
+                <div class="block sidebar-item">
+                    <span class="item-heading">Quản lý tài khoản</span>
+                    <a href="/user/list" class="item-link">Xem danh sách tài khoản</a>
                 </div>
             </div>
+            <div class="conten-wrapper">
+                <div class="content">
+                    <!-- topbar -->
+                    <nav class="navbar navbar-expand ">
+                        <div class="navbar-var">
+                            <a class="user ">
+                                <span class="r-2 d-none d-lg-inline text-gray-600 small">nghiapham</span>
+                                <img class="img-profile rounded-circle" src="" alt="">
+                            </a>
+                            <a href="#" class="user-item" onclick="openModal()">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Đăng xuất
+                            </a>
+                        </div>
+                    </nav>
+                    <div class="card-body">
+                        <div class="card-responsive">
+                            <div th:if="${not #lists.isEmpty(categories)}"></div>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="item : ${categories}">
+                                    <td th:text="${item.categoriesID}"></td>
+                                    <td th:text="${item.name}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+                <footer class="sticky-footer bg-white">
+                    <span>Copyright &copy; Your Website 2021</span>
+                </footer>
+            </div>
+
+            <!-- Logout Modal-->
+            <div id="logoutModal" class="modal">
+                <div class="modal-content">
+                    <span class="modal-close" onclick="closeModal()">&times;</span>
+                    <h2>Bạn có chắc muốn đăng xuất?</h2>
+                    <p>Chọn "Hủy" nếu bạn muốn tiếp tục phiên làm việc.</p>
+                    <button onclick="closeModal()">Hủy</button>
+                    <a href="/auth/login">Đăng xuất</a>
+                </div>
+            </div>
+            <script>
+
+                function openModal() {
+                    document.getElementById("logoutModal").style.display = "flex";
+                }
+
+                function closeModal() {
+                    document.getElementById("logoutModal").style.display = "none";
+                }
+
+                // Đóng modal nếu người dùng nhấn vào nền đen
+                window.onclick = function (event) {
+                    if (event.target === document.getElementById("logoutModal")) {
+                        closeModal();
+                    }
+                };
+            </script>
 
         </div>
-
-        <footer class="sticky-footer bg-white">
-            <span>Copyright &copy; Your Website 2021</span>
-        </footer>
-    </div>
-
-    <!-- Logout Modal-->
-    <div id="logoutModal" class="modal">
-        <div class="modal-content">
-            <span class="modal-close" onclick="closeModal()">&times;</span>
-            <h2>Bạn có chắc muốn đăng xuất?</h2>
-            <p>Chọn "Hủy" nếu bạn muốn tiếp tục phiên làm việc.</p>
-            <button onclick="closeModal()">Hủy</button>
-            <a href="/auth/login">Đăng xuất</a>
-        </div>
-    </div>
-    <script>
-
-        function openModal() {
-            document.getElementById("logoutModal").style.display = "flex";
-        }
-
-        function closeModal() {
-            document.getElementById("logoutModal").style.display = "none";
-        }
-
-        // Đóng modal nếu người dùng nhấn vào nền đen
-        window.onclick = function (event) {
-            if (event.target === document.getElementById("logoutModal")) {
-                closeModal();
-            }
-        };
-    </script>
-
-</div>
-</body>
+    </body>
 </html>
