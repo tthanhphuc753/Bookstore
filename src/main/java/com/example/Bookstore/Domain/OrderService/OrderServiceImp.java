@@ -14,21 +14,16 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class OrderServiceImp implements OrderService{
     private final CartRepository cartRepository;
-    private OrderdetailRepository orderdetailRepository;
+    private final OrderdetailRepository orderdetailRepository;
     @Override
     public Order addOrder(Long cartId) {
         Cart cartItem = cartRepository.findById(cartId).get();
-        if( cartItem != null)
-        {
+
             Order newOrder = new Order();
             newOrder.setQuantity(cartItem.getQuantity());
             newOrder.setBookName(cartItem.getName());
             return orderdetailRepository.save(newOrder);
-        }
-        else
-        {
-            throw new RuntimeException("Lỗi order rồi");
-        }
+
     }
 
     @Override
