@@ -1,6 +1,8 @@
 package com.example.Bookstore;
 
+import com.example.Bookstore.Domain.Model.Book.Categories;
 import com.example.Bookstore.Domain.Model.Order.Order;
+import com.example.Bookstore.Persistence.DAO.CategoriesRepository;
 import com.example.Bookstore.Persistence.DAO.OrderdetailRepository;
 import com.example.Bookstore.Persistence.DAO.UserRepository;
 import com.example.Bookstore.Domain.Model.User.User;
@@ -26,6 +28,9 @@ public class Bookstore {
     private ApplicationConfig applicationConfig;
 
     @Autowired
+    private CategoriesRepository categoriesRepository;
+
+    @Autowired
     private OrderdetailRepository orderdetailRepository;
 
     @Bean
@@ -47,8 +52,11 @@ public class Bookstore {
             List<Order> orderList = new ArrayList<>();
             Order newOrder = new Order(null, null, "black sea", Phuc, 3);
             orderList.add(newOrder);
-
             orderdetailRepository.saveAll(orderList);
+
+
+            Categories newCat = new Categories(1,"Document",null);
+            categoriesRepository.save(newCat);
 
         };
     }
