@@ -8,13 +8,12 @@ import com.example.Bookstore.Domain.Security.JWTAuth.JwtService;
 import com.example.Bookstore.Persistence.DAO.BookRepository;
 import com.example.Bookstore.Persistence.DAO.UserRepository;
 import com.example.Bookstore.Persistence.DAO.VerificationTokenRepository;
-import com.example.Bookstore.Domain.Security.RegistrationRequest;
+import com.example.Bookstore.Domain.AuthService.RegistrationRequest;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;

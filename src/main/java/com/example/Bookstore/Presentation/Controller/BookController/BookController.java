@@ -1,6 +1,7 @@
 package com.example.Bookstore.Presentation.Controller.BookController;
 
 import com.example.Bookstore.Domain.BookService.BookService;
+import com.example.Bookstore.Domain.CategoriesService.CategoriesService;
 import com.example.Bookstore.Domain.Model.Book.Book;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BookController {
     private final BookService bookService;
-
+    private final CategoriesService categoriesService;
 
     @GetMapping("list")
     public String getAllBook(Model model) {
@@ -27,8 +28,8 @@ public class BookController {
     @GetMapping("/homepage")
     public String showHomePage(Model model) {
         model.addAttribute("books", bookService.getAllBook());
+        model.addAttribute("category", categoriesService.getAllCategory());
         return "homePage";
     }
-
 
 }

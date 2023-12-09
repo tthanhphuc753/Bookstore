@@ -1,8 +1,7 @@
 package com.example.Bookstore.Domain.UserService;
 
 import com.example.Bookstore.Domain.Model.User.User;
-import com.example.Bookstore.Domain.Security.RegistrationRequest;
-import org.springframework.ui.Model;
+import com.example.Bookstore.Domain.AuthService.RegistrationRequest;
 
 import java.util.List;
 import java.util.Optional;
