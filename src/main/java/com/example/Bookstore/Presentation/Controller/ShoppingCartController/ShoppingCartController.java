@@ -10,6 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/shopping-cart")
@@ -19,28 +22,41 @@ public class ShoppingCartController {
     private final CartRepository cartRepository;
     private final BookRepository bookRepository;
 
-    @GetMapping("add")
+    @PostMapping("add")
     public String addToCart(@ModelAttribute("bookID") Long id)
     {
-        Book book = bookRepository.findById(id).get();
-        if(book!=null)
+        Optional<Book> optionalBook = bookRepository.findById(id);
+        if(optionalBook.isPresent())
         {
+            Book book = optionalBook.get();
             CartItem item = new CartItem();
             item.setBookID(book.getId());
             item.setName(book.getName());
             item.setPrice(book.getPrice());
             item.setQuantity(1);
             cartService.addToCart(item);
-            return "Success";
+            return "Them thanh cong";
         }
         else
-            return "Fail";
+            return "Them that bai";
     }
     @GetMapping("list")
     public String getAll(Model model)
     {
         model.addAttribute("cartitem",cartRepository.findAll());
+        return "redirect:/book/homepage";
+    }
+
+    @DeleteMapping("delete")
+    public String deleteCart (@PathVariable Long cartId){
+        cartService.removeFromCart(cartId);
         return "";
     }
 
+    @PostMapping("update")
+    public String updateCartQuantity(@ModelAttribute("cartId") Long cartId,
+                                     @ModelAttribute("quantity") int quantity) {
+        cartService.updateCart(cartId, quantity);
+        return "";
+    }
 }
