@@ -29,10 +29,6 @@ public class Book {
     @ManyToMany(mappedBy = "bookList")
     private Set<Order> orders = new HashSet<>();
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "bookList", cascade = CascadeType.ALL)
-    private Set<User> userList = new HashSet<>();
-
 
     @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL)
@@ -58,9 +54,6 @@ public class Book {
     public Book() {
     }
 
-    public void setUserList(Set<User> userList) {
-        this.userList = userList;
-    }
 
     @Override
     public String toString() {

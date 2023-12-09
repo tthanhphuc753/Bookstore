@@ -37,19 +37,6 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Order> orders = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "user_book",
-            joinColumns = @JoinColumn(name = "userID"),
-            inverseJoinColumns = @JoinColumn(name = "BookID")
-    )
-    private Set<Book> bookList = new HashSet<>();
-
-    // Getters and Setters
-    public void setBookList(Set<Book> bookList) {
-        this.bookList = bookList;
-    }
-
     @Override
     public String toString() {
         return "User{" +

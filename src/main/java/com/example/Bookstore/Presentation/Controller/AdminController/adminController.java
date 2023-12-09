@@ -33,7 +33,7 @@ public class adminController {
     @PostMapping("/update/{id}")
     public String updateBook(@PathVariable Long id, @ModelAttribute("book") Book newBook) {
         bookService.updateBook(id, newBook);
-        return "redirect:/book/list";
+        return "redirect:/admin/homepage";
     }
 
     @GetMapping("/add-form")
@@ -53,7 +53,7 @@ public class adminController {
     public String removeBook(@PathVariable Long id) {
 
         bookService.removeBook(id);
-        return "redirect:/book/list";
+        return "redirect:/admin/homepage";
     }
 
 }
