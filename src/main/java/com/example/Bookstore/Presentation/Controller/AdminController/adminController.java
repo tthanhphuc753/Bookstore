@@ -46,7 +46,7 @@ public class adminController {
     @PostMapping("add")
     public String addBook(@ModelAttribute("book") Book book) {
         bookService.addBook(book);
-        return "redirect:/book/homepage";
+        return "redirect:/admin/homepage";
     }
 
     @PostMapping("/books/delete/{id}")
