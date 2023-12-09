@@ -14,7 +14,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class CartServiceImp implements CartService {
 
-    private final BookRepository bookRepository;
     private final CartRepository cartRepository;
 
     private final Map<Long, CartItem> cartMap = new HashMap<>();
@@ -25,16 +24,18 @@ public class CartServiceImp implements CartService {
         CartItem cartItem = cartMap.get(item.getBookID());
         if (cartItem == null) {
             cartMap.put(item.getBookID(), item);
+            cartRepository.save(item);
         } else {
             cartItem.setQuantity(cartItem.getQuantity() + 1);
+            cartRepository.save(cartItem);
         }
-        cartRepository.save(cartItem);
 
     }
 
     @Override
     public void removeFromCart(long id) {
         cartMap.remove(id);
+        cartRepository.deleteById(id);
     }
 
     @Override
@@ -47,10 +48,12 @@ public class CartServiceImp implements CartService {
     @Override
     public void clearAll() {
         cartMap.clear();
+        cartRepository.deleteAll();
     }
 
     @Override
     public Collection<CartItem> getAlls() {
         return cartMap.values();
+
     }
 }
