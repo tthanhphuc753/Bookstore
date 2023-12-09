@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/category")
+@RequestMapping("category")
 @RequiredArgsConstructor
 public class CategoriesServiceController {
 
@@ -19,11 +19,7 @@ public class CategoriesServiceController {
         return "category";
     }
 
-    @PostMapping("add")
-    public String addBook(@ModelAttribute("categories") Categories categories) {
-        categoriesService.addCategory(categories);
-        return "redirect:/category/list";
-    }
+
 
 
 }
