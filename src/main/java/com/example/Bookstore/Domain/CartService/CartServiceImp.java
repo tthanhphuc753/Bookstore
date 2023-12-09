@@ -17,7 +17,7 @@ public class CartServiceImp implements CartService {
     private final BookRepository bookRepository;
     private final CartRepository cartRepository;
 
-    private Map<Long, Cart> cartMap = new HashMap<>();
+    private final Map<Long, Cart> cartMap = new HashMap<>();
 
 
     @Override

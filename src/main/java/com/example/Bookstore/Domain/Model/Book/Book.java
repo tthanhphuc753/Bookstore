@@ -1,5 +1,6 @@
 package com.example.Bookstore.Domain.Model.Book;
 
+import com.example.Bookstore.Domain.Model.Order.Order;
 import com.example.Bookstore.Domain.Model.User.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
@@ -25,6 +26,10 @@ public class Book {
     private String author;
 
     @JsonIgnore
+    @ManyToMany(mappedBy = "bookList")
+    private Set<Order> orders = new HashSet<>();
+
+    @JsonIgnore
     @ManyToMany(mappedBy = "bookList", cascade = CascadeType.ALL)
     private Set<User> userList = new HashSet<>();
 
@@ -33,7 +38,7 @@ public class Book {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "book_cate",
-            joinColumns = @JoinColumn(name = "bookID"),
+            joinColumns = @JoinColumn(name = "BookID"),
             inverseJoinColumns = @JoinColumn(name = "categoriesID")
     )
     private Set<Categories> categoriesSet = new HashSet<>();

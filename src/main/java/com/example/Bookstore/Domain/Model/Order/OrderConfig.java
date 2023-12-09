@@ -15,13 +15,13 @@ public class OrderConfig {
 
     private final List<Order> orderList = new ArrayList<>();
 
-    @Bean(name = "OrderBean")
-    CommandLineRunner commandLineRunner(OrderdetailRepository orderdetailRepository) {
-        return args -> {
-            Order newOrder = new Order();
-            orderList.add(newOrder);
-
-            orderdetailRepository.saveAll(orderList);
-        };
-    }
+//    @Bean(name = "OrderBean")
+//    CommandLineRunner commandLineRunner(OrderdetailRepository orderdetailRepository) {
+//        return args -> {
+//            Order newOrder = new Order();
+//            orderList.add(newOrder);
+//
+//            orderdetailRepository.saveAll(orderList);
+//        };
+//    }
 }

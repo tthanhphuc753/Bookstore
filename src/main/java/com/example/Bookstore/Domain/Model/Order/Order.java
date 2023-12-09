@@ -14,7 +14,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table(name = "order")
+@Table(name = "orderdetail")
 public class Order {
 
     @Id
@@ -27,19 +27,19 @@ public class Order {
 
 
     @ManyToOne
-    @JoinColumn(name="userID", nullable=false)
+    @JoinColumn(name = "userID", nullable = false)
     private User user;
 
     @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "order_book",
-            joinColumns = @JoinColumn(name = "orderID"),
+            joinColumns = @JoinColumn(name = "id"),
             inverseJoinColumns = @JoinColumn(name = "bookID")
     )
     private Set<Book> bookList = new HashSet<>();
 
-    public Order(Set<Book> book,Date date, String bookName, User user, int quantity) {
+    public Order(Set<Book> book, Date date, String bookName, User user, int quantity) {
         this.bookList = book;
         this.date = date;
         this.bookName = bookName;

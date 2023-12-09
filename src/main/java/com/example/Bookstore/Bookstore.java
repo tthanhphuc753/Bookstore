@@ -25,13 +25,13 @@ public class Bookstore {
             User Phuc = new User(null, "Phuc", "Tran"
                     , "tthanhphuc753@gmail.com"
                     , applicationConfig.passwordEncoder().encode("123456")
-                    , "ADMIN", null, true, null);
+                    , "ADMIN", null, true, null,null);
             userRepository.save(Phuc);
 
             User Sor = new User(null, "Sor", "Q"
                     , "tthanhphuc752@gmail.com"
                     , applicationConfig.passwordEncoder().encode("123456")
-                    , "USER", null, true, null);
+                    , "USER", null, true, null,null);
             userRepository.save(Sor);
         };
     }
