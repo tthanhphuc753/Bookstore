@@ -1,0 +1,50 @@
+package com.example.Bookstore.Domain.OrderService;
+
+import com.example.Bookstore.Domain.Model.Cart.Cart;
+import com.example.Bookstore.Domain.Model.Order.Order;
+import com.example.Bookstore.Persistence.DAO.CartRepository;
+import com.example.Bookstore.Persistence.DAO.OrderdetailRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+@Service
+@RequiredArgsConstructor
+public class OrderServiceImp implements OrderService{
+    private final CartRepository cartRepository;
+    private OrderdetailRepository orderdetailRepository;
+    @Override
+    public Order addOrder(Long cartId) {
+        Cart cartItem = cartRepository.findById(cartId).get();
+        if( cartItem != null)
+        {
+            Order newOrder = new Order();
+            newOrder.setQuantity(cartItem.getQuantity());
+            newOrder.setBookName(cartItem.getName());
+            return orderdetailRepository.save(newOrder);
+        }
+        else
+        {
+            throw new RuntimeException("Lỗi order rồi");
+        }
+    }
+
+    @Override
+    public void deleteOrderById(long id) {
+
+    }
+
+
+
+    @Override
+    public List<Order> getAllOrder() {
+        return orderdetailRepository.findAll();
+    }
+
+    @Override
+    public Optional<Order> findOrderById(Long id) {
+        return Optional.empty();
+    }
+}
