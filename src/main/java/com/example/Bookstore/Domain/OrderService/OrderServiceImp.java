@@ -20,7 +20,7 @@ public class OrderServiceImp implements OrderService{
 
             Order newOrder = new Order();
             newOrder.setQuantity(cartItem.getQuantity());
-            newOrder.setBookName(cartItem.getName());
+            newOrder.setBookName(cartItem.getBook().getName());
             return orderdetailRepository.save(newOrder);
 
     }
