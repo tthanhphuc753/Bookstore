@@ -4,6 +4,8 @@ import com.example.Bookstore.Domain.BookService.BookService;
 import com.example.Bookstore.Domain.CartService.CartService;
 import com.example.Bookstore.Domain.Model.Book.Book;
 import com.example.Bookstore.Domain.Model.Cart.CartItem;
+import com.example.Bookstore.Domain.Model.User.User;
+import com.example.Bookstore.Domain.UserService.UserServices;
 import com.example.Bookstore.Persistence.DAO.BookRepository;
 import com.example.Bookstore.Persistence.DAO.CartRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,15 +26,18 @@ public class ShoppingCartController {
 
     private final CartService cartService;
     private final BookService bookService;
+    private final UserServices userServices;
     private static final Logger logger = LoggerFactory.getLogger(ShoppingCartController.class);
 
-    @PostMapping("add/{id}")
-    public String addToCart(@PathVariable Long id, HttpServletRequest request, HttpSession session) {
+    @PostMapping("add/{id}/{userid}")
+    public String addToCart(@PathVariable Long id, @PathVariable Long userId, HttpServletRequest request, HttpSession session) {
         Optional<Book> optionalBook = bookService.findById(id);
-        if (optionalBook.isPresent()) {
+        User user = userServices.findUserByID(userId);
+        if (optionalBook.isPresent() ) {
             Book book = optionalBook.get();
             CartItem item = new CartItem();
             item.setBook(book);
+            item.setUser(user);
             item.setQuantity(1);
             cartService.addToCart(item, session);
             return "redirect:/shopping-cart/list";
