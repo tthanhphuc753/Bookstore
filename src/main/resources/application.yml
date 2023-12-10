@@ -11,6 +11,18 @@ spring:
       properties:
         hibernate.dialect: org.hibernate.dialect.MySQL8Dialect
 
+
+
+
+#  redis:
+#    host: localhost
+#    port: 6379
+#
+#  session:
+#    store-type: redis
+
+
+
   mail:
     host: smtp.gmail.com
     port: 587
@@ -30,4 +42,7 @@ spring:
 server:
   error:
     include-message: always
+  servlet:
+    session:
+      store-type: none
 

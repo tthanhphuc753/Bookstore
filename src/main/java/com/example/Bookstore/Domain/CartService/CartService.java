@@ -2,18 +2,19 @@ package com.example.Bookstore.Domain.CartService;
 
 import com.example.Bookstore.Domain.Model.Cart.CartItem;
 
+import javax.servlet.http.HttpSession;
 import java.util.Collection;
 
 public interface CartService {
 
 
-    void addToCart(CartItem item);
+    void addToCart(CartItem item, HttpSession session);
 
-    void removeFromCart(long id);
+    void removeFromCart(long id, HttpSession session);
 
-    CartItem updateCart(Long bookId, int quantity);
+    CartItem updateCart(Long bookId, int quantity, HttpSession session);
 
-    void clearAll();
+    void clearAll(HttpSession session);
 
-    Collection<CartItem> getAlls();
+    Collection<CartItem> getAlls(HttpSession session);
 }

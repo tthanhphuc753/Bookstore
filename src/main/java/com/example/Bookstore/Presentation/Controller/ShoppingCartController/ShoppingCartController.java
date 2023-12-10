@@ -6,14 +6,16 @@ import com.example.Bookstore.Domain.Model.Cart.CartItem;
 import com.example.Bookstore.Persistence.DAO.BookRepository;
 import com.example.Bookstore.Persistence.DAO.CartRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/shopping-cart")
 public class ShoppingCartController {
@@ -21,42 +23,40 @@ public class ShoppingCartController {
     private final CartService cartService;
     private final CartRepository cartRepository;
     private final BookRepository bookRepository;
+    private static final Logger logger = LoggerFactory.getLogger(ShoppingCartController.class);
 
-    @PostMapping("add")
-    public String addToCart(@ModelAttribute("bookID") Long id)
-    {
+    @PostMapping("add/{id}")
+    public String addToCart(@PathVariable Long id, HttpServletRequest request, HttpSession session) {
         Optional<Book> optionalBook = bookRepository.findById(id);
-        if(optionalBook.isPresent())
-        {
+        if (optionalBook.isPresent()) {
             Book book = optionalBook.get();
             CartItem item = new CartItem();
             item.setBookID(book.getId());
             item.setName(book.getName());
             item.setPrice(book.getPrice());
             item.setQuantity(1);
-            cartService.addToCart(item);
+            cartService.addToCart(item, session);
             return "Them thanh cong";
-        }
-        else
+        } else
             return "Them that bai";
     }
+
     @GetMapping("list")
-    public String getAll(Model model)
-    {
-        model.addAttribute("cartitem",cartRepository.findAll());
+    public String getAll(Model model) {
+        model.addAttribute("cartitem", cartRepository.findAll());
         return "redirect:/book/homepage";
     }
 
     @DeleteMapping("delete")
-    public String deleteCart (@PathVariable Long cartId){
-        cartService.removeFromCart(cartId);
+    public String deleteCart(@PathVariable Long cartId, HttpSession session) {
+        cartService.removeFromCart(cartId,session);
         return "";
     }
 
     @PostMapping("update")
     public String updateCartQuantity(@ModelAttribute("cartId") Long cartId,
-                                     @ModelAttribute("quantity") int quantity) {
-        cartService.updateCart(cartId, quantity);
+                                     @ModelAttribute("quantity") int quantity, HttpSession session) {
+        cartService.updateCart(cartId, quantity,session);
         return "";
     }
 }
