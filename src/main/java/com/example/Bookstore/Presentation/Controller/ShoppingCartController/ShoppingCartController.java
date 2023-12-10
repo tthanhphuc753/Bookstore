@@ -32,9 +32,7 @@ public class ShoppingCartController {
         if (optionalBook.isPresent()) {
             Book book = optionalBook.get();
             CartItem item = new CartItem();
-            item.setBookID(book.getId());
-            item.setName(book.getName());
-            item.setPrice(book.getPrice());
+            item.setBook(book);
             item.setQuantity(1);
             cartService.addToCart(item, session);
             return "Them thanh cong";
@@ -48,7 +46,7 @@ public class ShoppingCartController {
         return "redirect:/book/homepage";
     }
 
-    @DeleteMapping("delete")
+    @DeleteMapping("delete/{id}")
     public String deleteCart(@PathVariable Long cartId, HttpSession session) {
         cartService.removeFromCart(cartId, session);
         return "";

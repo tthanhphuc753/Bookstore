@@ -30,9 +30,9 @@ public class CartServiceImp implements CartService {
     public void addToCart(CartItem item, HttpSession session) {
         Map<Long, CartItem> cartMap = getCartMap(session);
 
-        CartItem cartItem = cartMap.get(item.getBookID());
+        CartItem cartItem = cartMap.get(item.getBook().getId());
         if (cartItem == null) {
-            cartMap.put(item.getBookID(), item);
+            cartMap.put(item.getBook().getId(), item);
         } else {
             cartItem.setQuantity(cartItem.getQuantity() + 1);
         }

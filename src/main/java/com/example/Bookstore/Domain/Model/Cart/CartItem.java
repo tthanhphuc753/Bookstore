@@ -20,9 +20,6 @@ public class CartItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Long bookID;
-    private String name;
-    private double price;
     private int quantity;
 
     @ManyToOne
