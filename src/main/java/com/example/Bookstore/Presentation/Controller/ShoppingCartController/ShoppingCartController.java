@@ -22,7 +22,6 @@ import java.util.Optional;
 public class ShoppingCartController {
 
     private final CartService cartService;
-    private final CartRepository cartRepository;
     private final BookRepository bookRepository;
     private static final Logger logger = LoggerFactory.getLogger(ShoppingCartController.class);
 
@@ -43,8 +42,8 @@ public class ShoppingCartController {
     }
 
     @GetMapping("list")
-    public String getAll(Model model) {
-        model.addAttribute("cartitem", cartRepository.findAll());
+    public String getAll(Model model, HttpSession session) {
+        model.addAttribute("cartitem",cartService.getAlls(session));
         return "redirect:/book/homepage";
     }
 
