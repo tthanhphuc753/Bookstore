@@ -30,7 +30,7 @@ public class CartItem implements Serializable {
     private User user;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "BookID",referencedColumnName = "id")
+    @MapsId
     private Book book;
 
 }
