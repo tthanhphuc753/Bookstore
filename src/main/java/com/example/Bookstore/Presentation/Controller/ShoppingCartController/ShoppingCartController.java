@@ -35,9 +35,9 @@ public class ShoppingCartController {
             item.setBook(book);
             item.setQuantity(1);
             cartService.addToCart(item, session);
-            return "Them thanh cong";
+            return "shopping-cart/list";
         } else
-            return "Them that bai";
+            return "shopping-cart/list";
     }
 
     @GetMapping("list")
@@ -49,7 +49,7 @@ public class ShoppingCartController {
     @DeleteMapping("delete/{id}")
     public String deleteCart(@PathVariable Long cartId, HttpSession session) {
         cartService.removeFromCart(cartId, session);
-        return "";
+        return "redirect:/book/homepage";
     }
 
     @PostMapping("update")
