@@ -1,7 +1,6 @@
 package com.example.Bookstore.Domain.Mailsender;
 
 import com.example.Bookstore.Domain.Model.User.User;
-import com.example.Bookstore.Presentation.Controller.Auth.EmailSender;
 import lombok.AllArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;

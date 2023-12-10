@@ -1,6 +1,6 @@
 package com.example.Bookstore.Domain.event.listener;
 
-import com.example.Bookstore.Presentation.Controller.Auth.EmailSender;
+import com.example.Bookstore.Domain.Mailsender.EmailSender;
 import com.example.Bookstore.Domain.UserService.UserServices;
 import com.example.Bookstore.Persistence.DAO.UserRepository;
 import com.example.Bookstore.Domain.Model.User.User;

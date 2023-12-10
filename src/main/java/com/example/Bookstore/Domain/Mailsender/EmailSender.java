@@ -1,4 +1,4 @@
-package com.example.Bookstore.Presentation.Controller.Auth;
+package com.example.Bookstore.Domain.Mailsender;
 
 import com.example.Bookstore.Domain.Model.User.User;
 
