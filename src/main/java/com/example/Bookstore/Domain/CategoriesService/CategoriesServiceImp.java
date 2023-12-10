@@ -32,4 +32,9 @@ public class CategoriesServiceImp implements CategoriesService {
     public long countCategory() {
         return categoriesRepository.count();
     }
+
+    public Optional<Categories> findById(Long id)
+    {
+        return categoriesRepository.findById(id);
+    }
 }

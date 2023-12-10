@@ -1,7 +1,10 @@
 package com.example.Bookstore;
 
+import com.example.Bookstore.Domain.CategoriesService.CategoriesService;
+import com.example.Bookstore.Domain.Model.Book.Book;
 import com.example.Bookstore.Domain.Model.Book.Categories;
 import com.example.Bookstore.Domain.Model.Order.Order;
+import com.example.Bookstore.Persistence.DAO.BookRepository;
 import com.example.Bookstore.Persistence.DAO.CategoriesRepository;
 import com.example.Bookstore.Persistence.DAO.OrderdetailRepository;
 import com.example.Bookstore.Persistence.DAO.UserRepository;
@@ -14,9 +17,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @SpringBootApplication
 public class Bookstore {
@@ -33,20 +34,22 @@ public class Bookstore {
 
     @Autowired
     private OrderdetailRepository orderdetailRepository;
+    private final List<Book> bookList = new ArrayList<>();
+
 
     @Bean
-    CommandLineRunner commandLineRunner(UserRepository userRepository) {
+    CommandLineRunner commandLineRunner(UserRepository userRepository, BookRepository bookRepository) {
         return args -> {
             User Phuc = new User(null, "Phuc", "Tran"
                     , "tthanhphuc753@gmail.com"
                     , applicationConfig.passwordEncoder().encode("123456")
-                    , "ADMIN", null, true, null,null);
+                    , "ADMIN", null, true, null, null);
             userRepository.save(Phuc);
 
             User Sor = new User(null, "Sor", "Q"
                     , "tthanhphuc752@gmail.com"
                     , applicationConfig.passwordEncoder().encode("123456")
-                    , "USER", null, true, null,null);
+                    , "USER", null, true, null, null);
             userRepository.save(Sor);
 
 
@@ -58,6 +61,15 @@ public class Bookstore {
 
             Categories newCat = new Categories(1, "Document", null);
             categoriesRepository.save(newCat);
+
+
+            Set<Categories> newSet = new HashSet<>();
+            newSet.add(newCat);
+
+            Book ThinkAndGrowRich = new Book(24, "Think And Grow Rich", "Phuc", newSet);
+            bookList.add(ThinkAndGrowRich);
+
+            bookRepository.saveAll(bookList);
         };
     }
 }

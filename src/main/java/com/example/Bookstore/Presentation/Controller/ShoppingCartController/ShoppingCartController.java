@@ -35,9 +35,9 @@ public class ShoppingCartController {
             item.setBook(book);
             item.setQuantity(1);
             cartService.addToCart(item, session);
-            return "shopping-cart/list";
+            return "redirect:/shopping-cart/list";
         } else
-            return "shopping-cart/list";
+            return "redirect:/shopping-cart/list";
     }
 
     @GetMapping("list")
@@ -56,6 +56,6 @@ public class ShoppingCartController {
     public String updateCartQuantity(@ModelAttribute("cartId") Long cartId,
                                      @ModelAttribute("quantity") int quantity, HttpSession session) {
         cartService.updateCart(cartId, quantity, session);
-        return "";
+        return "redirect:/shopping-cart/list";
     }
 }

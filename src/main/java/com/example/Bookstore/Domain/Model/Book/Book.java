@@ -32,7 +32,7 @@ public class Book {
 
 
     @JsonIgnore
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "book_cate",
             joinColumns = @JoinColumn(name = "BookID"),
