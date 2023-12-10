@@ -179,7 +179,7 @@
             margin-left: 10px;
             text-decoration: none;
             color: var(--gray-dark);
-
+            font-size: larger;
         }
         .user {
             cursor: default;
@@ -200,6 +200,10 @@
         footer {
             display: flex;
             justify-content: center;
+        }
+        .modal-link-logout, .modal-link-cancel {
+            margin-top: 10px;
+            cursor: pointer;
         }
 
 
@@ -244,9 +248,8 @@
             <!-- topbar -->
             <nav class="navbar navbar-expand ">
                 <div class="navbar-var">
-                    <a class="user ">
-                        <span class="r-2 d-none d-lg-inline text-gray-600 small">nghiapham</span>
-                        <img class="img-profile rounded-circle" src="" alt="">
+                    <a class="user">
+                        <span id="user-email" class="r-2 d-none d-lg-inline text-gray-600 small"></span>
                     </a>
                     <a href="#" class="user-item" onclick="openModal()">
                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -293,8 +296,8 @@
             <span class="modal-close" onclick="closeModal()">&times;</span>
             <h2>Bạn có chắc muốn đăng xuất?</h2>
             <p>Chọn "Hủy" nếu bạn muốn tiếp tục phiên làm việc.</p>
-            <button onclick="closeModal()">Hủy</button>
-            <a href="/auth/login">Đăng xuất</a>
+            <a class="modal-link modal-link-cancel" onclick="closeModal()">Hủy</a>
+            <a class="modal-link modal-link-logout ">Đăng xuất</a>
         </div>
     </div>
     <script>
@@ -313,6 +316,77 @@
                 closeModal();
             }
         };
+
+        function logout() {
+            // Gửi yêu cầu đăng xuất đến server
+            fetch('/auth/logout', {
+                method: 'POST',
+                credentials: 'same-origin', // Bảo đảm các cookie được gửi đi (hoặc sử dụng 'include' nếu máy chủ và trang web ở các domain khác nhau)
+                headers: {
+                    'Content-Type': 'application/json',
+                    // Thêm các thông tin khác nếu cần
+                },
+            })
+                .then(response => {
+                    if (response.ok) {
+
+                        window.location.href = '/auth/login';
+
+                    } else {
+                        // Xử lý lỗi đăng xuất
+                        alert('Có lỗi khi đăng xuất. Vui lòng thử lại!');
+                    }
+                })
+                .catch(error => {
+                    alert('Không thể kết nối đến server. Vui lòng thử lại sau!');
+                });
+        }
+
+
+        // Khi nhấn nút "Đăng xuất"
+        document.querySelector('#logoutModal .modal-link-logout').addEventListener('click', function (event) {
+            event.preventDefault();
+            logout();
+            closeModal();
+        });
+
+
+
+        // Lấy token từ cookie
+        const token = getCookie("JWT_TOKEN"); // Thay "yourTokenCookie" bằng tên cookie bạn đã sử dụng
+
+        // Hàm để lấy giá trị của cookie
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        // Trích xuất thông tin từ token (đây chỉ là một ví dụ, thực tế bạn cần phải thực hiện trích xuất phù hợp với định dạng của token)
+        function extractEmailFromToken(token) {
+            // Giả sử token có định dạng là JWT và chứa thông tin người dùng trong payload
+            const payloadBase64 = token.split('.')[1];
+            const payload = JSON.parse(atob(payloadBase64));
+            return payload.sub; // Thay "email" bằng tên trường chứa email trong token của bạn
+        }
+
+        // Lấy thẻ span để hiển thị email
+        const userEmailSpan = document.getElementById('user-email');
+
+        // Trích xuất và hiển thị email trong thẻ span
+        if (token) {
+            const userEmail = extractEmailFromToken(token);
+            if (userEmail) {
+                userEmailSpan.textContent = userEmail;
+            }
+        }
+
+
     </script>
 
 </div>
