@@ -1,5 +1,6 @@
 package com.example.Bookstore.Domain.Model.Book;
 
+import com.example.Bookstore.Domain.Model.Cart.CartItem;
 import com.example.Bookstore.Domain.Model.Order.Order;
 import com.example.Bookstore.Domain.Model.User.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -39,6 +40,8 @@ public class Book {
     )
     private Set<Categories> categoriesSet = new HashSet<>();
 
+    @OneToOne(mappedBy = "book")
+    private CartItem cartItem;
     public Book(double price, String name) {
         this.price = price;
         this.name = name;

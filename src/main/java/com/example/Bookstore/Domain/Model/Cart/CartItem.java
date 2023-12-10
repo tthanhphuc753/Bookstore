@@ -1,6 +1,8 @@
 package com.example.Bookstore.Domain.Model.Cart;
 
 
+import com.example.Bookstore.Domain.Model.Book.Book;
+import com.example.Bookstore.Domain.Model.User.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,5 +25,12 @@ public class CartItem implements Serializable {
     private double price;
     private int quantity;
 
+    @ManyToOne
+    @JoinColumn(name = "UserID",nullable = false)
+    private User user;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "BookID",referencedColumnName = "id")
+    private Book book;
 
 }
