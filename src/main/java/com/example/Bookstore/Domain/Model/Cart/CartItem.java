@@ -23,7 +23,7 @@ public class CartItem implements Serializable {
     private int quantity;
 
     @ManyToOne
-    @JoinColumn(name = "UserID",nullable = false)
+    @JoinColumn(name = "UserID",nullable = true)
     private User user;
 
     @OneToOne(cascade = CascadeType.ALL)
