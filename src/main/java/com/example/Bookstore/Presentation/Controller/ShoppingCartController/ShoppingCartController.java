@@ -1,5 +1,6 @@
 package com.example.Bookstore.Presentation.Controller.ShoppingCartController;
 
+import com.example.Bookstore.Domain.BookService.BookService;
 import com.example.Bookstore.Domain.CartService.CartService;
 import com.example.Bookstore.Domain.Model.Book.Book;
 import com.example.Bookstore.Domain.Model.Cart.CartItem;
@@ -22,12 +23,12 @@ import java.util.Optional;
 public class ShoppingCartController {
 
     private final CartService cartService;
-    private final BookRepository bookRepository;
+    private final BookService bookService;
     private static final Logger logger = LoggerFactory.getLogger(ShoppingCartController.class);
 
     @PostMapping("add/{id}")
     public String addToCart(@PathVariable Long id, HttpServletRequest request, HttpSession session) {
-        Optional<Book> optionalBook = bookRepository.findById(id);
+        Optional<Book> optionalBook = bookService.findById(id);
         if (optionalBook.isPresent()) {
             Book book = optionalBook.get();
             CartItem item = new CartItem();
@@ -43,7 +44,7 @@ public class ShoppingCartController {
 
     @GetMapping("list")
     public String getAll(Model model, HttpSession session) {
-        model.addAttribute("cartitem",cartService.getAlls(session));
+        model.addAttribute("cartitem", cartService.getAlls(session));
         return "redirect:/book/homepage";
     }
 
