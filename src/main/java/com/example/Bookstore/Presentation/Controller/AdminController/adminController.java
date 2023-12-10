@@ -21,7 +21,6 @@ public class adminController {
 
     private final BookService bookService;
     private final CategoriesService categoriesService;
-    private final CategoriesRepository categoriesRepository;
     @GetMapping("/homepage")
     public String showAdminPage(Model model) {
         model.addAttribute("books", bookService.getAllBook());
@@ -44,7 +43,7 @@ public class adminController {
     @GetMapping("book/add-form")
     public String showAddForm(Model model) {
         model.addAttribute("book", new Book());
-        model.addAttribute("category", categoriesRepository.findAll());
+        model.addAttribute("category",categoriesService.getAllCategory());
         return "addbook";
     }
 
