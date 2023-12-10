@@ -8,6 +8,7 @@ import com.example.Bookstore.Persistence.DAO.CartRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 @RequestMapping("/shopping-cart")
 public class ShoppingCartController {
@@ -49,14 +50,14 @@ public class ShoppingCartController {
 
     @DeleteMapping("delete")
     public String deleteCart(@PathVariable Long cartId, HttpSession session) {
-        cartService.removeFromCart(cartId,session);
+        cartService.removeFromCart(cartId, session);
         return "";
     }
 
     @PostMapping("update")
     public String updateCartQuantity(@ModelAttribute("cartId") Long cartId,
                                      @ModelAttribute("quantity") int quantity, HttpSession session) {
-        cartService.updateCart(cartId, quantity,session);
+        cartService.updateCart(cartId, quantity, session);
         return "";
     }
 }
