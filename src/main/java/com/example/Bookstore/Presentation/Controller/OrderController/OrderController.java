@@ -16,16 +16,15 @@ public class OrderController {
     private final OrderService orderService;
 
     @GetMapping("list")
-    public String getAllOrder(Model model)
-    {
+    public String getAllOrder(Model model) {
         model.addAttribute("orders", orderService.getAllOrder());
         return "orderlist";
     }
 
-    @PostMapping("add/{cartid}")
-    public void addOrder(@PathVariable Long cartId)
-    {
-        orderService.addOrder(cartId);
+    @PostMapping("add/{cartid}/{userid}")
+    public void addOrder(@PathVariable Long cartId, @PathVariable Long userId) {
+        orderService.addOrder(cartId, userId);
     }
+
 
 }
