@@ -4,6 +4,9 @@ import com.example.Bookstore.Domain.Model.Book.Book;
 import com.example.Bookstore.Persistence.DAO.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -55,5 +58,10 @@ public class BookServiceImp implements BookService {
     @Override
     public void removeBook(Long id) {
         bookRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<Book> getAllBooks(Pageable pageable) {
+        return bookRepository.findAll(pageable);
     }
 }

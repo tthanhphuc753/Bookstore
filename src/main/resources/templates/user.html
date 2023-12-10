@@ -179,7 +179,7 @@
             margin-left: 10px;
             text-decoration: none;
             color: var(--gray-dark);
-            font-size: larger;
+            font-size: large;
         }
         .user {
             cursor: default;
@@ -206,8 +206,21 @@
             margin-top: 10px;
             cursor: pointer;
         }
+        .dropdown-menu {
+            position: absolute;
+            top: 75%;
+            right: 0;
+            background-color: #fff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            display: none;
+            /*display: flex;*/
+        }
 
+        .user:hover .dropdown-menu {
+            display: block;
 
+        }
     </style>
 
 </head>
@@ -249,12 +262,16 @@
             <!-- topbar -->
             <nav class="navbar navbar-expand ">
                 <div class="navbar-var">
-                    <a class="user">
+                    <a class="user" onmouseover="showDropdown()" onmouseout="hideDropdown()">
                         <span id="user-email" class="r-2 d-none d-lg-inline text-gray-600 small"></span>
-                    </a>
-                    <a href="#" class="user-item" onclick="openModal()">
-                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Đăng xuất
+                        <div id="dropdown-menu" class="dropdown-menu" onmouseover="cancelHide()"
+                             onmouseout="hideDropdown()">
+                            <!-- Các liên kết hoặc nội dung của dropdown menu -->
+                            <a href="#" class="user-item" onclick="openModal()">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Đăng xuất
+                            </a>
+                        </div>
                     </a>
                 </div>
             </nav>
@@ -302,7 +319,24 @@
         </div>
     </div>
     <script>
+        let timeoutId;
 
+        function showDropdown() {
+            clearTimeout(timeoutId);
+            document.getElementById('dropdown-menu').style.display = 'block';
+        }
+
+        function hideDropdown() {
+
+            timeoutId = setTimeout(() => {
+                document.getElementById('dropdown-menu').style.display = 'none';
+            }, 300);
+
+        }
+
+        function cancelHide() {
+            clearTimeout(timeoutId);
+        }
         function openModal() {
             document.getElementById("logoutModal").style.display = "flex";
         }

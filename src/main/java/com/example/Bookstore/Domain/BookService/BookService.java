@@ -1,6 +1,9 @@
 package com.example.Bookstore.Domain.BookService;
 
 import com.example.Bookstore.Domain.Model.Book.Book;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.ui.Model;
 
 import java.util.List;
@@ -23,4 +26,5 @@ public interface BookService {
     void removeBook(Long id);
 
 
+    Page<Book> getAllBooks(Pageable pageable);
 }

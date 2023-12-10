@@ -57,6 +57,7 @@
             -webkit-text-size-adjust: 100%;
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
         }
+
         *,
         *::before,
         *::after {
@@ -87,6 +88,7 @@
             margin-top: 0;
             margin-bottom: 0.5rem;
         }
+
         hr {
             color: inherit;
             border: 0;
@@ -102,9 +104,11 @@
         #wrapper {
             display: flex;
         }
+
         .conten-wrapper {
             width: 100rem;
         }
+
         .modal {
             display: none;
             position: fixed;
@@ -131,12 +135,15 @@
             top: 10px;
             right: 10px;
         }
+
         .navbar-var {
             display: flex;
         }
+
         .navbar-expand {
             flex-direction: row-reverse;
         }
+
         .sidebar {
             background-color: var(--primary);
             color: var(--white);
@@ -144,6 +151,7 @@
             padding: 0 30px;
 
         }
+
         .sidebar-brand {
             display: flex;
             color: var(--white);
@@ -154,36 +162,43 @@
             font-size: x-large;
             text-decoration: none;
         }
+
         .sidebar-brand-text {
         }
+
         .sidebar-divider {
             margin: 0;
         }
+
         .sidebar-item {
             padding: 30px 0;
             display: flex;
             flex-direction: column;
         }
+
         .item-heading {
             color: #94a8e7;
             font-weight: 800;
             margin-bottom: 10px;
             cursor: default;
         }
+
         .item-link {
             color: var(--white);
             text-decoration: none;
             cursor: pointer;
             padding: 1px;
         }
+
         .user, .user-item {
             margin-left: 10px;
             text-decoration: none;
             color: var(--gray-dark);
-            font-size: larger;
+            font-size: large;
         }
-        .user {
 
+        .user {
+            position: relative;
             cursor: default;
         }
 
@@ -196,10 +211,12 @@
             display: flex;
             justify-content: center;
         }
+
         .noidung {
             display: flex;
             flex-wrap: wrap;
         }
+
         .noidung-item {
             display: flex;
             flex-wrap: wrap;
@@ -214,43 +231,70 @@
             width: 300px;
             text-align: center;
         }
+
         .book-detail {
             display: flex;
             flex-wrap: wrap;
         }
+
         .book-detail-v {
             padding-right: 5px;
         }
+
         .book-detail-c {
             display: flex;
             justify-content: flex-end;
         }
+
         .book-actions {
             display: flex;
             justify-content: space-between;
         }
-        .add{
+
+        .add {
             display: flex;
             justify-content: center;
             flex: 1;
             font-size: large;
             padding: 10px 0;
         }
+
         .modal-link-logout, .modal-link-cancel {
             margin-top: 10px;
             cursor: pointer;
         }
 
+        .btn-primary {
+            border-radius: 6px;
+            background-color: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
 
+        .dropdown-menu {
+            position: absolute;
+            top: 75%;
+            right: 0;
+            background-color: #fff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            display: none;
+            /*display: flex;*/
+        }
 
+        .user:hover .dropdown-menu {
+            display: block;
+
+        }
 
 
     </style>
 
 </head>
 <body id="page-top">
+
 <div id="wrapper">
-    <div class="navbar-nav sidebar  " >
+    <div class="navbar-nav sidebar  ">
 
         <a class="sidebar-brand " href="/admin/homepage">
             <div class="sidebar-brand-icon rotate-n-15">
@@ -264,7 +308,7 @@
         <div class="block sidebar-item">
             <span class="item-heading">Quản lý sản phẩm/ loại sản phẩm</span>
             <a href="/category/list" class="item-link">Xem danh sách loại sản phẩm</a>
-            <a href="/admin/homepage"  class="item-link">Xem danh sách sản phẩm</a>
+            <a href="/admin/homepage" class="item-link">Xem danh sách sản phẩm</a>
         </div>
 
         <hr class="sidebar-divider">
@@ -286,58 +330,66 @@
             <!-- topbar -->
             <nav class="navbar navbar-expand ">
                 <div class="navbar-var">
-                    <a class="user">
+                    <a class="user" onmouseover="showDropdown()" onmouseout="hideDropdown()">
                         <span id="user-email" class="r-2 d-none d-lg-inline text-gray-600 small"></span>
-                    </a>
-
-                    <a href="#" class="user-item" onclick="openModal()">
-                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Đăng xuất
+                        <div id="dropdown-menu" class="dropdown-menu" onmouseover="cancelHide()"
+                             onmouseout="hideDropdown()">
+                            <!-- Các liên kết hoặc nội dung của dropdown menu -->
+                            <a href="#" class="user-item" onclick="openModal()">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Đăng xuất
+                            </a>
+                        </div>
                     </a>
                 </div>
             </nav>
-            <div class="noidung">
-                <div class="noidung-item" th:if="${not #lists.isEmpty(books)}">
 
+            <div class="add">
+                <a class="add-link" href="/admin/book/add-form">Add book</a>
+            </div>
+            <div>
+                <div class="noidung-item" th:if="${not #lists.isEmpty(books)}">
                     <div class="book" th:each="item : ${books}">
                         <div class="book-detail">
-                            <h5 class="book-detail-v">tên sách:</h5>
                             <h5 class="book-detail-c" th:text="${item.name}"></h5>
                         </div>
                         <div class="book-detail">
-                            <p class="book-detail-v">tác giả:</p>
+                            <p class="book-detail-v">Author:</p>
                             <p class="book-detail-c" th:text="${item.author}"></p>
                         </div>
                         <div class="book-detail">
-                            <p class="book-detail-v">giá:</p>
+                            <p class="book-detail-v">Price:</p>
+                            <p>$</p>
                             <p class="book-detail-c" th:text="${item.price}"></p>
                         </div>
                         <div class="book-actions">
-
-                            <form class="book-actions-update" th:action="@{/admin/book/update-form/{id}(id=${item.id})}" method="get">
-                                <button type="submit">Update</button>
+                            <form class="book-actions-update" th:action="@{/admin/book/update-form/{id}(id=${item.id})}"
+                                  method="get">
+                                <button class="btn-primary" type="submit">Update</button>
                             </form>
-
-                            <form class="book-actions-delete" th:method="post" th:action="@{/admin/books/delete/{id}(id=${item.id})}">
-                                <button type="submit">Delete</button>
+                            <form class="book-actions-delete" th:method="post"
+                                  th:action="@{/admin/books/delete/{id}(id=${item.id})}">
+                                <button class="btn-primary" type="submit">Delete</button>
                             </form>
-
                         </div>
                     </div>
-
-
                 </div>
-                <div class="add">
-                    <a class="add-link" href="/admin/book/add-form">Add book</a>
-                </div>
-
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item" th:if="${currentPage > 0}">
+                            <a class="page-link" th:href="@{'/admin/homepage?page=' +  ${currentPage - 1 }}">Previous</a>
+                        </li>
+                        <li class="page-item" th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}">
+                            <a class="page-link" th:href="@{'/admin/homepage?page=' + ${pageNumber}}"
+                               th:text="${pageNumber}"></a>
+                        </li>
+                        <li class="page-item" th:if="${currentPage < totalPages - 1}">
+                            <a class="page-link" th:href="@{'/admin/homepage?page=' + ${currentPage + 1 }}">Next</a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
-
         </div>
-
-        <footer class="sticky-footer bg-white">
-            <span>Copyright &copy; Your Website 2021</span>
-        </footer>
     </div>
 
     <!-- Logout Modal-->
@@ -350,95 +402,118 @@
             <a class="modal-link modal-link-logout ">Đăng xuất</a>
         </div>
     </div>
-    <script>
 
-        function openModal() {
-            document.getElementById("logoutModal").style.display = "flex";
-        }
-
-        function closeModal() {
-            document.getElementById("logoutModal").style.display = "none";
-        }
-
-        // Đóng modal nếu người dùng nhấn vào nền đen
-        window.onclick = function (event) {
-            if (event.target === document.getElementById("logoutModal")) {
-                closeModal();
-            }
-        };
-
-        function logout() {
-            // Gửi yêu cầu đăng xuất đến server
-            fetch('/auth/logout', {
-                method: 'POST',
-                credentials: 'same-origin', // Bảo đảm các cookie được gửi đi (hoặc sử dụng 'include' nếu máy chủ và trang web ở các domain khác nhau)
-                headers: {
-                    'Content-Type': 'application/json',
-                    // Thêm các thông tin khác nếu cần
-                },
-            })
-                .then(response => {
-                    if (response.ok) {
-
-                        window.location.href = '/auth/login';
-
-                    } else {
-                        // Xử lý lỗi đăng xuất
-                        alert('Có lỗi khi đăng xuất. Vui lòng thử lại!');
-                    }
-                })
-                .catch(error => {
-                    alert('Không thể kết nối đến server. Vui lòng thử lại sau!');
-                });
-        }
-
-
-        // Khi nhấn nút "Đăng xuất"
-        document.querySelector('#logoutModal .modal-link-logout').addEventListener('click', function (event) {
-            event.preventDefault();
-            logout();
-            closeModal();
-        });
-
-
-
-        // Lấy token từ cookie
-        const token = getCookie("JWT_TOKEN"); // Thay "yourTokenCookie" bằng tên cookie bạn đã sử dụng
-
-        // Hàm để lấy giá trị của cookie
-        function getCookie(name) {
-            const nameEQ = name + "=";
-            const ca = document.cookie.split(';');
-            for (let i = 0; i < ca.length; i++) {
-                let c = ca[i];
-                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-            }
-            return null;
-        }
-
-        // Trích xuất thông tin từ token (đây chỉ là một ví dụ, thực tế bạn cần phải thực hiện trích xuất phù hợp với định dạng của token)
-        function extractEmailFromToken(token) {
-            // Giả sử token có định dạng là JWT và chứa thông tin người dùng trong payload
-            const payloadBase64 = token.split('.')[1];
-            const payload = JSON.parse(atob(payloadBase64));
-            return payload.sub; // Thay "email" bằng tên trường chứa email trong token của bạn
-        }
-
-        // Lấy thẻ span để hiển thị email
-        const userEmailSpan = document.getElementById('user-email');
-
-        // Trích xuất và hiển thị email trong thẻ span
-        if (token) {
-            const userEmail = extractEmailFromToken(token);
-            if (userEmail) {
-                userEmailSpan.textContent = userEmail;
-            }
-        }
-
-
-    </script>
 
 </div>
+<footer class="sticky-footer bg-white">
+    <span>Copyright &copy; Your Website 2021</span>
+</footer>
+<script>
+    let timeoutId;
+
+    function showDropdown() {
+        clearTimeout(timeoutId);
+        document.getElementById('dropdown-menu').style.display = 'block';
+    }
+
+    function hideDropdown() {
+
+        timeoutId = setTimeout(() => {
+            document.getElementById('dropdown-menu').style.display = 'none';
+        }, 300);
+
+    }
+
+    function cancelHide() {
+        clearTimeout(timeoutId);
+    }
+
+    function openModal() {
+        document.getElementById("logoutModal").style.display = "flex";
+    }
+
+    function closeModal() {
+        document.getElementById("logoutModal").style.display = "none";
+    }
+
+    // Đóng modal nếu người dùng nhấn vào nền đen
+    window.onclick = function (event) {
+        if (event.target === document.getElementById("logoutModal")) {
+            closeModal();
+        }
+    };
+
+    function logout() {
+        // Gửi yêu cầu đăng xuất đến server
+        fetch('/auth/logout', {
+            method: 'POST',
+            credentials: 'same-origin', // Bảo đảm các cookie được gửi đi (hoặc sử dụng 'include' nếu máy chủ và trang web ở các domain khác nhau)
+            headers: {
+                'Content-Type': 'application/json',
+                // Thêm các thông tin khác nếu cần
+            },
+        })
+            .then(response => {
+                if (response.ok) {
+
+                    window.location.href = '/auth/login';
+
+                } else {
+                    // Xử lý lỗi đăng xuất
+                    alert('Có lỗi khi đăng xuất. Vui lòng thử lại!');
+                }
+            })
+            .catch(error => {
+                alert('Không thể kết nối đến server. Vui lòng thử lại sau!');
+            });
+    }
+
+
+    // Khi nhấn nút "Đăng xuất"
+    document.querySelector('#logoutModal .modal-link-logout').addEventListener('click', function (event) {
+        event.preventDefault();
+        logout();
+        closeModal();
+        // Cập nhật lại trang sau khi chuyển trang
+        window.location.reload();
+    });
+
+
+    // Lấy token từ cookie
+    const token = getCookie("JWT_TOKEN"); // Thay "yourTokenCookie" bằng tên cookie bạn đã sử dụng
+
+    // Hàm để lấy giá trị của cookie
+    function getCookie(name) {
+        const nameEQ = name + "=";
+        const ca = document.cookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+
+    // Trích xuất thông tin từ token (đây chỉ là một ví dụ, thực tế bạn cần phải thực hiện trích xuất phù hợp với định dạng của token)
+    function extractEmailFromToken(token) {
+        // Giả sử token có định dạng là JWT và chứa thông tin người dùng trong payload
+        const payloadBase64 = token.split('.')[1];
+        const payload = JSON.parse(atob(payloadBase64));
+        return payload.sub; // Thay "email" bằng tên trường chứa email trong token của bạn
+    }
+
+    // Lấy thẻ span để hiển thị email
+    const userEmailSpan = document.getElementById('user-email');
+
+    // Trích xuất và hiển thị email trong thẻ span
+    if (token) {
+        const userEmail = extractEmailFromToken(token);
+        if (userEmail) {
+            userEmailSpan.textContent = userEmail;
+        }
+    }
+
+
+</script>
 </body>
 </html>

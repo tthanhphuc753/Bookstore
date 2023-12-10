@@ -8,6 +8,8 @@ import com.example.Bookstore.Domain.Model.Book.Categories;
 import com.example.Bookstore.Persistence.DAO.BookRepository;
 import com.example.Bookstore.Persistence.DAO.CategoriesRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +24,14 @@ public class adminController {
     private final BookService bookService;
     private final CategoriesService categoriesService;
     @GetMapping("/homepage")
-    public String showAdminPage(Model model) {
-        model.addAttribute("books", bookService.getAllBook());
+    public String showAdminPage(Model model,
+                                @RequestParam(defaultValue = "0") int page,
+                                @RequestParam(defaultValue = "10") int size) {
+        Page<Book> booksPage = bookService.getAllBooks(PageRequest.of(page, size));
+
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", booksPage.getTotalPages());
+        model.addAttribute("books", booksPage.getContent());
         return "admin";
     }
 
