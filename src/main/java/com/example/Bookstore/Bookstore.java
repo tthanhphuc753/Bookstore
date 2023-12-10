@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @SpringBootApplication
@@ -50,7 +51,7 @@ public class Bookstore {
 
 
             List<Order> orderList = new ArrayList<>();
-            Order newOrder = new Order(null, null, "black sea", Phuc, 3);
+            Order newOrder = new Order(null, new Date(), "black sea", Phuc, 3);
             orderList.add(newOrder);
             orderdetailRepository.saveAll(orderList);
 

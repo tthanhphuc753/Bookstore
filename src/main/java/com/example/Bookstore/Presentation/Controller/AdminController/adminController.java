@@ -6,6 +6,7 @@ import com.example.Bookstore.Domain.CategoriesService.CategoriesService;
 import com.example.Bookstore.Domain.Model.Book.Book;
 import com.example.Bookstore.Domain.Model.Book.Categories;
 import com.example.Bookstore.Persistence.DAO.BookRepository;
+import com.example.Bookstore.Persistence.DAO.CategoriesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,7 @@ public class adminController {
 
     private final BookService bookService;
     private final CategoriesService categoriesService;
+    private final CategoriesRepository categoriesRepository;
     @GetMapping("/homepage")
     public String showAdminPage(Model model) {
         model.addAttribute("books", bookService.getAllBook());
@@ -42,6 +44,7 @@ public class adminController {
     @GetMapping("book/add-form")
     public String showAddForm(Model model) {
         model.addAttribute("book", new Book());
+        model.addAttribute("category", categoriesRepository.findAll());
         return "addbook";
     }
 
