@@ -35,7 +35,7 @@ public class JwtAuthenticationSuccessHandler extends SavedRequestAwareAuthentica
             String token = jwtService.generateToken(userAuthDetails);
 
             Cookie cookie = new Cookie("JWT_TOKEN", token);
-            cookie.setMaxAge(3600);
+            cookie.setMaxAge(36000);
             cookie.setPath("/");
 
             response.addCookie(cookie);
