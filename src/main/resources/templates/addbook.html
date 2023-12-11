@@ -75,7 +75,7 @@
         </div>
 
         <div class="mb-3">
-            <label for="category" class="form-label">Categogies</label>
+            <label for="category" class="form-label">Categories</label>
             <div class="form-check" th:each="category : ${category}">
                 <input type="checkbox" class="form-check-input" id="category" name="categories" th:value="${category.categoriesID}" th:field="*{categoriesSet}" th:checked="${book.categoriesSet.contains(category)}">
                 <label class="form-check-label" th:text="${category.name}"></label>

@@ -10,6 +10,7 @@ import com.example.Bookstore.Persistence.DAO.OrderdetailRepository;
 import com.example.Bookstore.Persistence.DAO.UserRepository;
 import com.example.Bookstore.Domain.Model.User.User;
 import com.example.Bookstore.Domain.Security.ApplicationConfig;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -58,12 +59,40 @@ public class Bookstore {
             orderList.add(newOrder);
             orderdetailRepository.saveAll(orderList);
 
-            List<Categories> categoriesList = new ArrayList<>();
-            Categories newCat = new Categories( "Document", null);
-            categoriesList.add(newCat);
-            Categories newCat1 = new Categories( "Psychology", null);
-            categoriesList.add(newCat1);
-            categoriesRepository.saveAll(categoriesList);
+            List<Categories> lc = new ArrayList<>();
+            Categories newCat = new Categories(1, "Document", null);
+            lc.add(newCat);
+            Categories newCat1 = new Categories(2,"Romance",null);
+            lc.add(newCat1);
+            Categories newCat2 = new Categories(3,"Mystery",null);
+            lc.add(newCat2);
+            Categories newCat3 = new Categories(4,"Fantasy & Science fiction",null);
+            lc.add(newCat3);
+            Categories newCat4 = new Categories(5,"Thrillers & Horror",null);
+            lc.add(newCat4);
+            Categories self_help = new Categories(6,"Self-help",null);
+            lc.add(self_help);
+            Categories short_stories = new Categories(7,"Short Stories",null);
+            lc.add(short_stories);
+            Categories cookbooks = new Categories(8,"Cookbooks",null);
+            lc.add(cookbooks);
+            Categories history = new Categories(9,"History",null);
+            lc.add(history);
+            Categories science = new Categories(10,"Science",null);
+            lc.add(science);
+            Categories adventure = new Categories(11,"Adventure",null);
+            lc.add(adventure);
+            Categories humor = new Categories(12,"Humor",null);
+            lc.add(humor);
+            Categories biography = new Categories(13,"Biography",null);
+            lc.add(biography);
+            Categories memoir = new Categories(14,"Memoir",null);
+            lc.add(memoir);
+
+
+
+
+            categoriesRepository.saveAll(lc);
 
 
             Set<Categories> newSet = new HashSet<>();
