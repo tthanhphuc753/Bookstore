@@ -46,7 +46,8 @@ public class CartServiceImp implements CartService {
         Map<Long, CartItem> cartMap = getCartMap(session);
 
         cartMap.remove(bookId);
-        cartRepository.deleteById(bookId);
+        cartRepository.deleteAll();
+        cartRepository.saveAll(cartMap.values());
 
         session.setAttribute(SESSION_KEY_CART, cartMap);
     }
