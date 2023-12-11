@@ -28,4 +28,8 @@ public class Categories {
     private Set<Book> bookSet = new HashSet<>();
 
 
+    public Categories( String name, Set<Book> bookSet) {
+        this.name = name ;
+        this.bookSet = bookSet;
+    }
 }

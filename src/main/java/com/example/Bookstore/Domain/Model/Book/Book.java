@@ -25,6 +25,7 @@ public class Book {
     private String image;
     private String name;
     private String author;
+    private String description;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "bookList")

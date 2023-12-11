@@ -58,9 +58,12 @@ public class Bookstore {
             orderList.add(newOrder);
             orderdetailRepository.saveAll(orderList);
 
-
-            Categories newCat = new Categories(1, "Document", null);
-            categoriesRepository.save(newCat);
+            List<Categories> categoriesList = new ArrayList<>();
+            Categories newCat = new Categories( "Document", null);
+            categoriesList.add(newCat);
+            Categories newCat1 = new Categories( "Psychology", null);
+            categoriesList.add(newCat1);
+            categoriesRepository.saveAll(categoriesList);
 
 
             Set<Categories> newSet = new HashSet<>();
