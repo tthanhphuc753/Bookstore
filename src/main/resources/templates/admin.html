@@ -374,14 +374,14 @@
                         </div>
                     </div>
                 </div>
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
+                <nav aria-label="Page navigation example" th:if="${not #lists.isEmpty(books)}">
+                    <ul class="pagination" th:if="${totalPages > 1}">
                         <li class="page-item" th:if="${currentPage > 0}">
                             <a class="page-link" th:href="@{'/admin/homepage?page=' +  ${currentPage - 1 }}">Previous</a>
                         </li>
                         <li class="page-item" th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}">
                             <a class="page-link" th:href="@{'/admin/homepage?page=' + ${pageNumber}}"
-                               th:text="${pageNumber}"></a>
+                               th:text="${pageNumber + 1}"></a>
                         </li>
                         <li class="page-item" th:if="${currentPage < totalPages - 1}">
                             <a class="page-link" th:href="@{'/admin/homepage?page=' + ${currentPage + 1 }}">Next</a>
