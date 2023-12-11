@@ -58,7 +58,6 @@ public class Book {
     public Book() {
     }
 
-
     @Override
     public String toString() {
         return "Product{" +

@@ -58,16 +58,16 @@ public class ShoppingCartController {
         return "redirect:/book/homepage";
     }
 
-    @DeleteMapping("delete/{cartId}")
-    public String deleteCart(@PathVariable Long cartId, HttpSession session) {
-        cartService.removeFromCart(cartId, session);
+    @DeleteMapping("delete/{bookId}")
+    public String deleteCart(@PathVariable Long bookId, HttpSession session) {
+        cartService.removeFromCart(bookId, session);
         return "redirect:/book/homepage";
     }
 
     @PostMapping("update")
-    public String updateCartQuantity(@ModelAttribute("cartId") Long cartId,
+    public String updateCartQuantity(@ModelAttribute("bookId") Long bookId,
                                      @ModelAttribute("quantity") int quantity, HttpSession session) {
-        cartService.updateCart(cartId, quantity, session);
+        cartService.updateCart(bookId, quantity, session);
         return "redirect:/shopping-cart/list";
     }
 

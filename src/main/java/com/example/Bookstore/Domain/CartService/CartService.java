@@ -10,9 +10,9 @@ public interface CartService {
 
     void addToCart(CartItem item, HttpSession session);
 
-    void removeFromCart(long id, HttpSession session);
+    void removeFromCart(long bookId, HttpSession session);
 
-    CartItem updateCart(Long bookId, int quantity, HttpSession session);
+    void updateCart(Long bookId, int quantity, HttpSession session);
 
     void clearAll(HttpSession session);
 

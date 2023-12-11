@@ -42,17 +42,17 @@ public class CartServiceImp implements CartService {
     }
 
     @Override
-    public void removeFromCart(long id, HttpSession session) {
+    public void removeFromCart(long bookId, HttpSession session) {
         Map<Long, CartItem> cartMap = getCartMap(session);
 
-        cartMap.remove(id);
-        cartRepository.deleteById(id);
+        cartMap.remove(bookId);
+        cartRepository.deleteById(bookId);
 
         session.setAttribute(SESSION_KEY_CART, cartMap);
     }
 
     @Override
-    public CartItem updateCart(Long bookId, int quantity, HttpSession session) {
+    public void updateCart(Long bookId, int quantity, HttpSession session) {
         Map<Long, CartItem> cartMap = getCartMap(session);
 
         CartItem cartItem = cartMap.get(bookId);
@@ -63,7 +63,6 @@ public class CartServiceImp implements CartService {
 
         session.setAttribute(SESSION_KEY_CART, cartMap);
 
-        return cartItem;
     }
 
     @Override

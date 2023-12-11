@@ -14,6 +14,10 @@
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
+    <!-- Thêm thư viện DataTables -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+
+
     <style>
         :root {
             --blue: #4e73df;
@@ -54,8 +58,9 @@
         html {
             font-family: sans-serif;
             line-height: 1.15;
-            -webkit-text-size-adjust: 100%;
-            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            height: 100%;
+            margin: 0;
+            padding: 0;
         }
         *,
         *::before,
@@ -63,19 +68,18 @@
             box-sizing: border-box;
         }
 
-        article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
-            display: block;
-        }
-
         body {
-            margin: 0;
             font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
             font-size: 1rem;
             font-weight: 400;
             line-height: 1.5;
             color: #858796;
-            text-align: left;
-            background-color: #fff;
+            height: 100%;
+            padding: 0;
+            width: 100%;
+            background-color: aliceblue;
+            display: flex;
+            flex-direction: column;
         }
 
         h1, h2, h3, h4, h5, h6 {
@@ -101,9 +105,30 @@
 
         #wrapper {
             display: flex;
+            flex: 1;
         }
-        .conten-wrapper {
-            width: 70rem;
+        .content-wrapper {
+            flex: 1; /* Mỗi thành phần chiếm đầy đủ chiều cao của wrapper */
+            padding: 10px;
+
+        }
+        .sidebar {
+            background-color: var(--primary);
+            color: var(--white);
+            /*flex-basis: 20%;*/
+            width: 280px;
+            padding: 0 30px;
+
+        }
+        .content-wrapper {
+            flex: 1;
+        }
+        .content {
+            height: 98%;
+        }
+        .footer {
+            text-align: center;
+            height: 2%;
         }
         .modal {
             display: none;
@@ -136,13 +161,7 @@
         .navbar-expand {
             flex-direction: row-reverse;
         }
-        .sidebar {
-            background-color: var(--primary);
-            color: var(--white);
-            width: 25rem;
-            padding: 0 30px;
 
-        }
         .sidebar-brand {
             display: flex;
             color: var(--white);
@@ -198,10 +217,7 @@
         .table {
             display: table;
         }
-        footer {
-            display: flex;
-            justify-content: center;
-        }
+
 
         .modal-link-logout, .modal-link-cancel {
             margin-top: 10px;
@@ -223,6 +239,16 @@
             display: block;
 
         }
+        .item-link:hover {
+            background-color: #006dce;
+        }
+
+        .item-link.selected {
+            text-decoration: underline;
+        }
+        #user-icon {
+            margin: 0 5px;
+        }
 
 
     </style>
@@ -243,7 +269,7 @@
 
                 <div class="block sidebar-item">
                     <span class="item-heading">Quản lý sản phẩm/ loại sản phẩm</span>
-                    <a href="/category/list" class="item-link">Xem danh sách loại sản phẩm</a>
+                    <a href="/category/list" class="item-link selected">Xem danh sách loại sản phẩm</a>
                     <a href="/admin/homepage"  class="item-link">Xem danh sách sản phẩm</a>
                 </div>
 
@@ -261,13 +287,14 @@
                     <a href="/user/list" class="item-link">Xem danh sách tài khoản</a>
                 </div>
             </div>
-            <div class="conten-wrapper">
+            <div class="content-wrapper">
                 <div class="content">
                     <!-- topbar -->
                     <nav class="navbar navbar-expand ">
                         <div class="navbar-var">
                             <a class="user" onmouseover="showDropdown()" onmouseout="hideDropdown()">
                                 <span id="user-email" class="r-2 d-none d-lg-inline text-gray-600 small"></span>
+                                <i id="user-icon" class="fa-solid fa-user"></i>
                                 <div id="dropdown-menu" class="dropdown-menu" onmouseover="cancelHide()"
                                      onmouseout="hideDropdown()">
                                     <!-- Các liên kết hoặc nội dung của dropdown menu -->
@@ -282,7 +309,7 @@
                     <div class="card-body">
                         <div class="card-responsive">
                             <div th:if="${not #lists.isEmpty(categories)}"></div>
-                            <table class="table">
+                            <table id="categoryTable" class="table">
                                 <thead>
                                 <tr>
                                     <th>Id</th>
@@ -301,7 +328,7 @@
 
                 </div>
 
-                <footer class="sticky-footer bg-white">
+                <footer class="footer">
                     <span>Copyright &copy; Your Website 2021</span>
                 </footer>
             </div>
@@ -316,8 +343,15 @@
                     <a class="modal-link modal-link-logout ">Đăng xuất</a>
                 </div>
             </div>
-            <script>
+            <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+            <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 
+            <script>
+                $(document).ready(function() {
+                    $('#categoryTable').DataTable({
+                        pagelength: 10,
+                    }); // ID của bảng là categoryTable
+                });
                 let timeoutId;
 
                 function showDropdown() {
