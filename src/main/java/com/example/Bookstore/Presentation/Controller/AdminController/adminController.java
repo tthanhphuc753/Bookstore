@@ -39,6 +39,7 @@ public class adminController {
     public String showUpdateForm(@PathVariable Long id, Model model) {
         Optional<Book> bookOptional = bookService.findById(id);
         bookOptional.ifPresent(book -> model.addAttribute("book", book));
+        model.addAttribute("category",categoriesService.getAllCategory());
         return "updatebook";
     }
 

@@ -7,6 +7,8 @@ import com.example.Bookstore.Persistence.DAO.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.security.web.savedrequest.DefaultSavedRequest;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -41,11 +43,16 @@ public class JwtAuthenticationSuccessHandler extends SavedRequestAwareAuthentica
 
             response.addCookie(cookie);
             if (userAuthDetails.getAuthorities().stream().anyMatch(role -> role.getAuthority().equals("USER"))) {
-                getRedirectStrategy().sendRedirect(request, response, "/book/homepage");
+                setDefaultTargetUrl("/book/homepage");
             } else {
-                getRedirectStrategy().sendRedirect(request, response, "/admin/homepage");
+                setDefaultTargetUrl("/admin/homepage");
             }
 
+
+            DefaultSavedRequest savedRequest = (DefaultSavedRequest) new HttpSessionRequestCache().getRequest(request, response);
+            if (savedRequest != null && savedRequest.getRedirectUrl() != null) {
+                setDefaultTargetUrl(savedRequest.getRedirectUrl()); // Sử dụng trang trước đó nếu có
+            }
 
             super.onAuthenticationSuccess(request, response, authentication);
         } else {
