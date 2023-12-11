@@ -5,6 +5,7 @@ import com.example.Bookstore.Domain.BookService.BookService;
 import com.example.Bookstore.Domain.CategoriesService.CategoriesService;
 import com.example.Bookstore.Domain.Model.Book.Book;
 import com.example.Bookstore.Domain.Model.Book.Categories;
+import com.example.Bookstore.Domain.OrderService.OrderService;
 import com.example.Bookstore.Persistence.DAO.BookRepository;
 import com.example.Bookstore.Persistence.DAO.CategoriesRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class adminController {
 
     private final BookService bookService;
     private final CategoriesService categoriesService;
+    private final OrderService orderService;
     @GetMapping("/homepage")
     public String showAdminPage(Model model,
                                 @RequestParam(defaultValue = "0") int page,
@@ -75,6 +77,13 @@ public class adminController {
 
         categoriesService.addCategory(categories);
         return "redirect:/category/list";
+    }
+
+    @PostMapping("/order/delete/{id}")
+    public String deleteOrder(@PathVariable Long id)
+    {
+        orderService.deleteOrderById(id);
+        return "redirect:/order/list";
     }
 
 }
