@@ -2,6 +2,7 @@ package com.example.Bookstore.Domain.Security.JWTAuth;
 
 import com.example.Bookstore.Domain.Model.User.User;
 import com.example.Bookstore.Domain.Model.User.UserAuthDetails;
+import com.example.Bookstore.Domain.UserService.UserServices;
 import com.example.Bookstore.Persistence.DAO.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -18,7 +19,7 @@ import java.util.Optional;
 public class JwtAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
     private final JwtService jwtService;
-    private final UserRepository userrepos;
+    private final UserServices userServices;
 
 
     @Override
@@ -28,7 +29,7 @@ public class JwtAuthenticationSuccessHandler extends SavedRequestAwareAuthentica
 
         String email = authentication.getName();
 
-        Optional<User> userOptional = userrepos.findByEmail(email);
+        Optional<User> userOptional = userServices.findByEmail(email);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             var userAuthDetails = new UserAuthDetails(user);

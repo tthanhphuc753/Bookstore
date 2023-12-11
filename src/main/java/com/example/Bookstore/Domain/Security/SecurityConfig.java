@@ -3,6 +3,7 @@ package com.example.Bookstore.Domain.Security;
 import com.example.Bookstore.Domain.Security.JWTAuth.JwtAuthenticationFilter;
 import com.example.Bookstore.Domain.Security.JWTAuth.JwtAuthenticationSuccessHandler;
 import com.example.Bookstore.Domain.Security.JWTAuth.JwtService;
+import com.example.Bookstore.Domain.UserService.UserServices;
 import com.example.Bookstore.Persistence.DAO.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +26,7 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
     private final JwtService jwtService;
-    private final UserRepository userrepos;
+    private final UserServices userServices;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -43,7 +44,7 @@ public class SecurityConfig {
                                 .loginPage("/auth/login")
                                 .loginProcessingUrl("/auth/authenticate")
                                 .usernameParameter("email")
-                                .successHandler(new JwtAuthenticationSuccessHandler(jwtService, userrepos))
+                                .successHandler(new JwtAuthenticationSuccessHandler(jwtService, userServices))
                                 .failureUrl("/auth/login?error=true")
                                 .permitAll()
                                 .and()

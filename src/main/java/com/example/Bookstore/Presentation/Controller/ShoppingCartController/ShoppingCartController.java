@@ -45,7 +45,6 @@ public class ShoppingCartController {
                 User user = optionalUser.get();
                 item.setUser(user);
             }
-
             item.setQuantity(1);
             cartService.addToCart(item, session);
             return "redirect:/shopping-cart/list";
