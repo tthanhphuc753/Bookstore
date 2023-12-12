@@ -47,7 +47,7 @@ public class ShoppingCartController {
             }
             item.setQuantity(1);
             cartService.addToCart(item, session);
-            return "redirect:/shopping-cart/list";
+            return "redirect:/book/homepage";
         } else
             return "redirect:/shopping-cart/list";
     }
@@ -55,13 +55,13 @@ public class ShoppingCartController {
     @GetMapping("list")
     public String getAll(Model model, HttpSession session) {
         model.addAttribute("cartitem", cartService.getAlls(session));
-        return "redirect:/book/homepage";
+        return "shopping-cart";
     }
 
-    @DeleteMapping("delete/{bookId}")
+    @PostMapping("delete/{bookId}")
     public String deleteCart(@PathVariable Long bookId, HttpSession session) {
         cartService.removeFromCart(bookId, session);
-        return "redirect:/book/homepage";
+        return "redirect:/shopping-cart/list";
     }
 
     @PostMapping("update")
