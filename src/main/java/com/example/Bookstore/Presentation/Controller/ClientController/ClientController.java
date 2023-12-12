@@ -40,8 +40,10 @@ public class ClientController {
 
 
     @GetMapping("/homepage")
-    public String showHomePage(Model model) {
-        model.addAttribute("books", bookController.getAllBook());
+    public String showHomePage(Model model,
+                               @RequestParam(defaultValue = "0") int page,
+                               @RequestParam(defaultValue = "12") int size) {
+        bookController.pageSize(model, page, size);
         model.addAttribute("category", categoriesServiceController.getAllCategory());
         return "homePage";
     }
@@ -54,9 +56,9 @@ public class ClientController {
     @PostMapping("add/{bookId}")
     public String addToCart(@PathVariable Long bookId, HttpServletRequest request, HttpSession session) {
         if (shoppingCartController.addToCart(bookId, request, session)) {
-            return "redirect:/user/homepage";
+            return "redirect:/client/homepage";
         } else
-            return "redirect:/shopping-cart/list";
+            return "redirect:/client/list";
     }
 
     @GetMapping("list")
@@ -68,13 +70,13 @@ public class ClientController {
     @PostMapping("delete/{bookId}")
     public String deleteCart(@PathVariable Long bookId, HttpSession session) {
         shoppingCartController.deleteCart(bookId, session);
-        return "redirect:/shopping-cart/list";
+        return "redirect:/client/list";
     }
 
     @PostMapping("update")
     public String updateCartQuantity(@ModelAttribute("bookId") Long bookId,
                                      @ModelAttribute("quantity") int quantity, HttpSession session) {
         shoppingCartController.updateCartQuantity(bookId, quantity, session);
-        return "redirect:/shopping-cart/list";
+        return "redirect:/client/list";
     }
 }

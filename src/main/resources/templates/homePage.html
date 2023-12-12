@@ -323,7 +323,7 @@
     <!-- header section start -->
     <header class="header">
         <div class="logo">
-            <a href="/book/homepage">
+            <a href="/client/homepage">
                 <i class="fas fa-book"></i> BOOKSTORE
             </a>
         </div>
@@ -381,7 +381,7 @@
                 <h2 th:text="${book.name}"></h2>
                 <p th:text="'Author: ' + ${book.author}"></p>
                 <p th:text="'Price: $' + ${book.price}"></p>
-                <form method="post" th:action="@{/shopping-cart/add/{bookId}(bookId=${book.id})}">
+                <form method="post" th:action="@{/client/add/{bookId}(bookId=${book.id})}">
                     <button type="submit">Add to Cart</button>
                 </form>
             </div>
@@ -389,14 +389,14 @@
         <nav aria-label="Page navigation example" th:if="${not #lists.isEmpty(books)}">
             <ul class="pagination" th:if="${totalPages > 1}">
                 <li class="page-item" th:if="${currentPage > 0}">
-                    <a class="page-link" th:href="@{'/user/homepage?page=' +  ${currentPage - 1 }}">Previous</a>
+                    <a class="page-link" th:href="@{'/client/homepage?page=' +  ${currentPage - 1 }}">Previous</a>
                 </li>
                 <li class="page-item" th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}">
-                    <a class="page-link" th:href="@{'/user/homepage?page=' + ${pageNumber}}"
+                    <a class="page-link" th:href="@{'/client/homepage?page=' + ${pageNumber}}"
                        th:text="${pageNumber + 1}"></a>
                 </li>
                 <li class="page-item" th:if="${currentPage < totalPages - 1}">
-                    <a class="page-link" th:href="@{'/user/homepage?page=' + ${currentPage + 1 }}">Next</a>
+                    <a class="page-link" th:href="@{'/client/homepage?page=' + ${currentPage + 1 }}">Next</a>
                 </li>
             </ul>
         </nav>
@@ -408,15 +408,16 @@
             <h2>Bạn có chắc muốn đăng xuất?</h2>
             <p>Chọn "Hủy" nếu bạn muốn tiếp tục phiên làm việc.</p>
             <a class="modal-link modal-link-cancel" onclick="closeModal()">Hủy</a>
-            <a class="modal-link modal-link-logout ">Đăng xuất</a>
+            <a class="modal-link modal-link-logout" href="#" onclick="performLogout()">Đăng xuất</a>
         </div>
     </div>
 <footer>
     <p>&copy; 2023 Bookstore. All rights reserved.</p>
 </footer>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     function redirectToShoppingCart() {
-        window.location.href = '/shopping-cart/list'; // Điều hướng đến trang giỏ hàng
+        window.location.href = '/client/list'; // Điều hướng đến trang giỏ hàng
     }
 
     let timeoutId;
@@ -453,39 +454,22 @@
         }
     };
 
-    function logout() {
-        // Gửi yêu cầu đăng xuất đến server
-        fetch('/auth/logout', {
-            method: 'POST',
-            credentials: 'same-origin', // Bảo đảm các cookie được gửi đi (hoặc sử dụng 'include' nếu máy chủ và trang web ở các domain khác nhau)
-            headers: {
-                'Content-Type': 'application/json',
-                // Thêm các thông tin khác nếu cần
+    function performLogout() {
+        $.ajax({
+            url: '/auth/logout',
+            type: 'POST',
+            success: function(response) {
+                // Xử lý thành công (nếu cần)
+                console.log('Logout successful');
+                // Chuyển hướng trang sau khi logout
+                window.location.href = '/auth/login';
             },
-        })
-            .then(response => {
-                if (response.ok) {
-
-                    window.location.href = '/auth/login';
-
-                } else {
-                    // Xử lý lỗi đăng xuất
-                    alert('Có lỗi khi đăng xuất. Vui lòng thử lại!');
-                }
-            })
-            .catch(error => {
-                alert(error);
-            });
+            error: function(error) {
+                // Xử lý lỗi (nếu cần)
+                console.error('Logout error:', error);
+            }
+        });
     }
-
-    // Khi nhấn nút "Đăng xuất"
-    document.querySelector('#logoutModal .modal-link-logout').addEventListener('click', function (event) {
-        event.preventDefault();
-        logout();
-        closeModal();
-        // Cập nhật lại trang sau khi chuyển trang
-        window.location.reload();
-    });
 
     // Lấy token từ cookie
     const token = getCookie("JWT_TOKEN"); // Thay "yourTokenCookie" bằng tên cookie bạn đã sử dụng

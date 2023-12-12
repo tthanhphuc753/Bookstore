@@ -179,7 +179,7 @@
 
         }
 
-        .modal {
+        .modal1 {
             display: none;
             position: fixed;
             top: 0;
@@ -243,7 +243,7 @@
     <!-- header section start -->
     <header class="header">
         <div class="logo">
-            <a href="/book/homepage">
+            <a href="/client/homepage">
                 <i class="fas fa-book"></i> BOOKSTORE
             </a>
         </div>
@@ -303,14 +303,14 @@
                     <td th:text="${stat.index + 1}"></td>
                     <td th:text="${cartItem.book.name}"></td>
                     <td>
-                        <form th:action="@{/shopping-cart/update}" th:method="post" id="updateForm">
+                        <form th:action="@{/client/update}" th:method="post" id="updateForm">
                             <input type="hidden" th:name="bookId" th:value="${cartItem.book.id}" />
                             <input type="number" th:name="quantity" th:value="${cartItem.quantity}" min="1" max="80" oninput="validateQuantity(this)" onchange="updateCartQuantity(this)" />
                         </form>
                     </td>
                     <td th:text="${cartItem.book.price}"></td>
                     <td>
-                        <form th:action="@{/shopping-cart/delete/{bookId}(bookId=${cartItem.book.id})}" th:method="post">
+                        <form th:action="@{/client/delete/{bookId}(bookId=${cartItem.book.id})}" th:method="post">
                             <button type="submit">Remove</button>
                         </form>
                     </td>
@@ -322,44 +322,46 @@
         </th:block>
         <th:block th:unless="${not #lists.isEmpty(cartitem)}">
             <p>Your shopping cart is empty.</p>
-            <a th:href="@{/user/homepage}">Continue Shopping</a>
+            <a th:href="@{/client/homepage}">Continue Shopping</a>
         </th:block>
     </div>
-
 </section>
-    <div id="quantityModal" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="quantityModal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Thông báo</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Số lượng không hợp lại. Xin vui lòng nhập lại.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                </div>
+<div class="modal fade" id="quantityModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeModalButton">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Số lượng không hợp lý. Xin vui lòng nhập lại.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
             </div>
         </div>
     </div>
-    <div id="logoutModal" class="modal">
+</div>
+
+    <div id="logoutModal" class="modal1">
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal()">&times;</span>
             <h2>Bạn có chắc muốn đăng xuất?</h2>
             <p>Chọn "Hủy" nếu bạn muốn tiếp tục phiên làm việc.</p>
             <a class="modal-link modal-link-cancel" onclick="closeModal()">Hủy</a>
-            <a class="modal-link modal-link-logout ">Đăng xuất</a>
+            <a class="modal-link modal-link-logout" href="#" onclick="performLogout()">Đăng xuất</a>
         </div>
     </div>
 <footer>
     <p>&copy; 2023 Bookstore. All rights reserved.</p>
 </footer>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     function redirectToShoppingCart() {
-        window.location.href = '/shopping-cart/list'; // Điều hướng đến trang giỏ hàng
+        window.location.href = '/client/list'; // Điều hướng đến trang giỏ hàng
     }
 
     let timeoutId;
@@ -396,39 +398,22 @@
         }
     };
 
-    function logout() {
-        // Gửi yêu cầu đăng xuất đến server
-        fetch('/auth/logout', {
-            method: 'POST',
-            credentials: 'same-origin', // Bảo đảm các cookie được gửi đi (hoặc sử dụng 'include' nếu máy chủ và trang web ở các domain khác nhau)
-            headers: {
-                'Content-Type': 'application/json',
-                // Thêm các thông tin khác nếu cần
+    function performLogout() {
+        $.ajax({
+            url: '/auth/logout',
+            type: 'POST',
+            success: function(response) {
+                // Xử lý thành công (nếu cần)
+                console.log('Logout successful');
+                // Chuyển hướng trang sau khi logout
+                window.location.href = '/auth/login';
             },
-        })
-            .then(response => {
-                if (response.ok) {
-
-                    window.location.href = '/auth/login';
-
-                } else {
-                    // Xử lý lỗi đăng xuất
-                    alert('Có lỗi khi đăng xuất. Vui lòng thử lại!');
-                }
-            })
-            .catch(error => {
-                alert(error);
-            });
+            error: function(error) {
+                // Xử lý lỗi (nếu cần)
+                console.error('Logout error:', error);
+            }
+        });
     }
-
-    // Khi nhấn nút "Đăng xuất"
-    document.querySelector('#logoutModal .modal-link-logout').addEventListener('click', function (event) {
-        event.preventDefault();
-        logout();
-        closeModal();
-        // Cập nhật lại trang sau khi chuyển trang
-        window.location.reload();
-    });
 
     // Lấy token từ cookie
     const token = getCookie("JWT_TOKEN"); // Thay "yourTokenCookie" bằng tên cookie bạn đã sử dụng
@@ -475,37 +460,28 @@
     }
 // Cart
     function updateCartQuantity(input) {
-        var form = input.form;
-        if (validateQuantity(input)) {
+        var inputValue = input instanceof HTMLInputElement ? input.value : input;
+        var form = $(input).closest('form'); // Find the closest form to the input
+        if (validateQuantity(inputValue)) {
             form.submit();
         } else {
-            var modal = document.getElementById('quantityModal');
-            modal.classList.add('show');
-            modal.style.display = 'block';
-            var closeButton = modal.querySelector('.close');
-            var closeButtonDismiss = modal.querySelector('[data-dismiss="modal"]');
-            var closeButtonInModal = modal.querySelector('.btn-secondary');
-            closeButton.addEventListener('click', function() {
-                input.value = 1;
-                modal.style.display = 'none';
-            });
-            closeButtonDismiss.addEventListener('click', function() {
-                input.value = 1;
-                modal.style.display = 'none';
-            });
-            closeButtonInModal.addEventListener('click', function() {
-                input.value = 1;
-                modal.style.display = 'none';
-            });
+            $('#quantityModal').modal('show');
         }
     }
-    function validateQuantity(input) {
-        var value = input.value;
-        if (value < 1 || value > 80) {
-            return false;
-        }
-        return true;
+
+    function validateQuantity(value) {
+        return value >= 1 && value <= 80;
     }
+
+    $(document).ready(function () {
+        $('#closeModalButton, .btn-secondary').on('click', function () {
+            // Set the input value to 1
+            $('#updateForm input[name="quantity"]').val(1);
+            // Hide the modal
+            $('#quantityModal').modal('hide');
+            updateCartQuantity();
+        });
+    });
 </script>
 </body>
 </html>
