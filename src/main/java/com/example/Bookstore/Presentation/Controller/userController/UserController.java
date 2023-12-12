@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -57,5 +58,9 @@ public class UserController {
         userServices.deleteUser(userID);
     }
 
+
+    public Optional<User> findByEmail(String s) {
+        return userServices.findByEmail(s);
+    }
 
 }

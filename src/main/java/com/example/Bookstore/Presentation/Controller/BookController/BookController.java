@@ -59,4 +59,7 @@ public class BookController {
         return bookService.getAllBook();
     }
 
+    public Optional<Book> findById(Long bookId) {
+       return  bookService.findById(bookId);
+    }
 }

@@ -7,6 +7,8 @@ import com.example.Bookstore.Domain.Model.Cart.CartItem;
 import com.example.Bookstore.Domain.Model.User.User;
 import com.example.Bookstore.Domain.Security.JWTAuth.JwtService;
 import com.example.Bookstore.Domain.UserService.UserServices;
+import com.example.Bookstore.Presentation.Controller.BookController.BookController;
+import com.example.Bookstore.Presentation.Controller.userController.UserController;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,14 +27,14 @@ import java.util.Optional;
 public class ShoppingCartController {
 
     private final CartService cartService;
-    private final BookService bookService;
     private final JwtService jwtService;
-    private final UserServices userServices;
+    private final BookController bookController;
+    private final UserController userController;
     private static final Logger logger = LoggerFactory.getLogger(ShoppingCartController.class);
 
     @PostMapping("add/{bookId}")
     public String addToCart(@PathVariable Long bookId, HttpServletRequest request, HttpSession session) {
-        Optional<Book> optionalBook = bookService.findById(bookId);
+        Optional<Book> optionalBook = bookController.findById(bookId);
         if (optionalBook.isPresent()) {
             Book book = optionalBook.get();
             CartItem item = new CartItem();
@@ -41,7 +43,7 @@ public class ShoppingCartController {
             String token = getJwtFromCookie(request);
 
             if (token != null) {
-                Optional<User> optionalUser = userServices.findByEmail(jwtService.extractUsername(token));
+                Optional<User> optionalUser = userController.findByEmail(jwtService.extractUsername(token));
                 User user = optionalUser.get();
                 item.setUser(user);
             }
