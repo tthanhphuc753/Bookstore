@@ -99,7 +99,11 @@ public class Bookstore {
             newSet.add(newCat);
 
             Book ThinkAndGrowRich = new Book(24, "Think And Grow Rich", "Phuc", newSet);
-            bookList.add(ThinkAndGrowRich);
+            int n = 40;
+            for ( int i = 0 ; i < n ; i++ ){
+                Book book = new Book(25,"book "+i);
+                bookList.add(book);
+            }
 
             bookRepository.saveAll(bookList);
         };
