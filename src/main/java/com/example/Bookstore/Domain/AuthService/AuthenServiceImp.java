@@ -24,6 +24,7 @@ public class AuthenServiceImp implements AuthenService {
     private final VerificationTokenRepository tokenRepository;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final VerificationTokenRepository verificationTokenRepository;
     private final Logger logger = LoggerFactory.getLogger(AuthenServiceImp.class);
 
     @Override
@@ -63,5 +64,11 @@ public class AuthenServiceImp implements AuthenService {
         user.setEnabled(true);
         userrepos.save(user);
         return "Valid";
+    }
+
+    @Override
+    public VerificationToken getToken(String token)
+    {
+       return verificationTokenRepository.findByToken(token);
     }
 }
