@@ -3,9 +3,11 @@ package com.example.Bookstore.Presentation.Controller.CategoriesController;
 import com.example.Bookstore.Domain.CategoriesService.CategoriesService;
 import com.example.Bookstore.Domain.Model.Book.Categories;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 @RequiredArgsConstructor
 public class CategoriesServiceController {
 

@@ -1,15 +1,21 @@
 package com.example.Bookstore.Presentation.Controller.BookController;
 
 import com.example.Bookstore.Domain.BookService.BookService;
+import com.example.Bookstore.Domain.CategoriesService.CategoriesService;
 import com.example.Bookstore.Domain.Model.Book.Book;
 import com.example.Bookstore.Presentation.Controller.CategoriesController.CategoriesServiceController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+
+@Service
 
 @RequiredArgsConstructor
 public class BookController {
@@ -48,7 +54,8 @@ public class BookController {
         model.addAttribute("category", categoriesServiceController.getAllCategory());
     }
 
-    public List<Book> getAllBook() {
+    public List<Book> getAllBook()
+    {
         return bookService.getAllBook();
     }
 
