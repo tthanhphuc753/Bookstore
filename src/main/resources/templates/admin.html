@@ -305,150 +305,154 @@
             margin: 0 5px;
         }
 
-
     </style>
 
 </head>
 <body id="page-top">
 
-<div id="wrapper">
-    <div class="navbar-nav sidebar  ">
-
-        <a class="sidebar-brand " href="/admin/homepage">
-            <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fa-solid fa-book"></i>
-            </div>
-            <div href="#" class="sidebar-brand-text mx-3">Bookstore</div>
-        </a>
-
-        <hr class="sidebar-divider">
-
-        <div class="block sidebar-item">
-            <span class="item-heading">Quản lý sản phẩm/ loại sản phẩm</span>
-            <a href="/category/list" class="item-link">Xem danh sách loại sản phẩm</a>
-            <a href="/admin/homepage" class="item-link selected">Xem danh sách sản phẩm</a>
-        </div>
-
-        <hr class="sidebar-divider">
-
-        <div class="block sidebar-item">
-            <span class="item-heading">Quản lý đơn hàng</span>
-            <a class="item-link" href="/order/list">Xem danh sách đơn hàng</a>
-        </div>
-
-        <hr class="sidebar-divider">
-
-        <div class="block sidebar-item">
-            <span class="item-heading">Quản lý tài khoản</span>
-            <a href="/user/list" class="item-link">Xem danh sách tài khoản</a>
-        </div>
-    </div>
-    <div class="content-wrapper">
-        <div class="content">
-            <!-- topbar -->
-            <nav class="navbar navbar-expand ">
-                <div class="navbar-var">
-                    <a class="user" onmouseover="showDropdown()" onmouseout="hideDropdown()">
-                        <span id="user-email" class="r-2 d-none d-lg-inline text-gray-600 small"></span>
-                        <i id="user-icon" class="fa-solid fa-user"></i>
-                        <div id="dropdown-menu" class="dropdown-menu" onmouseover="cancelHide()"
-                             onmouseout="hideDropdown()">
-                            <!-- Các liên kết hoặc nội dung của dropdown menu -->
-                            <a href="#" class="user-item" onclick="openModalLogout()">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Đăng xuất
-                            </a>
-                        </div>
-                    </a>
+    <div id="wrapper">
+        <div class="navbar-nav sidebar  ">
+            <a class="sidebar-brand " href="/admin/homepage">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fa-solid fa-book"></i>
                 </div>
-            </nav>
+                <div href="#" class="sidebar-brand-text mx-3">Bookstore</div>
+            </a>
 
-            <div class="add">
-                <a class="add-link" href="/admin/book/add-form">Add book</a>
+            <hr class="sidebar-divider">
+
+            <div class="block sidebar-item">
+                <span class="item-heading">Quản lý sản phẩm/ loại sản phẩm</span>
+                <a href="/admin/category/list" class="item-link">Xem danh sách loại sản phẩm</a>
+                <a href="/admin/homepage" class="item-link selected">Xem danh sách sản phẩm</a>
             </div>
-            <div>
-                <div id="booksTable" class="content-item" th:if="${not #lists.isEmpty(books)}">
-                    <div  class="book" th:each="item : ${books}">
-                        <div class="book-detail">
-                            <h5 class="book-detail-c" th:text="${item.name}"></h5>
-                        </div>
-                        <div class="book-detail">
-                            <p class="book-detail-v">Author:</p>
-                            <p class="book-detail-c" th:text="${item.author}"></p>
-                        </div>
-                        <div class="book-detail">
-                            <p class="book-detail-v">Price:</p>
-                            <p>$</p>
-                            <p class="book-detail-c" th:text="${item.price}"></p>
-                        </div>
-                        <div class="book-actions">
-                            <form class="book-actions-update" th:action="@{/admin/book/update-form/{id}(id=${item.id})}"
-                                  method="get">
-                                <button class="btn-primary" type="submit">Update</button>
-                            </form>
-<!--                            <form class="book-actions-delete" th:method="post"-->
-<!--                                  th:action="@{/admin/books/delete/{id}(id=${item.id})}">-->
-<!--                                <button class="btn-primary" type="submit">Delete</button>-->
-<!--                            </form>-->
-                            <!-- Modify the delete button in your book item -->
-                            <div class="book-actions">
-                                <button class="btn-primary" th:data-book-id="${item.id}" onclick="openConfirmDeleteModal(this.getAttribute('data-book-id'))">Delete</button>
+
+            <hr class="sidebar-divider">
+
+            <div class="block sidebar-item">
+                <span class="item-heading">Quản lý đơn hàng</span>
+                <a class="item-link" href="/admin/order/list">Xem danh sách đơn hàng</a>
+            </div>
+
+            <hr class="sidebar-divider">
+
+            <div class="block sidebar-item">
+                <span class="item-heading">Quản lý tài khoản</span>
+                <a href="/admin/user/list" class="item-link">Xem danh sách tài khoản</a>
+            </div>
+        </div>
+        <div class="content-wrapper">
+            <div class="content">
+                <!-- topbar -->
+                <nav class="navbar navbar-expand ">
+                    <div class="navbar-var">
+                        <a class="user" onmouseover="showDropdown()" onmouseout="hideDropdown()">
+                            <span id="user-email" class="r-2 d-none d-lg-inline text-gray-600 small"></span>
+                            <i id="user-icon" class="fa-solid fa-user"></i>
+                            <div id="dropdown-menu" class="dropdown-menu" onmouseover="cancelHide()"
+                                 onmouseout="hideDropdown()">
+                                <!-- Các liên kết hoặc nội dung của dropdown menu -->
+                                <a href="#" class="user-item" onclick="openModalLogout()">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Đăng xuất
+                                </a>
                             </div>
+                        </a>
+                    </div>
+                </nav>
 
+                <div class="add">
+                    <a class="add-link" href="/admin/book/add-form">Add book</a>
+                </div>
+                <div>
+                    <div id="booksTable" class="content-item" th:if="${not #lists.isEmpty(books)}">
+                        <div  class="book" th:each="item : ${books}">
+                            <div class="book-detail">
+                                <h5 class="book-detail-c" th:text="${item.name}"></h5>
+                            </div>
+                            <div class="book-detail">
+                                <p class="book-detail-v">Author:</p>
+                                <p class="book-detail-c" th:text="${item.author}"></p>
+                            </div>
+                            <div class="book-detail">
+                                <p class="book-detail-v">Price:</p>
+                                <p>$</p>
+                                <p class="book-detail-c" th:text="${item.price}"></p>
+                            </div>
+                            <div th:each="item : ${books}" th:id="'bookDetailModal-' + ${item.id}" class="modal">
+                                <div class="modal-content">
+                                    <span class="modal-close" th:data-book-id="${item.id}" onclick="closeBookDetailModal(this.getAttribute('data-book-id'))">&times;</span>
+                                    <p th:text="${item.name}"></p>
+                                    <p th:text="${item.author}"></p>
+                                    <p th:text="${item.price}"></p>
+                                    <p>Category</p>
+                                    <div th:each="category : ${item.categoriesSet}">
+                                        <p th:text="${category.name}"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="book-actions">
+                                <form class="book-actions-update" th:action="@{/admin/book/update-form/{id}(id=${item.id})}"
+                                      method="get">
+                                    <button class="btn-primary" type="submit">Update</button>
+                                </form>
 
+                                <div class="book-actions">
+                                    <button class="btn-primary" th:data-book-id="${item.id}" onclick="openConfirmDeleteModal(this.getAttribute('data-book-id'))">Delete</button>
+                                </div>
+                                <div class="book-actions">
+                                    <button class="btn-primary" th:data-book-id="${item.id}" onclick="openBookDetailModal(this.getAttribute('data-book-id'))">Xem chi tiết</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <div id="pagination-container"></div>
+                    <nav aria-label="Page navigation example" th:if="${not #lists.isEmpty(books)}">
+                        <ul class="pagination" th:if="${totalPages > 1}">
+                            <li class="page-item" th:if="${currentPage > 0}">
+                                <a class="page-link" th:href="@{'/admin/homepage?page=' +  ${currentPage - 1 }}">Previous</a>
+                            </li>
+                            <li class="page-item" th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}">
+                                <a class="page-link" th:onclick="'changePage(this)'" th:href="@{'/admin/homepage?page=' + ${pageNumber}}"
+                                   th:text="${pageNumber + 1}"
+                                   th:class="${pageNumber == currentPage ? 'page-link active' : 'page-link'}"></a>
+                            </li>
+                            <li class="page-item" th:if="${currentPage < totalPages - 1}">
+                                <a class="page-link" th:href="@{'/admin/homepage?page=' + ${currentPage + 1 }}">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
-                <div id="pagination-container"></div>
-                <nav aria-label="Page navigation example" th:if="${not #lists.isEmpty(books)}">
-                    <ul class="pagination" th:if="${totalPages > 1}">
-                        <li class="page-item" th:if="${currentPage > 0}">
-                            <a class="page-link" th:href="@{'/admin/homepage?page=' +  ${currentPage - 1 }}">Previous</a>
-                        </li>
-                        <li class="page-item" th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}">
-                            <a class="page-link" th:href="@{'/admin/homepage?page=' + ${pageNumber}}"
-                               th:text="${pageNumber + 1}"></a>
-                        </li>
-                        <li class="page-item" th:if="${currentPage < totalPages - 1}">
-                            <a class="page-link" th:href="@{'/admin/homepage?page=' + ${currentPage + 1 }}">Next</a>
-                        </li>
-                    </ul>
-                </nav>
+            </div>
+            <footer class="footer">
+                <span>Copyright &copy; Your Website 2021</span>
+            </footer>
+        </div>
+
+        <!-- Logout Modal-->
+        <div id="logoutModal" class="modal">
+            <div class="modal-content">
+                <span class="modal-close" onclick="closeModalLogout()">&times;</span>
+                <h2>Bạn có chắc muốn đăng xuất ?</h2>
+                <p>Chọn "Hủy" nếu bạn muốn tiếp tục phiên làm việc.</p>
+                <a class="modal-link modal-link-cancel" onclick="closeModalLogout()">Hủy</a>
+                <a class="modal-link modal-link-logout" href="#" onclick="performLogout()">Đăng xuất</a>
             </div>
         </div>
-        <footer class="footer">
-            <span>Copyright &copy; Your Website 2021</span>
-        </footer>
-    </div>
-
-    <!-- Logout Modal-->
-    <div id="logoutModal" class="modal">
-        <div class="modal-content">
-            <span class="modal-close" onclick="closeModalLogout()">&times;</span>
-            <h2>Bạn có chắc muốn đăng xuất ?</h2>
-            <p>Chọn "Hủy" nếu bạn muốn tiếp tục phiên làm việc.</p>
-            <a class="modal-link modal-link-cancel" onclick="closeModalLogout()">Hủy</a>
-            <a class="modal-link modal-link-logout">Đăng xuất</a>
+        <!-- Add this modal to your HTML -->
+        <div id="confirmDeleteModal" class="modal">
+            <div class="modal-content">
+                <span class="modal-close" onclick="closeConfirmDeleteModal()">&times;</span>
+                <h2>Xác nhận xóa sách</h2>
+                <p>Bạn có chắc chắn muốn xóa sách này?</p>
+                <a  class="modal-link modal-link-logout" onclick="closeConfirmDeleteModal()">Hủy</a>
+                <a  class="modal-link modal-link-cancel" onclick="deleteBook()">Xác nhận</a>
+            </div>
         </div>
     </div>
-    <!-- Add this modal to your HTML -->
-    <div id="confirmDeleteModal" class="modal">
-        <div class="modal-content">
-            <span class="modal-close" onclick="closeConfirmDeleteModal()">&times;</span>
-            <h2>Xác nhận xóa sách</h2>
-            <p>Bạn có chắc chắn muốn xóa sách này?</p>
-            <a  class="modal-link modal-link-logout" onclick="closeConfirmDeleteModal()">Hủy</a>
-            <a  class="modal-link modal-link-cancel" onclick="deleteBook()">Xác nhận</a>
-        </div>
-    </div>
-
-
-</div>
-
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-
     let timeoutId;
-
     function showDropdown() {
         clearTimeout(timeoutId);
         document.getElementById('dropdown-menu').style.display = 'block';
@@ -481,40 +485,40 @@
         }
     };
 
-    function logout() {
-        // Gửi yêu cầu đăng xuất đến server
-        fetch('/auth/logout', {
-            method: 'POST',
-            credentials: 'same-origin', // Bảo đảm các cookie được gửi đi (hoặc sử dụng 'include' nếu máy chủ và trang web ở các domain khác nhau)
-            headers: {
-                'Content-Type': 'application/json',
-                // Thêm các thông tin khác nếu cần
-            },
-        })
-            .then(response => {
-                if (response.ok) {
-
-                    window.location.href = '/auth/login';
-
-                } else {
-                    // Xử lý lỗi đăng xuất
-                    alert('Có lỗi khi đăng xuất. Vui lòng thử lại!');
-                }
-            })
-            .catch(error => {
-                alert(error);
-            });
-    }
+    // function logout() {
+    //     // Gửi yêu cầu đăng xuất đến server
+    //     fetch('/auth/logout', {
+    //         method: 'POST',
+    //         credentials: 'same-origin', // Bảo đảm các cookie được gửi đi (hoặc sử dụng 'include' nếu máy chủ và trang web ở các domain khác nhau)
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             // Thêm các thông tin khác nếu cần
+    //         },
+    //     })
+    //         .then(response => {
+    //             if (response.ok) {
+    //
+    //                 window.location.href = '/auth/login';
+    //
+    //             } else {
+    //                 // Xử lý lỗi đăng xuất
+    //                 alert('Có lỗi khi đăng xuất. Vui lòng thử lại!');
+    //             }
+    //         })
+    //         .catch(error => {
+    //             alert(error);
+    //         });
+    // }
 
 
     // Khi nhấn nút "Đăng xuất"
-    document.querySelector('#logoutModal .modal-link-logout').addEventListener('click', function (event) {
-        event.preventDefault();
-        logout();
-        closeModal();
-        // Cập nhật lại trang sau khi chuyển trang
-        window.location.reload();
-    });
+    // document.querySelector('#logoutModal .modal-link-logout').addEventListener('click', function (event) {
+    //     event.preventDefault();
+    //     logout();
+    //     closeModal();
+    //     // Cập nhật lại trang sau khi chuyển trang
+    //     window.location.reload();
+    // });
 
     // Lấy token từ cookie
     const token = getCookie("JWT_TOKEN"); // Thay "yourTokenCookie" bằng tên cookie bạn đã sử dụng
@@ -593,6 +597,31 @@
                 alert(error);
             });
 
+    }
+    function openBookDetailModal(index) {
+        console.log('index='+index)
+        document.getElementById('bookDetailModal-' + index).style.display = 'flex';
+    }
+    function closeBookDetailModal(index) {
+        console.log('close='+index)
+        document.getElementById('bookDetailModal-'+ index).style.display = 'none';
+    }
+
+    function performLogout() {
+        $.ajax({
+            url: '/auth/logout',
+            type: 'POST',
+            success: function(response) {
+                // Xử lý thành công (nếu cần)
+                console.log('Logout successful');
+                // Chuyển hướng trang sau khi logout
+                window.location.href = '/auth/login';
+            },
+            error: function(error) {
+                // Xử lý lỗi (nếu cần)
+                console.error('Logout error:', error);
+            }
+        });
     }
 
 
