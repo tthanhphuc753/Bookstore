@@ -58,7 +58,7 @@ public class ShoppingCartController {
         return "redirect:/book/homepage";
     }
 
-    @DeleteMapping("delete/{bookId}")
+    @PostMapping("delete/{bookId}")
     public String deleteCart(@PathVariable Long bookId, HttpSession session) {
         cartService.removeFromCart(bookId, session);
         return "redirect:/book/homepage";
