@@ -8,6 +8,7 @@ import com.example.Bookstore.Domain.Model.token.VerificationToken;
 import com.example.Bookstore.Domain.UserService.UserServices;
 import com.example.Bookstore.Domain.event.RegistrationCompleteEvent;
 import com.example.Bookstore.Persistence.DAO.VerificationTokenRepository;
+import com.example.Bookstore.Presentation.Controller.userController.UserController;
 import lombok.AllArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
@@ -24,13 +25,13 @@ import javax.servlet.http.HttpServletResponse;
 @AllArgsConstructor
 public class AuthenticationController {
 
-    private final UserServices userServices;
+    private final UserController userController;
     private final AuthenService authenService;
     private final ApplicationEventPublisher publisher;
 
     @PostMapping("/register")
     public String registerUser(@ModelAttribute("user") RegistrationRequest registrationRequest, final HttpServletRequest request) {
-        User user = userServices.registerUser(registrationRequest);
+        User user = userController.registerUser(registrationRequest);
         publisher.publishEvent(new RegistrationCompleteEvent(user, applicationUrl(request)));
         return "redirect:/auth/registration-form?success";
     }
