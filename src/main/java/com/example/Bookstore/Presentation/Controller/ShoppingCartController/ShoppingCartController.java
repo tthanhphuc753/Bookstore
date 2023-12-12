@@ -47,7 +47,7 @@ public class ShoppingCartController {
             }
             item.setQuantity(1);
             cartService.addToCart(item, session);
-            return "redirect:/book/homepage";
+            return "redirect:/user/homepage";
         } else
             return "redirect:/shopping-cart/list";
     }
