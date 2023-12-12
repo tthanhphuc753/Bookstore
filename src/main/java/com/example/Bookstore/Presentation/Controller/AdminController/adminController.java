@@ -82,7 +82,7 @@ public class adminController {
     public String deteleOrder(@PathVariable Long orderId)
     {
         orderController.deleteOrder(orderId);
-        return "redirect:order/list";
+        return "redirect:/admin/order/list";
     }
 
     @GetMapping("user/list")
