@@ -1,4 +1,4 @@
-package com.example.Bookstore.Presentation.Controller.categoriesController;
+package com.example.Bookstore.Presentation.Controller.CategoriesController;
 
 import com.example.Bookstore.Domain.CategoriesService.CategoriesService;
 import com.example.Bookstore.Domain.Model.Book.Categories;
@@ -18,6 +18,11 @@ public class CategoriesServiceController {
     public String getAllCategory(Model model) {
         model.addAttribute("categories", categoriesService.getAllCategory());
         return "categorylist";
+    }
+
+    public void addCategories(Categories categories)
+    {
+        categoriesService.addCategory(categories);
     }
 
 

@@ -53,7 +53,7 @@ public class SecurityConfig {
                                 .logoutSuccessHandler((httpServletRequest, httpServletResponse, authentication) -> {
                                     httpServletResponse.setStatus(HttpServletResponse.SC_OK);
                                 })
-                                .deleteCookies("JWT_TOKEN")
+                                    .deleteCookies("JWT_TOKEN")
                                 .invalidateHttpSession(true)
                                 .clearAuthentication(true)
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
