@@ -23,6 +23,11 @@ public class OrderController {
     public void addOrder(Long cartId, Long userId) {
         orderService.addOrder(cartId, userId);
     }
+    public void deleteOrder(Long orderId)
+    {
+        orderService.deleteOrderById(orderId);
+    }
+
 
 
 }

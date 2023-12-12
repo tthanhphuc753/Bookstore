@@ -78,6 +78,12 @@ public class adminController {
         model.addAttribute("orders", orderController.getAllOrder());
         return "orderlist";
     }
+    @PostMapping("order/delete/{orderId}")
+    public String deteleOrder(@PathVariable Long orderId)
+    {
+        orderController.deleteOrder(orderId);
+        return "redirect:order/list";
+    }
 
     @GetMapping("user/list")
     public String getAllUser(Model model) {
