@@ -36,7 +36,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 0.9rem 7%;
-            background-color: #0bb7c4;
+            background-color: #4e73df;
             font-family: 'Poppins', sans-serif;
         }
 
@@ -120,45 +120,6 @@
             align-items: flex-start;
         }
 
-        .category-list {
-            width: 200px;
-            padding: 20px;
-            background-color: #f4f4f4;
-            margin-left: 20px;
-            margin-top: 10px;
-            border-radius: 8px;
-        }
-
-        .category-list ul{
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .category-list li{
-            margin-bottom: 10px;
-        }
-
-        .category-list li button {
-            text-decoration: none;
-            color: black;
-            position: relative;
-            display: inline-block;
-            border: none;
-        }
-
-        .category-list li button::after {
-            content: '';
-            display: block;
-            width: 0;
-            height: 2px;
-            background: black;
-            transition: width 0.3s;
-        }
-
-        .category-list li button:hover::after {
-            width: 100%;
-        }
-
         .header_cart_icon {
             font-size: 25px;
             color: #fff;
@@ -189,7 +150,7 @@
         }
 
         .cart th {
-            background-color: #0bb7c4;
+            background-color: #4e73df;
             color: white;
         }
 
@@ -258,7 +219,7 @@
         }
 
         footer {
-            background-color: #0bb7c4;
+            background-color: #4e73df;
             color: #fff;
             text-align: center;
             padding: 15px;
@@ -323,16 +284,6 @@
 </div>
 
 <section class="book-section">
-    <div class="category-list">
-        <h3>Danh mục sách</h3>
-        <div th:each="cate: ${category}" class="category-item">
-            <ul id="categoryFilterList">
-                <li><button class="show-all-button">Show All</button></li>
-                <li><button class="category-button" th:text="${cate.name}" th:attr="data-cate-name=${cate.name}"></button> </li>
-            </ul>
-        </div>
-    </div>
-
     <div class="cart">
         <h2>Your Shopping Cart</h2>
         <!-- Kiểm tra xem giỏ hàng có sách không -->
