@@ -27,8 +27,6 @@ public class AuthenticationController {
     private final UserServices userServices;
     private final AuthenService authenService;
     private final ApplicationEventPublisher publisher;
-    private final VerificationTokenRepository tokenRepository;
-
 
     @PostMapping("/register")
     public String registerUser(@ModelAttribute("user") RegistrationRequest registrationRequest, final HttpServletRequest request) {
