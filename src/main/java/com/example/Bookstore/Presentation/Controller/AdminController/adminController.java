@@ -62,7 +62,7 @@ public class adminController {
     }
 
     @PostMapping("category/add")
-    public String addBook(@ModelAttribute("categories") Categories categories) {
+    public String addCategory(@ModelAttribute("categories") Categories categories) {
         categoriesController.addCategories(categories);
         return "redirect:/category/list";
     }
@@ -86,8 +86,7 @@ public class adminController {
     }
 
     @PostMapping("user/delete/{userId}")
-    public String deleteUser(@PathVariable Long userId)
-    {
+    public String deleteUser(@PathVariable Long userId) {
         userController.deleteUser(userId);
         return "redirect:admin/user/list";
     }

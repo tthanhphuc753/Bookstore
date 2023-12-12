@@ -1,39 +1,32 @@
 package com.example.Bookstore.Presentation.Controller.ShoppingCartController;
 
-import com.example.Bookstore.Domain.BookService.BookService;
 import com.example.Bookstore.Domain.CartService.CartService;
 import com.example.Bookstore.Domain.Model.Book.Book;
 import com.example.Bookstore.Domain.Model.Cart.CartItem;
 import com.example.Bookstore.Domain.Model.User.User;
 import com.example.Bookstore.Domain.Security.JWTAuth.JwtService;
-import com.example.Bookstore.Domain.UserService.UserServices;
 import com.example.Bookstore.Presentation.Controller.BookController.BookController;
 import com.example.Bookstore.Presentation.Controller.userController.UserController;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
-@Controller
+
+@Service
 @RequiredArgsConstructor
-@RequestMapping("/shopping-cart")
 public class ShoppingCartController {
 
     private final CartService cartService;
     private final JwtService jwtService;
     private final BookController bookController;
     private final UserController userController;
-    private static final Logger logger = LoggerFactory.getLogger(ShoppingCartController.class);
 
-    @PostMapping("add/{bookId}")
-    public String addToCart(@PathVariable Long bookId, HttpServletRequest request, HttpSession session) {
+    public boolean addToCart(Long bookId, HttpServletRequest request, HttpSession session) {
         Optional<Book> optionalBook = bookController.findById(bookId);
         if (optionalBook.isPresent()) {
             Book book = optionalBook.get();
@@ -49,28 +42,22 @@ public class ShoppingCartController {
             }
             item.setQuantity(1);
             cartService.addToCart(item, session);
-            return "redirect:/user/homepage";
+            return true;
         } else
-            return "redirect:/shopping-cart/list";
+            return false;
     }
 
-    @GetMapping("list")
-    public String getAll(Model model, HttpSession session) {
+    public void getAll(Model model, HttpSession session) {
         model.addAttribute("cartitem", cartService.getAlls(session));
-        return "shopping-cart";
     }
 
-    @PostMapping("delete/{bookId}")
-    public String deleteCart(@PathVariable Long bookId, HttpSession session) {
+
+    public void deleteCart(Long bookId, HttpSession session) {
         cartService.removeFromCart(bookId, session);
-        return "redirect:/shopping-cart/list";
     }
 
-    @PostMapping("update")
-    public String updateCartQuantity(@ModelAttribute("bookId") Long bookId,
-                                     @ModelAttribute("quantity") int quantity, HttpSession session) {
+    public void updateCartQuantity(Long bookId, int quantity, HttpSession session) {
         cartService.updateCart(bookId, quantity, session);
-        return "redirect:/shopping-cart/list";
     }
 
     private String getJwtFromCookie(HttpServletRequest request) {
