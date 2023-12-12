@@ -31,6 +31,10 @@
             overflow-x: auto;
         }
 
+        body {
+            font-size: 100%; /* hoặc giá trị khác tùy thuộc vào thiết kế của bạn */
+        }
+
         .header {
             display: flex;
             align-items: center;
@@ -189,7 +193,7 @@
             padding: 10px;
             box-sizing: border-box;
             flex-grow: 1;
-            max-width: 1180px;
+            max-width: calc(100% - 240px);
         }
 
         .book-info {
@@ -203,8 +207,8 @@
         }
 
         .book-info img{
-            width: 160px;
-            height: 120px;
+            width: 100%;
+            height: auto;
         }
 
         /* CSS cho nút "Add to Cart" */
