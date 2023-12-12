@@ -31,6 +31,10 @@
             overflow-x: auto;
         }
 
+        body {
+            font-size: 100%; /* hoặc giá trị khác tùy thuộc vào thiết kế của bạn */
+        }
+
         .header {
             display: flex;
             align-items: center;
@@ -189,7 +193,7 @@
             padding: 10px;
             box-sizing: border-box;
             flex-grow: 1;
-            max-width: 1180px;
+            max-width: calc(100% - 280px);
         }
 
         .book-info {
@@ -203,8 +207,8 @@
         }
 
         .book-info img{
-            width: 160px;
-            height: 120px;
+            width: 100%;
+            height: auto;
         }
 
         /* CSS cho nút "Add to Cart" */
@@ -288,6 +292,10 @@
             text-decoration: none;
             color: black;
             font-family: 'Poppins', sans-serif;
+        }
+
+        .pagination {
+            justify-content: center;
         }
 
         footer {
@@ -378,6 +386,20 @@
                 </form>
             </div>
         </div>
+        <nav aria-label="Page navigation example" th:if="${not #lists.isEmpty(books)}">
+            <ul class="pagination" th:if="${totalPages > 1}">
+                <li class="page-item" th:if="${currentPage > 0}">
+                    <a class="page-link" th:href="@{'/user/homepage?page=' +  ${currentPage - 1 }}">Previous</a>
+                </li>
+                <li class="page-item" th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}">
+                    <a class="page-link" th:href="@{'/user/homepage?page=' + ${pageNumber}}"
+                       th:text="${pageNumber + 1}"></a>
+                </li>
+                <li class="page-item" th:if="${currentPage < totalPages - 1}">
+                    <a class="page-link" th:href="@{'/user/homepage?page=' + ${currentPage + 1 }}">Next</a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </section>
     <div id="logoutModal" class="modal">

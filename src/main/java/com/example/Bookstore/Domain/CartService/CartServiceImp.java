@@ -38,7 +38,6 @@ public class CartServiceImp implements CartService {
         }
 
         session.setAttribute(SESSION_KEY_CART, cartMap);
-        cartRepository.saveAll(cartMap.values());
     }
 
     @Override
@@ -46,7 +45,6 @@ public class CartServiceImp implements CartService {
         Map<Long, CartItem> cartMap = getCartMap(session);
 
         cartMap.remove(bookId);
-        cartRepository.saveAll(cartMap.values());
 
         session.setAttribute(SESSION_KEY_CART, cartMap);
     }
@@ -58,7 +56,6 @@ public class CartServiceImp implements CartService {
         CartItem cartItem = cartMap.get(bookId);
         if (cartItem != null) {
             cartItem.setQuantity(quantity);
-            cartRepository.save(cartItem);
         }
 
         session.setAttribute(SESSION_KEY_CART, cartMap);
@@ -69,8 +66,6 @@ public class CartServiceImp implements CartService {
     public void clearAll(HttpSession session) {
         Map<Long, CartItem> cartMap = getCartMap(session);
         cartMap.clear();
-        cartRepository.deleteAll();
-
         session.setAttribute(SESSION_KEY_CART, cartMap);
     }
 

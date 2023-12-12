@@ -1,5 +1,6 @@
 package com.example.Bookstore.Domain.UserService;
 
+import com.example.Bookstore.Domain.AuthService.RegistrationRequest;
 import com.example.Bookstore.Domain.Exception.Exception;
 import com.example.Bookstore.Domain.Model.User.User;
 import com.example.Bookstore.Domain.Model.User.UserAuthDetails;
@@ -8,7 +9,6 @@ import com.example.Bookstore.Domain.Security.JWTAuth.JwtService;
 import com.example.Bookstore.Persistence.DAO.BookRepository;
 import com.example.Bookstore.Persistence.DAO.UserRepository;
 import com.example.Bookstore.Persistence.DAO.VerificationTokenRepository;
-import com.example.Bookstore.Domain.AuthService.RegistrationRequest;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +34,7 @@ public class UserServicesImp implements UserServices {
 
     @Override
     public List<User> getAllUser() {
-       return  userrepos.findAll();
+        return userrepos.findAll();
     }
 
     @Override

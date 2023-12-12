@@ -262,7 +262,7 @@
 
         <div class="block sidebar-item">
             <span class="item-heading">Quản lý sản phẩm/ loại sản phẩm</span>
-            <a href="/category/list" class="item-link">Xem danh sách loại sản phẩm</a>
+            <a href="/admin/category/list" class="item-link">Xem danh sách loại sản phẩm</a>
             <a href="/admin/homepage"  class="item-link">Xem danh sách sản phẩm</a>
         </div>
 
@@ -270,14 +270,14 @@
 
         <div class="block sidebar-item">
             <span class="item-heading">Quản lý đơn hàng</span>
-            <a class="item-link" href="/order/list">Xem danh sách đơn hàng</a>
+            <a class="item-link" href="/admin/order/list">Xem danh sách đơn hàng</a>
         </div>
 
         <hr class="sidebar-divider">
 
         <div class="block sidebar-item">
             <span class="item-heading">Quản lý tài khoản</span>
-            <a href="/user/list" class="item-link selected">Xem danh sách tài khoản</a>
+            <a href="/admin/user/list" class="item-link selected">Xem danh sách tài khoản</a>
         </div>
     </div>
     <div class="content-wrapper">
@@ -337,7 +337,7 @@
             <h2>Bạn có chắc muốn đăng xuất?</h2>
             <p>Chọn "Hủy" nếu bạn muốn tiếp tục phiên làm việc.</p>
             <a class="modal-link modal-link-cancel" onclick="closeModal()">Hủy</a>
-            <a class="modal-link modal-link-logout ">Đăng xuất</a>
+            <a class="modal-link modal-link-logout " href="#" onclick="performLogout()">Đăng xuất</a>
         </div>
     </div>
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
@@ -381,38 +381,38 @@
             }
         };
 
-        function logout() {
-            // Gửi yêu cầu đăng xuất đến server
-            fetch('/auth/logout', {
-                method: 'POST',
-                credentials: 'same-origin', // Bảo đảm các cookie được gửi đi (hoặc sử dụng 'include' nếu máy chủ và trang web ở các domain khác nhau)
-                headers: {
-                    'Content-Type': 'application/json',
-                    // Thêm các thông tin khác nếu cần
-                },
-            })
-                .then(response => {
-                    if (response.ok) {
-
-                        window.location.href = '/auth/login';
-
-                    } else {
-                        // Xử lý lỗi đăng xuất
-                        alert('Có lỗi khi đăng xuất. Vui lòng thử lại!');
-                    }
-                })
-                .catch(error => {
-                    alert('Không thể kết nối đến server. Vui lòng thử lại sau!');
-                });
-        }
-
-
-        // Khi nhấn nút "Đăng xuất"
-        document.querySelector('#logoutModal .modal-link-logout').addEventListener('click', function (event) {
-            event.preventDefault();
-            logout();
-            closeModal();
-        });
+        // function logout() {
+        //     // Gửi yêu cầu đăng xuất đến server
+        //     fetch('/auth/logout', {
+        //         method: 'POST',
+        //         credentials: 'same-origin', // Bảo đảm các cookie được gửi đi (hoặc sử dụng 'include' nếu máy chủ và trang web ở các domain khác nhau)
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //             // Thêm các thông tin khác nếu cần
+        //         },
+        //     })
+        //         .then(response => {
+        //             if (response.ok) {
+        //
+        //                 window.location.href = '/auth/login';
+        //
+        //             } else {
+        //                 // Xử lý lỗi đăng xuất
+        //                 alert('Có lỗi khi đăng xuất. Vui lòng thử lại!');
+        //             }
+        //         })
+        //         .catch(error => {
+        //             alert('Không thể kết nối đến server. Vui lòng thử lại sau!');
+        //         });
+        // }
+        //
+        //
+        // // Khi nhấn nút "Đăng xuất"
+        // document.querySelector('#logoutModal .modal-link-logout').addEventListener('click', function (event) {
+        //     event.preventDefault();
+        //     logout();
+        //     closeModal();
+        // });
 
 
 
@@ -448,6 +448,23 @@
             if (userEmail) {
                 userEmailSpan.textContent = userEmail;
             }
+        }
+
+        function performLogout() {
+            $.ajax({
+                url: '/auth/logout',
+                type: 'POST',
+                success: function(response) {
+                    // Xử lý thành công (nếu cần)
+                    console.log('Logout successful');
+                    // Chuyển hướng trang sau khi logout
+                    window.location.href = '/auth/login';
+                },
+                error: function(error) {
+                    // Xử lý lỗi (nếu cần)
+                    console.error('Logout error:', error);
+                }
+            });
         }
 
 

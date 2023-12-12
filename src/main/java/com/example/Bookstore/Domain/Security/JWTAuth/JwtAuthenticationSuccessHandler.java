@@ -43,7 +43,7 @@ public class JwtAuthenticationSuccessHandler extends SavedRequestAwareAuthentica
 
             response.addCookie(cookie);
             if (userAuthDetails.getAuthorities().stream().anyMatch(role -> role.getAuthority().equals("USER"))) {
-                setDefaultTargetUrl("/book/homepage");
+                setDefaultTargetUrl("/user/homepage");
             } else {
                 setDefaultTargetUrl("/admin/homepage");
             }

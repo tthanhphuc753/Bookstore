@@ -2,39 +2,35 @@ package com.example.Bookstore.Presentation.Controller.userController;
 
 import com.example.Bookstore.Domain.Model.User.User;
 import com.example.Bookstore.Domain.UserService.UserServices;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
-@Controller
-@RequestMapping("/user")
+import java.util.List;
+import java.util.Optional;
+
+@Service
+@RequiredArgsConstructor
 
 public class UserController {
 
     private final UserServices userServices;
 
 
-    @Autowired
-    public UserController(UserServices userServices) {
-        this.userServices = userServices;
-    }
-
-    @GetMapping("list")
-    public String getAllUser(Model model) {
-        model.addAttribute("user", userServices.getAllUser());
-        return "user";
-    }
-
-    @GetMapping("findbyid")
-    public User findByID(@ModelAttribute("userID") Long id) {
+    public User findUserByID(Long id) {
         return userServices.findUserByID(id);
     }
 
-    @DeleteMapping(path = "{userID}")
-    public void deleteUser(@PathVariable long userID) {
+    public List<User> getAllUser() {
+        return userServices.getAllUser();
+    }
+
+    public void deleteUser(long userID) {
         userServices.deleteUser(userID);
     }
 
+
+    public Optional<User> findByEmail(String s) {
+        return userServices.findByEmail(s);
+    }
 
 }
