@@ -21,7 +21,7 @@ public class ClientController {
     private final CategoriesServiceController categoriesServiceController;
     private final OrderController orderController;
 
-    @GetMapping("findbyid")
+    @GetMapping("user/findbyid")
     public User findByID(@ModelAttribute("userID") Long id) {
         return userController.findUserByID(id);
     }
