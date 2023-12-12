@@ -1,10 +1,10 @@
 package com.example.Bookstore.Presentation.Controller.Auth;
 
-import com.example.Bookstore.Domain.Model.User.User;
-import com.example.Bookstore.Domain.Model.token.VerificationToken;
 import com.example.Bookstore.Domain.AuthService.AuthenService;
 import com.example.Bookstore.Domain.AuthService.AuthenticationRequest;
 import com.example.Bookstore.Domain.AuthService.RegistrationRequest;
+import com.example.Bookstore.Domain.Model.User.User;
+import com.example.Bookstore.Domain.Model.token.VerificationToken;
 import com.example.Bookstore.Domain.UserService.UserServices;
 import com.example.Bookstore.Domain.event.RegistrationCompleteEvent;
 import com.example.Bookstore.Persistence.DAO.VerificationTokenRepository;
