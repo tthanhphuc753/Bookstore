@@ -64,4 +64,9 @@ public class BookServiceImp implements BookService {
     public Page<Book> getAllBooks(Pageable pageable) {
         return bookRepository.findAll(pageable);
     }
+
+    @Override
+    public List<Book> searchBooks(String keyword) {
+        return bookRepository.findByNameContainingIgnoreCase(keyword);
+    }
 }

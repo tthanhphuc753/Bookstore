@@ -1,6 +1,7 @@
 package com.example.Bookstore.Presentation.Controller.ClientController;
 
 
+import com.example.Bookstore.Domain.Model.Book.Book;
 import com.example.Bookstore.Domain.Model.User.User;
 import com.example.Bookstore.Presentation.Controller.BookController.BookController;
 import com.example.Bookstore.Presentation.Controller.CategoriesController.CategoriesServiceController;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -78,5 +80,13 @@ public class ClientController {
                                      @ModelAttribute("quantity") int quantity, HttpSession session) {
         shoppingCartController.updateCartQuantity(bookId, quantity, session);
         return "redirect:/client/list";
+    }
+
+    @GetMapping("/search")
+    public String searchBooks(@RequestParam(name = "keyword", required = false) String keyword, Model model) {
+        List<Book> searchResults = bookController.searchBooks(keyword);
+        model.addAttribute("books", searchResults);
+        model.addAttribute("category", categoriesServiceController.getAllCategory());
+        return "homePage";
     }
 }

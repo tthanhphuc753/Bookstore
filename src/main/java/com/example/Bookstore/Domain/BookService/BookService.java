@@ -23,6 +23,6 @@ public interface BookService {
 
     void removeBook(Long id);
 
-
+    List<Book> searchBooks(String keyword);
     Page<Book> getAllBooks(Pageable pageable);
 }

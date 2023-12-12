@@ -62,4 +62,8 @@ public class BookController {
     public Optional<Book> findById(Long bookId) {
        return  bookService.findById(bookId);
     }
+
+    public List<Book> searchBooks(String keyword) {
+        return bookService.searchBooks(keyword);
+    }
 }

@@ -82,7 +82,8 @@
             text-decoration: none;
         }
 
-        .search-form {
+        .search-form,
+        .search-form form {
             width: 40rem;
             height: 2.2rem;
             border: var(--border);
@@ -249,8 +250,10 @@
         </div>
 
         <div class="search-form">
-            <input type="search" id="search-input" placeholder="Search here..">
-            <button type="submit" onclick="searchBook()" class="fas fa-search"></button>
+            <form th:action="@{/client/search}" method="get">
+                <input type="search" id="search-input" placeholder="Search here.." name="keyword">
+                <button type="submit" class="fas fa-search"></button>
+            </form>
         </div>
 
         <div class="header_cart_icon" onclick="redirectToShoppingCart()">
