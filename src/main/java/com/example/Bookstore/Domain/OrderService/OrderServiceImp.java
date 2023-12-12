@@ -34,7 +34,7 @@ public class OrderServiceImp implements OrderService{
 
     @Override
     public void deleteOrderById(long id) {
-
+        orderdetailRepository.deleteById(id);
     }
 
 
