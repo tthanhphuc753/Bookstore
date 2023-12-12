@@ -27,7 +27,6 @@ public class AuthenticationController {
     private final UserServices userServices;
     private final AuthenService authenService;
     private final ApplicationEventPublisher publisher;
-    private final VerificationTokenRepository tokenRepository;
 
     @PostMapping("/register")
     public String registerUser(@ModelAttribute("user") RegistrationRequest registrationRequest, final HttpServletRequest request) {
@@ -50,7 +49,7 @@ public class AuthenticationController {
 
     @GetMapping("/verifyEmail")
     public String verifyEmail(@RequestParam("token") String token, Model model) {
-        VerificationToken theToken = tokenRepository.findByToken(token);
+        VerificationToken theToken = authenService.getToken(token);
         String message = "";
         if (theToken.getUser().isEnabled()) {
             message = "This account already been verify, please login";
