@@ -354,7 +354,7 @@
                         <div id="dropdown-menu" class="dropdown-menu" onmouseover="cancelHide()"
                              onmouseout="hideDropdown()">
                             <!-- Các liên kết hoặc nội dung của dropdown menu -->
-                            <a href="#" class="user-item" onclick="openModal()">
+                            <a href="#" class="user-item" onclick="openModalLogout()">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Đăng xuất
                             </a>
@@ -386,10 +386,16 @@
                                   method="get">
                                 <button class="btn-primary" type="submit">Update</button>
                             </form>
-                            <form class="book-actions-delete" th:method="post"
-                                  th:action="@{/admin/books/delete/{id}(id=${item.id})}">
-                                <button class="btn-primary" type="submit">Delete</button>
-                            </form>
+<!--                            <form class="book-actions-delete" th:method="post"-->
+<!--                                  th:action="@{/admin/books/delete/{id}(id=${item.id})}">-->
+<!--                                <button class="btn-primary" type="submit">Delete</button>-->
+<!--                            </form>-->
+                            <!-- Modify the delete button in your book item -->
+                            <div class="book-actions">
+                                <button class="btn-primary" th:data-book-id="${item.id}" onclick="openConfirmDeleteModal(this.getAttribute('data-book-id'))">Delete</button>
+                            </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -418,11 +424,21 @@
     <!-- Logout Modal-->
     <div id="logoutModal" class="modal">
         <div class="modal-content">
-            <span class="modal-close" onclick="closeModal()">&times;</span>
-            <h2>Bạn có chắc muốn đăng xuất?</h2>
+            <span class="modal-close" onclick="closeModalLogout()">&times;</span>
+            <h2>Bạn có chắc muốn đăng xuất ?</h2>
             <p>Chọn "Hủy" nếu bạn muốn tiếp tục phiên làm việc.</p>
-            <a class="modal-link modal-link-cancel" onclick="closeModal()">Hủy</a>
-            <a class="modal-link modal-link-logout ">Đăng xuất</a>
+            <a class="modal-link modal-link-cancel" onclick="closeModalLogout()">Hủy</a>
+            <a class="modal-link modal-link-logout">Đăng xuất</a>
+        </div>
+    </div>
+    <!-- Add this modal to your HTML -->
+    <div id="confirmDeleteModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeConfirmDeleteModal()">&times;</span>
+            <h2>Xác nhận xóa sách</h2>
+            <p>Bạn có chắc chắn muốn xóa sách này?</p>
+            <a  class="modal-link modal-link-logout" onclick="closeConfirmDeleteModal()">Hủy</a>
+            <a  class="modal-link modal-link-cancel" onclick="deleteBook()">Xác nhận</a>
         </div>
     </div>
 
@@ -450,18 +466,18 @@
         clearTimeout(timeoutId);
     }
 
-    function openModal() {
+    function openModalLogout() {
         document.getElementById("logoutModal").style.display = "flex";
     }
 
-    function closeModal() {
+    function closeModalLogout() {
         document.getElementById("logoutModal").style.display = "none";
     }
 
     // Đóng modal nếu người dùng nhấn vào nền đen
     window.onclick = function (event) {
         if (event.target === document.getElementById("logoutModal")) {
-            closeModal();
+            closeModalLogout();
         }
     };
 
@@ -486,7 +502,7 @@
                 }
             })
             .catch(error => {
-                alert('Không thể kết nối đến server. Vui lòng thử lại sau!');
+                alert(error);
             });
     }
 
@@ -499,7 +515,6 @@
         // Cập nhật lại trang sau khi chuyển trang
         window.location.reload();
     });
-
 
     // Lấy token từ cookie
     const token = getCookie("JWT_TOKEN"); // Thay "yourTokenCookie" bằng tên cookie bạn đã sử dụng
@@ -533,6 +548,51 @@
         if (userEmail) {
             userEmailSpan.textContent = userEmail;
         }
+    }
+
+    let deleteBookId;
+    function openConfirmDeleteModal(bookId) {
+        deleteBookId=bookId;
+        document.getElementById("confirmDeleteModal").style.display = "flex";
+    }
+
+    function closeConfirmDeleteModal() {
+        document.getElementById("confirmDeleteModal").style.display = "none";
+    }
+    function deleteBook() {
+
+        console.log('Đang xóa sách có ID:', deleteBookId);
+        // Construct the URL for the delete request, replace '/admin/books/delete/' with your actual endpoint
+        const deleteUrl = `/admin/books/delete/${deleteBookId}`;
+
+        // Perform the actual deletion logic here using fetch
+        fetch(deleteUrl, {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json',
+                // You may need to include additional headers if required by your server
+            },
+        })
+            .then(response => {
+                if (response.ok) {
+                    // Update the UI as needed (remove the deleted book element, etc.)
+                    // ...
+
+                    // Close the confirmation modal
+                    closeConfirmDeleteModal();
+                    window.location.reload();
+                } else {
+                    // Handle error responses from the server
+                    // You might want to show an error message or take other actions
+                    alert('Có lỗi khi xóa sách. Vui lòng thử lại!')
+                }
+            })
+            .catch(error => {
+                // Handle network errors
+                alert(error);
+            });
+
     }
 
 
