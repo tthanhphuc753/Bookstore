@@ -71,4 +71,11 @@ public class adminController {
         return "redirect:/category/list";
     }
 
+    @GetMapping("category/list")
+    public String getAllCategory(Model model)
+    {
+        model.addAttribute("categories",categoriesController.getAllCategory());
+        return "categorylist";
+    }
+
 }
