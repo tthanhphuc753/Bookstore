@@ -1,5 +1,6 @@
 package com.example.Bookstore.Presentation.Controller.userController;
 
+import com.example.Bookstore.Domain.AuthService.RegistrationRequest;
 import com.example.Bookstore.Domain.Model.User.User;
 import com.example.Bookstore.Domain.UserService.UserServices;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,11 @@ public class UserController {
 
     public Optional<User> findByEmail(String s) {
         return userServices.findByEmail(s);
+    }
+
+    public User registerUser(RegistrationRequest request)
+    {
+        return userServices.registerUser(request);
     }
 
 }
