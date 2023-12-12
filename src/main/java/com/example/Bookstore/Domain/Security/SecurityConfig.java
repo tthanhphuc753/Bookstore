@@ -35,8 +35,8 @@ public class SecurityConfig {
                     try {
 
                         authorizeRequests
-                                .antMatchers("/user/**","/admin/**").hasAuthority("ADMIN")
-                                .antMatchers("/auth/**","/shopping-cart/**","/book/**")
+                                .antMatchers("/admin/**").hasAuthority("ADMIN")
+                                .antMatchers("/auth/**","/user/**", "/shopping-cart/**", "/book/**")
                                 .permitAll()
                                 .anyRequest().authenticated()
                                 .and()
@@ -53,7 +53,7 @@ public class SecurityConfig {
                                 .logoutSuccessHandler((httpServletRequest, httpServletResponse, authentication) -> {
                                     httpServletResponse.setStatus(HttpServletResponse.SC_OK);
                                 })
-                                    .deleteCookies("JWT_TOKEN")
+                                .deleteCookies("JWT_TOKEN")
                                 .invalidateHttpSession(true)
                                 .clearAuthentication(true)
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))

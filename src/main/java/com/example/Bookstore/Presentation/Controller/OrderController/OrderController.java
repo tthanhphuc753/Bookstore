@@ -1,5 +1,6 @@
 package com.example.Bookstore.Presentation.Controller.OrderController;
 
+import com.example.Bookstore.Domain.Model.Order.Order;
 import com.example.Bookstore.Domain.OrderService.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -9,20 +10,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/order")
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
 
-    @GetMapping("list")
-    public String getAllOrder(Model model) {
-        model.addAttribute("orders", orderService.getAllOrder());
-        return "orderlist";
+
+    public List<Order> getAllOrder() {
+       return orderService.getAllOrder();
     }
 
-    @PostMapping("add/{cartid}/{userid}")
-    public void addOrder(@PathVariable Long cartId, @PathVariable Long userId) {
+
+    public void addOrder(Long cartId, Long userId) {
         orderService.addOrder(cartId, userId);
     }
 
