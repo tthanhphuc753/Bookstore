@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("admin")
 @RequiredArgsConstructor
@@ -25,7 +27,7 @@ public class adminController {
     @GetMapping("/homepage")
     public String showAdminPage(Model model,
                                 @RequestParam(defaultValue = "0") int page,
-                                @RequestParam(defaultValue = "10") int size) {
+                                @RequestParam(defaultValue = "15") int size) {
         bookController.pageSize(model, page, size);
         return "admin";
     }
@@ -64,7 +66,7 @@ public class adminController {
     @PostMapping("category/add")
     public String addCategory(@ModelAttribute("categories") Categories categories) {
         categoriesController.addCategories(categories);
-        return "redirect:/category/list";
+        return "redirect:/admin/category/list";
     }
 
     @GetMapping("category/list")
@@ -95,6 +97,14 @@ public class adminController {
     public String deleteUser(@PathVariable Long userId) {
         userController.deleteUser(userId);
         return "redirect:/admin/user/list";
+    }
+
+    @GetMapping("/search")
+    public String searchBooksAdmin(@RequestParam(name = "keyword", required = false) String keyword, Model model) {
+        List<Book> searchResults = bookController.searchBooks(keyword);
+        model.addAttribute("books", searchResults);
+        model.addAttribute("category", categoriesController.getAllCategory());
+        return "admin";
     }
 
 }

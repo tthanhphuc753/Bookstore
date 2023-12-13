@@ -310,6 +310,8 @@
                             <th>Last Name</th>
                             <th>Email</th>
                             <th>Role</th>
+                            <th>Is_enable</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -319,6 +321,10 @@
                             <td th:text="${item.lastName}"></td>
                             <td th:text="${item.email}"></td>
                             <td th:text="${item.role}"></td>
+                            <td th:text="${item.enabled}"></td>
+                            <td>
+                                <button class="btn btn-danger" th:data-user-id="${item.userID}" onclick="openConfirmDeleteModal(this.getAttribute('data-user-id'))">Delete</button>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -338,6 +344,15 @@
             <p>Chọn "Hủy" nếu bạn muốn tiếp tục phiên làm việc.</p>
             <a class="modal-link modal-link-cancel" onclick="closeModal()">Hủy</a>
             <a class="modal-link modal-link-logout " href="#" onclick="performLogout()">Đăng xuất</a>
+        </div>
+    </div>
+    <div id="confirmDeleteModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeConfirmDeleteModal()">&times;</span>
+            <h2>Xác nhận xóa User</h2>
+            <p>Bạn có chắc chắn muốn xóa sách này?</p>
+            <a  class="modal-link modal-link-logout" onclick="closeConfirmDeleteModal()">Hủy</a>
+            <a  class="modal-link modal-link-cancel" onclick="deleteUser()">Xác nhận</a>
         </div>
     </div>
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
@@ -465,6 +480,51 @@
                     console.error('Logout error:', error);
                 }
             });
+        }
+
+        let deleteUserId;
+        function openConfirmDeleteModal(bookId) {
+            deleteUserId=bookId;
+            document.getElementById("confirmDeleteModal").style.display = "flex";
+        }
+
+        function closeConfirmDeleteModal() {
+            document.getElementById("confirmDeleteModal").style.display = "none";
+        }
+        function deleteUser() {
+
+            console.log('Đang xóa sách có ID:', deleteUserId);
+            // Construct the URL for the delete request, replace '/admin/books/delete/' with your actual endpoint
+            const deleteUrl = `/admin/user/delete/${deleteUserId}`;
+
+            // Perform the actual deletion logic here using fetch
+            fetch(deleteUrl, {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // You may need to include additional headers if required by your server
+                },
+            })
+                .then(response => {
+                    if (response.ok) {
+                        // Update the UI as needed (remove the deleted book element, etc.)
+                        // ...
+
+                        // Close the confirmation modal
+                        closeConfirmDeleteModal();
+                        window.location.reload();
+                    } else {
+                        // Handle error responses from the server
+                        // You might want to show an error message or take other actions
+                        alert('Có lỗi khi xóa sách. Vui lòng thử lại!')
+                    }
+                })
+                .catch(error => {
+                    // Handle network errors
+                    alert(error);
+                });
+
         }
 
 

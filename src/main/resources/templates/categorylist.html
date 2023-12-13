@@ -249,6 +249,32 @@
         #user-icon {
             margin: 0 5px;
         }
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 200px;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #4e73df;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #3366cc;
+        }
 
 
     </style>
@@ -306,6 +332,14 @@
                             </a>
                         </div>
                     </nav>
+                    <div>
+                        <h2>Add New Category</h2>
+                        <form id="addCategoryForm" >
+                            <label for="categoryName">Category Name:</label>
+                            <input type="text" id="categoryName" name="categoryName" required>
+                            <button type="button" onclick="addNewCategory()">Add Category</button>
+                        </form>
+                    </div>
                     <div class="card-body">
                         <div class="card-responsive">
                             <div th:if="${not #lists.isEmpty(categories)}"></div>
@@ -314,12 +348,17 @@
                                 <tr>
                                     <th>Id</th>
                                     <th>Name</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr th:each="item : ${categories}">
                                     <td th:text="${item.categoriesID}"></td>
                                     <td th:text="${item.name}"></td>
+                                    <td>
+                                        <button class="btn btn-danger" th:data-category-id="${item.categoriesID}" onclick="deleteCategory(this.getAttribute('data-category-id'))">Delete</button>
+                                    </td>
+
                                 </tr>
                                 </tbody>
                             </table>
@@ -467,6 +506,28 @@
                         error: function(error) {
                             // Xử lý lỗi (nếu cần)
                             console.error('Logout error:', error);
+                        }
+                    });
+                }
+
+                function addNewCategory() {
+                    // Lấy giá trị từ form
+                    const categoryName = document.getElementById('categoryName').value;
+                    console.log('categoryName:', categoryName);
+
+                    // Thực hiện logic để thêm danh mục mới
+                    // Bạn có thể sử dụng AJAX để gửi yêu cầu post đến máy chủ của bạn
+                    // Ví dụ:
+                    $.ajax({
+                        url: '/admin/category/add',
+                        type: 'POST',
+                        data: { name: categoryName },
+                        success: function(response) {
+                            // Xử lý thành công (tải lại bảng hoặc cập nhật giao diện người dùng)
+                            window.location.reload();
+                        },
+                        error: function(error) {
+                            alert('Error: ' + error.responseText);
                         }
                     });
                 }

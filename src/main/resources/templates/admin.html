@@ -94,10 +94,10 @@
             opacity: 25;
         }
 
-        p {
-            margin-top: 0;
-            margin-bottom: 1rem;
-        }
+        /*p {*/
+        /*    margin-top: 0;*/
+        /*    margin-bottom: 1rem;*/
+        /*}*/
 
         #wrapper {
             display: flex;
@@ -146,6 +146,7 @@
             border-radius: 5px;
             text-align: center;
             width: auto;
+
         }
 
         .modal-close {
@@ -233,7 +234,7 @@
             text-align: center;
         }
         .book {
-            min-height: 300px; /* Đặt chiều cao tối thiểu cho nội dung sách */
+            height: 400px; /* Đặt chiều cao tối thiểu cho nội dung sách */
         }
 
 
@@ -304,6 +305,39 @@
         #user-icon {
             margin: 0 5px;
         }
+        .modal-content-detail {
+            display: flex;
+            height: 100%;
+        }
+        .modal-content-detail-img{
+            flex-basis: 40%;
+        }
+        .modal-content-detail-content{
+            flex-basis: 60%;
+        }
+        .modal-content-detail-content-categories{
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+            margin-left: 20px;
+        }
+        .modal-content-detail-content-categories-name{
+            margin-left: 20px;
+            display: flex;
+        }
+        .modal-content-detail-content-categories-list{
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .modal-content-book{
+            flex-basis: 80%;
+            height: 80%;
+        }
+        .modal-content-detail-content-description{
+            align-self: auto;
+        }
+
+
 
     </style>
 
@@ -346,6 +380,10 @@
                 <!-- topbar -->
                 <nav class="navbar navbar-expand ">
                     <div class="navbar-var">
+                        <form th:action="@{/admin/search}" method="get">
+                            <input type="search" id="search-input" placeholder="Search here.." name="keyword">
+                            <button type="submit" class="fas fa-search"></button>
+                        </form>
                         <a class="user" onmouseover="showDropdown()" onmouseout="hideDropdown()">
                             <span id="user-email" class="r-2 d-none d-lg-inline text-gray-600 small"></span>
                             <i id="user-icon" class="fa-solid fa-user"></i>
@@ -367,6 +405,9 @@
                 <div>
                     <div id="booksTable" class="content-item" th:if="${not #lists.isEmpty(books)}">
                         <div  class="book" th:each="item : ${books}">
+                            <div style="width: 250px; height: 225px;display: flex">
+                                <img src="https://thegioidohoa.com/wp-content/uploads/2017/08/tong-hop-20-mau-bia-sach-doc-dao-nhat-nam-2017-7.jpg" alt="hình sách">
+                            </div>
                             <div class="book-detail">
                                 <h5 class="book-detail-c" th:text="${item.name}"></h5>
                             </div>
@@ -380,15 +421,44 @@
                                 <p class="book-detail-c" th:text="${item.price}"></p>
                             </div>
                             <div th:each="item : ${books}" th:id="'bookDetailModal-' + ${item.id}" class="modal">
-                                <div class="modal-content">
+                                <div class="modal-content modal-content-book">
                                     <span class="modal-close" th:data-book-id="${item.id}" onclick="closeBookDetailModal(this.getAttribute('data-book-id'))">&times;</span>
-                                    <p th:text="${item.name}"></p>
-                                    <p th:text="${item.author}"></p>
-                                    <p th:text="${item.price}"></p>
-                                    <p>Category</p>
-                                    <div th:each="category : ${item.categoriesSet}">
-                                        <p th:text="${category.name}"></p>
+                                    <div class="modal-content-detail">
+                                        <div class="modal-content-detail-img">
+                                            <img src="https://thegioidohoa.com/wp-content/uploads/2017/08/tong-hop-20-mau-bia-sach-doc-dao-nhat-nam-2017-7.jpg" alt="hình sách">
+                                        </div>
+                                        <div class="modal-content-detail-content">
+                                            <div style="display: flex">
+                                                <p style="margin-bottom: 0">Name:</p>
+                                                <p style="margin-bottom: 0; margin-left: 20px" th:text="${item.name}"></p>
+                                            </div>
+                                            <div style="display: flex">
+                                                <p style="margin-bottom: 0">Author:</p>
+                                                <p style="margin-bottom: 0; margin-left: 20px" th:text="${item.author}"></p>
+                                            </div>
+                                            <div style="display: flex">
+                                                <p style="margin-bottom: 0">Author:</p>
+                                                <p style="margin-bottom: 0; margin-left: 20px">$</p>
+                                                <p style="margin-bottom: 0" th:text="${item.price}"></p>
+                                            </div>
+
+                                            <div class="modal-content-detail-content-categories" style=" margin-left: 0">
+                                                <p style="text-align: start; margin-bottom: 0">Category</p>
+                                                <div class="modal-content-detail-content-categories-list">
+                                                    <div class="modal-content-detail-content-categories-name" th:each="category : ${item.categoriesSet}">
+                                                        <i class="fa-solid fa-check"></i>
+                                                        <p th:text="${category.name}"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-content-detail-content-description">
+                                                description
+                                            </div>
+
+                                        </div>
                                     </div>
+
+
                                 </div>
                             </div>
                             <div class="book-actions">
@@ -445,7 +515,7 @@
                 <span class="modal-close" onclick="closeConfirmDeleteModal()">&times;</span>
                 <h2>Xác nhận xóa sách</h2>
                 <p>Bạn có chắc chắn muốn xóa sách này?</p>
-                <a  class="modal-link modal-link-logout" onclick="closeConfirmDeleteModal()">Hủy</a>
+                <a  class="modal-link modal-link-cancel" onclick="closeConfirmDeleteModal()">Hủy</a>
                 <a  class="modal-link modal-link-cancel" onclick="deleteBook()">Xác nhận</a>
             </div>
         </div>
@@ -624,6 +694,61 @@
         });
     }
 
+    // let timeoutId;
+    // let books = [];
+    // function search() {
+    //     // Get the search query from the input field
+    //     const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+    //     console.log("id search:",searchQuery);
+    //
+    //     // Perform the search logic (replace this with your actual search logic)
+    //     const filteredBooks = books.filter(book => book.name.toLowerCase().includes(searchQuery));
+    //
+    //     // Update the UI with the filtered results (you may need to replace this part based on your UI structure)
+    //     updateUI(filteredBooks);
+    // }
+    // function updateUI(filteredBooks) {
+    //     // Get the container where you want to display the books (replace 'booksTable' with the actual container ID)
+    //     const booksContainer = document.getElementById('booksTable');
+    //
+    //     // Clear the existing content in the container
+    //     booksContainer.innerHTML = '';
+    //
+    //     // Iterate over the filtered books and create HTML elements for each book
+    //     filteredBooks.forEach(book => {
+    //         const bookElement = document.createElement('div');
+    //         bookElement.className = 'book';
+    //
+    //         // Create HTML content for the book details (replace with your actual book details)
+    //         const bookContent = `
+    //         <div class="book-detail">
+    //             <h5 class="book-detail-c">${book.name}</h5>
+    //         </div>
+    //         <div class="book-detail">
+    //             <p class="book-detail-v">Author:</p>
+    //             <p class="book-detail-c">${book.author}</p>
+    //         </div>
+    //         <div class="book-detail">
+    //             <p class="book-detail-v">Price:</p>
+    //             <p>$</p>
+    //             <p class="book-detail-c">${book.price}</p>
+    //         </div>
+    //         <div class="book-actions">
+    //             <!-- Add other actions or buttons as needed -->
+    //         </div>
+    //     `;
+    //
+    //         // Set the HTML content for the book element
+    //         bookElement.innerHTML = bookContent;
+    //
+    //         // Append the book element to the container
+    //         booksContainer.appendChild(bookElement);
+    //     });
+    //
+    //     // Update the pagination if needed
+    //     // ...
+    // }
+    //
 
 </script>
 </body>
