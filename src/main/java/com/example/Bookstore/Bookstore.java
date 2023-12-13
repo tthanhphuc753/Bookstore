@@ -1,6 +1,5 @@
 package com.example.Bookstore;
 
-import com.example.Bookstore.Domain.CategoriesService.CategoriesService;
 import com.example.Bookstore.Domain.Model.Book.Book;
 import com.example.Bookstore.Domain.Model.Book.Categories;
 import com.example.Bookstore.Domain.Model.Order.Order;
@@ -10,13 +9,11 @@ import com.example.Bookstore.Persistence.DAO.OrderdetailRepository;
 import com.example.Bookstore.Persistence.DAO.UserRepository;
 import com.example.Bookstore.Domain.Model.User.User;
 import com.example.Bookstore.Domain.Security.ApplicationConfig;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.*;
 

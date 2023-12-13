@@ -3,8 +3,8 @@ package com.example.Bookstore.Presentation.Controller.ClientController;
 
 import com.example.Bookstore.Domain.Model.Book.Book;
 import com.example.Bookstore.Domain.Model.User.User;
-import com.example.Bookstore.Presentation.Controller.BookController.BookController;
-import com.example.Bookstore.Presentation.Controller.CategoriesController.CategoriesServiceController;
+import com.example.Bookstore.Presentation.Controller.BookController.ClientBookController;
+import com.example.Bookstore.Presentation.Controller.CategoriesController.ClientCategoriesServiceController;
 import com.example.Bookstore.Presentation.Controller.OrderController.OrderController;
 import com.example.Bookstore.Presentation.Controller.ShoppingCartController.ShoppingCartController;
 import com.example.Bookstore.Presentation.Controller.userController.UserController;
@@ -23,8 +23,8 @@ import java.util.List;
 public class ClientController {
 
     private final UserController userController;
-    private final BookController bookController;
-    private final CategoriesServiceController categoriesServiceController;
+    private final ClientBookController clientBookController;
+    private final ClientCategoriesServiceController clientCategoriesServiceController;
     private final OrderController orderController;
     private final ShoppingCartController shoppingCartController;
 
@@ -36,7 +36,7 @@ public class ClientController {
 
     @GetMapping("book/list")
     public String getAllBook(Model model) {
-        model.addAttribute("books", bookController.getAllBook());
+        model.addAttribute("books", clientBookController.getAllBook());
         return "booklist";
     }
 
@@ -45,8 +45,8 @@ public class ClientController {
     public String showHomePage(Model model,
                                @RequestParam(defaultValue = "0") int page,
                                @RequestParam(defaultValue = "12") int size) {
-        bookController.pageSize(model, page, size);
-        model.addAttribute("category", categoriesServiceController.getAllCategory());
+        clientBookController.pageSize(model, page, size);
+        model.addAttribute("category", clientCategoriesServiceController.getAllCategory());
         return "homePage";
     }
 
@@ -84,9 +84,9 @@ public class ClientController {
 
     @GetMapping("/search")
     public String searchBooks(@RequestParam(name = "keyword", required = false) String keyword, Model model) {
-        List<Book> searchResults = bookController.searchBooks(keyword);
+        List<Book> searchResults = clientBookController.searchBooks(keyword);
         model.addAttribute("books", searchResults);
-        model.addAttribute("category", categoriesServiceController.getAllCategory());
+        model.addAttribute("category", clientCategoriesServiceController.getAllCategory());
         return "homePage";
     }
 }

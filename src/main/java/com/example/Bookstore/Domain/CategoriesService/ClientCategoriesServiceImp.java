@@ -9,32 +9,18 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CategoriesServiceImp implements CategoriesService {
+public class ClientCategoriesServiceImp implements ClientCategoriesService {
     @Autowired
     private CategoriesRepository categoriesRepository;
 
-    @Override
-    public void addCategory(Categories categories) {
-        categoriesRepository.save(categories);
-    }
-
+   
     @Override
     public List<Categories> getAllCategory() {
         return categoriesRepository.findAll();
     }
 
-    @Override
-    public Optional<Categories> findByName(String name) {
-        return categoriesRepository.findByName(name);
-    }
 
-    @Override
-    public long countCategory() {
-        return categoriesRepository.count();
-    }
-
-    public Optional<Categories> findById(Long id)
-    {
+    public Optional<Categories> findById(Long id) {
         return categoriesRepository.findById(id);
     }
 }

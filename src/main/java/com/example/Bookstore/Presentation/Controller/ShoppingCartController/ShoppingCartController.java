@@ -5,7 +5,7 @@ import com.example.Bookstore.Domain.Model.Book.Book;
 import com.example.Bookstore.Domain.Model.Cart.CartItem;
 import com.example.Bookstore.Domain.Model.User.User;
 import com.example.Bookstore.Domain.Security.JWTAuth.JwtService;
-import com.example.Bookstore.Presentation.Controller.BookController.BookController;
+import com.example.Bookstore.Presentation.Controller.BookController.ClientBookController;
 import com.example.Bookstore.Presentation.Controller.userController.UserController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,11 +23,11 @@ public class ShoppingCartController {
 
     private final CartService cartService;
     private final JwtService jwtService;
-    private final BookController bookController;
+    private final ClientBookController clientBookController;
     private final UserController userController;
 
     public boolean addToCart(Long bookId, HttpServletRequest request, HttpSession session) {
-        Optional<Book> optionalBook = bookController.findById(bookId);
+        Optional<Book> optionalBook = clientBookController.findById(bookId);
         if (optionalBook.isPresent()) {
             Book book = optionalBook.get();
             CartItem item = new CartItem();
@@ -71,4 +71,10 @@ public class ShoppingCartController {
         }
         return null;
     }
+
+    public int getCountItem(HttpSession session) {
+        return cartService.getCountItem(session);
+    }
+
+
 }

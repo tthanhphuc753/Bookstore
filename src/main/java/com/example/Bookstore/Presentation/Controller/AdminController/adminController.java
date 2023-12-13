@@ -3,8 +3,8 @@ package com.example.Bookstore.Presentation.Controller.AdminController;
 
 import com.example.Bookstore.Domain.Model.Book.Book;
 import com.example.Bookstore.Domain.Model.Book.Categories;
-import com.example.Bookstore.Presentation.Controller.BookController.BookController;
-import com.example.Bookstore.Presentation.Controller.CategoriesController.CategoriesServiceController;
+import com.example.Bookstore.Presentation.Controller.BookController.AdminBookController;
+import com.example.Bookstore.Presentation.Controller.CategoriesController.AdminCategoriesServiceController;
 import com.example.Bookstore.Presentation.Controller.OrderController.OrderController;
 import com.example.Bookstore.Presentation.Controller.userController.UserController;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +19,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class adminController {
 
-    private final CategoriesServiceController categoriesController;
-    private final BookController bookController;
+    private final AdminCategoriesServiceController adminCategoriesServiceController;
+    private final AdminBookController adminBookController;
     private final OrderController orderController;
     private final UserController userController;
 
@@ -28,50 +28,50 @@ public class adminController {
     public String showAdminPage(Model model,
                                 @RequestParam(defaultValue = "0") int page,
                                 @RequestParam(defaultValue = "15") int size) {
-        bookController.pageSize(model, page, size);
+        adminBookController.pageSize(model, page, size);
         return "admin";
     }
 
     @GetMapping("book/update-form/{id}")
     public String showUpdateForm(@PathVariable Long id, Model model) {
-        bookController.showUpdateBookForm(model, id);
+        adminBookController.showUpdateBookForm(model, id);
         return "updatebook";
     }
 
     @PostMapping("book/update/{id}")
     public String updateBook(@PathVariable Long id, @ModelAttribute("book") Book newBook) {
-        bookController.updateBook(id, newBook);
+        adminBookController.updateBook(id, newBook);
         return "redirect:/admin/homepage";
     }
 
     @GetMapping("book/add-form")
     public String showAddForm(Model model) {
-        bookController.showAddBookForm(model);
+        adminBookController.showAddBookForm(model);
         return "addbook";
     }
 
 
     @PostMapping("book/add")
     public String addBook(@ModelAttribute("book") Book book) {
-        bookController.addBook(book);
+        adminBookController.addBook(book);
         return "redirect:/admin/homepage";
     }
 
     @PostMapping("/books/delete/{id}")
     public String removeBook(@PathVariable Long id) {
-        bookController.deleteBook(id);
+        adminBookController.deleteBook(id);
         return "redirect:/admin/homepage";
     }
 
     @PostMapping("category/add")
     public String addCategory(@ModelAttribute("categories") Categories categories) {
-        categoriesController.addCategories(categories);
+        adminCategoriesServiceController.addCategories(categories);
         return "redirect:/admin/category/list";
     }
 
     @GetMapping("category/list")
     public String getAllCategory(Model model) {
-        model.addAttribute("categories", categoriesController.getAllCategory());
+        model.addAttribute("categories", adminCategoriesServiceController.getAllCategory());
         return "categorylist";
     }
 
@@ -80,9 +80,9 @@ public class adminController {
         model.addAttribute("orders", orderController.getAllOrder());
         return "orderlist";
     }
+
     @PostMapping("order/delete/{orderId}")
-    public String deteleOrder(@PathVariable Long orderId)
-    {
+    public String deteleOrder(@PathVariable Long orderId) {
         orderController.deleteOrder(orderId);
         return "redirect:/admin/order/list";
     }
@@ -101,9 +101,9 @@ public class adminController {
 
     @GetMapping("/search")
     public String searchBooksAdmin(@RequestParam(name = "keyword", required = false) String keyword, Model model) {
-        List<Book> searchResults = bookController.searchBooks(keyword);
+        List<Book> searchResults = adminBookController.searchBooks(keyword);
         model.addAttribute("books", searchResults);
-        model.addAttribute("category", categoriesController.getAllCategory());
+        model.addAttribute("category", adminCategoriesServiceController.getAllCategory());
         return "admin";
     }
 

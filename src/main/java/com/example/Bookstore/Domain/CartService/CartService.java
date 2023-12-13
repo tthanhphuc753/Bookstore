@@ -17,4 +17,5 @@ public interface CartService {
     void clearAll(HttpSession session);
 
     Collection<CartItem> getAlls(HttpSession session);
+    int getCountItem(HttpSession session);
 }

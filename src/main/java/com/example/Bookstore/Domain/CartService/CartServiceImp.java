@@ -74,4 +74,21 @@ public class CartServiceImp implements CartService {
         Map<Long, CartItem> cartMap = getCartMap(session);
         return cartMap.values();
     }
+
+    @Override
+    public int getCountItem(HttpSession session) {
+        Map<Long, CartItem> cartMap = getCartMap(session);
+        return cartMap.size();
+    }
+
+    public Double getSumItem(HttpSession session) {
+        Map<Long, CartItem> cartMap = getCartMap(session);
+        Double sum = 0.0;
+        for (int i = 0; i < cartMap.size(); i++) {
+
+        }
+
+        return sum;
+
+    }
 }

@@ -13,30 +13,14 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class BookServiceImp implements BookService {
+public class AdminBookServiceImp implements AdminBookService {
 
     private final BookRepository bookRepository;
 
 
-
-    @Override
-    public Optional<Book> findByName(String name) {
-        return bookRepository.findByName(name);
-    }
-
     @Override
     public Optional<Book> findById(Long id) {
         return bookRepository.findById(id);
-    }
-
-
-    @Override
-    public void addCategories(long bookID, long categoriesID) {
-
-    }
-
-    public List<Book> getAllBook() {
-        return bookRepository.findAll();
     }
 
     @Override

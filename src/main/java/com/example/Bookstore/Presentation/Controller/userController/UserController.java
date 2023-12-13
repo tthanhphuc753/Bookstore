@@ -34,8 +34,7 @@ public class UserController {
         return userServices.findByEmail(s);
     }
 
-    public User registerUser(RegistrationRequest request)
-    {
+    public User registerUser(RegistrationRequest request) {
         return userServices.registerUser(request);
     }
 
