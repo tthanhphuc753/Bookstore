@@ -345,7 +345,7 @@
 <body id="page-top">
 
     <div id="wrapper">
-        <div class="navbar-nav sidebar  ">
+        <div class="navbar-nav sidebar  " style="height: 100%; position: fixed">
             <a class="sidebar-brand " href="/admin/homepage">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fa-solid fa-book"></i>
@@ -375,7 +375,7 @@
                 <a href="/admin/user/list" class="item-link">Xem danh sách tài khoản</a>
             </div>
         </div>
-        <div class="content-wrapper">
+        <div class="content-wrapper" style="margin-left: 15%">
             <div class="content">
                 <!-- topbar -->
                 <nav class="navbar navbar-expand ">
@@ -420,29 +420,29 @@
                                 <p>$</p>
                                 <p class="book-detail-c" th:text="${item.price}"></p>
                             </div>
-                            <div th:each="item : ${books}" th:id="'bookDetailModal-' + ${item.id}" class="modal">
+                            <div  th:id="'bookDetailModal-' + ${item.id}" class="modal">
                                 <div class="modal-content modal-content-book">
                                     <span class="modal-close" th:data-book-id="${item.id}" onclick="closeBookDetailModal(this.getAttribute('data-book-id'))">&times;</span>
                                     <div class="modal-content-detail">
                                         <div class="modal-content-detail-img">
-                                            <img src="https://thegioidohoa.com/wp-content/uploads/2017/08/tong-hop-20-mau-bia-sach-doc-dao-nhat-nam-2017-7.jpg" alt="hình sách">
+                                            <img style="height: 100%; width: 100%" src="https://thegioidohoa.com/wp-content/uploads/2017/08/tong-hop-20-mau-bia-sach-doc-dao-nhat-nam-2017-7.jpg" alt="hình sách">
                                         </div>
                                         <div class="modal-content-detail-content">
-                                            <div style="display: flex">
-                                                <p style="margin-bottom: 0">Name:</p>
+                                            <div style="display: flex; margin-left: 20px">
+                                                <p style=" margin-bottom: 0">Name:</p>
                                                 <p style="margin-bottom: 0; margin-left: 20px" th:text="${item.name}"></p>
                                             </div>
-                                            <div style="display: flex">
+                                            <div style="display: flex; margin-left: 20px">
                                                 <p style="margin-bottom: 0">Author:</p>
                                                 <p style="margin-bottom: 0; margin-left: 20px" th:text="${item.author}"></p>
                                             </div>
-                                            <div style="display: flex">
+                                            <div style="display: flex; margin-left: 20px">
                                                 <p style="margin-bottom: 0">Author:</p>
                                                 <p style="margin-bottom: 0; margin-left: 20px">$</p>
                                                 <p style="margin-bottom: 0" th:text="${item.price}"></p>
                                             </div>
 
-                                            <div class="modal-content-detail-content-categories" style=" margin-left: 0">
+                                            <div class="modal-content-detail-content-categories" style="margin-left: 20px">
                                                 <p style="text-align: start; margin-bottom: 0">Category</p>
                                                 <div class="modal-content-detail-content-categories-list">
                                                     <div class="modal-content-detail-content-categories-name" th:each="category : ${item.categoriesSet}">
@@ -451,8 +451,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="modal-content-detail-content-description">
-                                                description
+                                            <div style="margin-left: 20px" class="modal-content-detail-content-description">
+                                                <p>Decription</p>
+                                                <p th:text="${item.description}"></p>
                                             </div>
 
                                         </div>
