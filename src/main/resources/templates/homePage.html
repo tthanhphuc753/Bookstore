@@ -34,7 +34,9 @@
         body {
             font-size: 100%; /* hoặc giá trị khác tùy thuộc vào thiết kế của bạn */
         }
-
+        p{
+            margin: 0;
+        }
         .header {
             display: flex;
             align-items: center;
@@ -208,10 +210,10 @@
             text-align: center;
         }
 
-        .book-info img{
-            width: 100%;
-            height: auto;
-        }
+        /*img{*/
+        /*    width: 100%;*/
+        /*    height: auto;*/
+        /*}*/
 
         /* CSS cho nút "Add to Cart" */
         .book-info button {
@@ -230,11 +232,11 @@
         }
 
         .pagination {
-            position: absolute;
-            bottom: 0;
-            left: 10px;
-            margin-bottom: 40px;
-            transform: translate(0, 100%);
+            /*position: absolute;*/
+            /*bottom: 0;*/
+            /*left: 10px;*/
+            /*margin-bottom: 40px;*/
+            /*transform: translate(0, 100%);*/
         }
 
         /* Optional: Style for pagination links */
@@ -354,7 +356,6 @@
 
         <div class="header_cart_icon" onclick="redirectToShoppingCart()">
             <i class="fas fa-shopping-cart"></i>
-            <span id="cartItemCount">0</span>
         </div>
 
         <nav class="header_navbar">
@@ -394,18 +395,25 @@
     </div>
 
     <div class="book-container" id="product-list">
-        <div th:each="book : ${books}" class="book-item">
-            <div class="book-info">
-                <img th:src="@{/images/{image}(image=${book.image})}" th:alt="${book.name}">
-                <h2 th:text="${book.name}"></h2>
-                <p th:text="'Author: ' + ${book.author}"></p>
-                <p th:text="'Price: $' + ${book.price}"></p>
-                <form method="post" th:action="@{/client/add/{bookId}(bookId=${book.id})}">
-                    <button type="submit">Add to Cart</button>
-                </form>
+        <div style="display: flex; flex-wrap: wrap; justify-content: flex-start">
+            <div th:each="book : ${books}" class="book-item" style="margin: 0 10px 10px 0">
+                <div class="book-info" style="min-width: 300px; height: 400px">
+                    <div style="width: 250px; height: 225px;display: flex; justify-content: center">
+                        <img src="https://th.bing.com/th/id/R.9b1f3361288e85fc0fc4c7723829fd3b?rik=BVMASTnwvJFPSA&pid=ImgRaw&r=0" alt="hinh sách">
+                    </div>
+
+<!--                    <img th:src="@{/images/{image}(image=${book.image})}" th:alt="${book.name}">-->
+                    <h6 th:text="${book.name}"></h6>
+                    <p th:text="'Author: ' + ${book.author}"></p>
+                    <p th:text="'Price: $' + ${book.price}"></p>
+                    <form method="post" th:action="@{/client/add/{bookId}(bookId=${book.id})}">
+                        <button type="submit">Add to Cart</button>
+                    </form>
+                </div>
             </div>
         </div>
-        <nav aria-label="Page navigation example" th:if="${not #lists.isEmpty(books)}">
+
+        <nav aria-label="Page navigation example" style="display: flex; justify-content: center; width: 100%" th:if="${not #lists.isEmpty(books)}">
             <ul class="pagination" th:if="${totalPages > 1}">
                 <li class="page-item" th:if="${currentPage > 0}">
                     <a class="page-link" th:href="@{'/client/homepage?page=' +  ${currentPage - 1 }}">Previous</a>
