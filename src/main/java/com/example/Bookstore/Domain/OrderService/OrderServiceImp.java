@@ -12,23 +12,25 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
-public class OrderServiceImp implements OrderService{
+public class OrderServiceImp implements OrderService {
     private final CartRepository cartRepository;
     private final OrderdetailRepository orderdetailRepository;
     private final UserRepository userRepository;
+
     @Override
     public Order addOrder(Long cartId, Long userId) {
         User user = userRepository.findById(userId).get();
         CartItem cartItem = cartRepository.findById(cartId).get();
 
-            Order newOrder = new Order();
-            newOrder.setQuantity(cartItem.getQuantity());
-            newOrder.setBookName(cartItem.getBook().getName());
-            newOrder.setDate(new Date());
-            newOrder.setUser(user);
-            return orderdetailRepository.save(newOrder);
+        Order newOrder = new Order();
+        newOrder.setQuantity(cartItem.getQuantity());
+        newOrder.setBookName(cartItem.getBook().getName());
+        newOrder.setDate(new Date());
+        newOrder.setUser(user);
+        return orderdetailRepository.save(newOrder);
 
     }
 
@@ -36,7 +38,6 @@ public class OrderServiceImp implements OrderService{
     public void deleteOrderById(long orderId) {
         orderdetailRepository.deleteById(orderId);
     }
-
 
 
     @Override

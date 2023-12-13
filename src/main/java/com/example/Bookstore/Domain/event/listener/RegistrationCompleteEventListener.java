@@ -1,10 +1,10 @@
 package com.example.Bookstore.Domain.event.listener;
 
 import com.example.Bookstore.Domain.Mailsender.EmailSender;
-import com.example.Bookstore.Domain.UserService.UserServices;
-import com.example.Bookstore.Persistence.DAO.UserRepository;
 import com.example.Bookstore.Domain.Model.User.User;
+import com.example.Bookstore.Domain.UserService.UserServices;
 import com.example.Bookstore.Domain.event.RegistrationCompleteEvent;
+import com.example.Bookstore.Persistence.DAO.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;

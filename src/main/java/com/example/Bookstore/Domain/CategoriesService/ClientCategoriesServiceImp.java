@@ -13,7 +13,7 @@ public class ClientCategoriesServiceImp implements ClientCategoriesService {
     @Autowired
     private CategoriesRepository categoriesRepository;
 
-   
+
     @Override
     public List<Categories> getAllCategory() {
         return categoriesRepository.findAll();

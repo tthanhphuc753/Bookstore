@@ -11,6 +11,8 @@ import java.util.Optional;
 public interface BookRepository extends JpaRepository<Book, Long> {
 
     Optional<Book> findByName(String name);
+
     Optional<Book> findById(Long id);
+
     List<Book> findByNameContainingIgnoreCase(String keyword);
 }

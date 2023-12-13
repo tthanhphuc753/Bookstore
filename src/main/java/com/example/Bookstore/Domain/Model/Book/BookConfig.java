@@ -9,8 +9,6 @@ import org.springframework.context.annotation.Configuration;
 public class BookConfig {
 
 
-
-
     @Bean(name = "ProductBean")
     CommandLineRunner commandLineRunner() {
         return args -> {
