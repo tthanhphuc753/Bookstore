@@ -15,32 +15,32 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class AdminBookController {
-    private final AdminBookService bookService;
+    private final AdminBookService adminBookService;
     private final ClientCategoriesServiceController clientCategoriesServiceController;
 
     public void addBook(Book book) {
-        bookService.addBook(book);
+        adminBookService.addBook(book);
     }
 
     public void deleteBook(Long id) {
-        bookService.removeBook(id);
+        adminBookService.removeBook(id);
 
     }
 
     public void updateBook(Long id, Book newBook) {
-        bookService.updateBook(id, newBook);
+        adminBookService.updateBook(id, newBook);
     }
 
     public void pageSize(Model model, int page, int size) {
 
-        Page<Book> booksPage = bookService.getAllBooks(PageRequest.of(page, size));
+        Page<Book> booksPage = adminBookService.getAllBooks(PageRequest.of(page, size));
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", booksPage.getTotalPages());
         model.addAttribute("books", booksPage.getContent());
     }
 
     public void showUpdateBookForm(Model model, Long id) {
-        Optional<Book> bookOptional = bookService.findById(id);
+        Optional<Book> bookOptional = adminBookService.findById(id);
         bookOptional.ifPresent(book -> model.addAttribute("book", book));
         model.addAttribute("category", clientCategoriesServiceController.getAllCategory());
     }
@@ -51,10 +51,11 @@ public class AdminBookController {
     }
 
     public Optional<Book> findById(Long bookId) {
-        return bookService.findById(bookId);
+        return adminBookService.findById(bookId);
     }
 
     public List<Book> searchBooks(String keyword) {
-        return bookService.searchBooks(keyword);
+
+        return adminBookService.searchBooks(keyword);
     }
 }
