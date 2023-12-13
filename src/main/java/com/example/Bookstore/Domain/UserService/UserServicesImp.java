@@ -26,7 +26,6 @@ import java.util.Optional;
 public class UserServicesImp implements UserServices {
 
     private final UserRepository userrepos;
-    private final BookRepository bookRepository;
     private final PasswordEncoder passwordEncoder;
     private final VerificationTokenRepository tokenRepository;
     private final JwtService jwtService;

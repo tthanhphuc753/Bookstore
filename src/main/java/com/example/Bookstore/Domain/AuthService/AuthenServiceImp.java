@@ -67,8 +67,7 @@ public class AuthenServiceImp implements AuthenService {
     }
 
     @Override
-    public VerificationToken getToken(String token)
-    {
-       return verificationTokenRepository.findByToken(token);
+    public VerificationToken getToken(String token) {
+        return verificationTokenRepository.findByToken(token);
     }
 }

@@ -1,7 +1,7 @@
 package com.example.Bookstore.Domain.Model.Order;
 
-import com.example.Bookstore.Domain.Model.User.User;
 import com.example.Bookstore.Domain.Model.Book.Book;
+import com.example.Bookstore.Domain.Model.User.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
