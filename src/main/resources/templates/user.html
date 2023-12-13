@@ -115,10 +115,14 @@
             /*flex-basis: 20%;*/
             width: 280px;
             padding: 0 30px;
+            height: 100%;
+            position: fixed;
 
         }
+
         .content-wrapper {
             flex: 1;
+            margin-left: 15%;
         }
         .content {
             height: 98%;
@@ -190,6 +194,21 @@
             cursor: pointer;
             padding: 1px;
         }
+        @media (max-width:  1280px) {
+            .sidebar {
+                width: 20%;
+            }
+
+            .content-wrapper{
+                margin-left: 20%;
+            }
+            .sidebar-brand {
+                font-weight: 800;
+                text-transform: uppercase;
+                padding: 30px;
+                font-size: large;
+            }
+        }
         .user, .user-item {
             margin-left: 10px;
             text-decoration: none;
@@ -249,7 +268,7 @@
 </head>
 <body id="page-top">
 <div id="wrapper">
-    <div class="navbar-nav sidebar  "  style="height: 100%; position: fixed">
+    <div class="navbar-nav sidebar  "  >
 
         <a class="sidebar-brand " href="/admin/homepage">
             <div class="sidebar-brand-icon rotate-n-15">
@@ -280,7 +299,7 @@
             <a href="/admin/user/list" class="item-link selected">Xem danh sách tài khoản</a>
         </div>
     </div>
-    <div class="content-wrapper" style="margin-left: 15%">
+    <div class="content-wrapper">
         <div class="content">
             <!-- topbar -->
             <nav class="navbar navbar-expand ">
