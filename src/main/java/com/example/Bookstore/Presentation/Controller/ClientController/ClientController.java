@@ -34,13 +34,6 @@ public class ClientController {
     }
 
 
-    @GetMapping("book/list")
-    public String getAllBook(Model model) {
-        model.addAttribute("books", clientBookController.getAllBook());
-        return "booklist";
-    }
-
-
     @GetMapping("/homepage")
     public String showHomePage(Model model,
                                @RequestParam(defaultValue = "0") int page,

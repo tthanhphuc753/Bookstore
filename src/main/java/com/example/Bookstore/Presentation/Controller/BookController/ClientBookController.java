@@ -20,7 +20,7 @@ public class ClientBookController {
     private final ClientCategoriesServiceController clientCategoriesServiceController;
 
 
-    public void pageSize(Model model, int page, int size) {
+        public void pageSize(Model model, int page, int size) {
 
         Page<Book> booksPage = clientBookService.getAllBooks(PageRequest.of(page, size));
         model.addAttribute("currentPage", page);
