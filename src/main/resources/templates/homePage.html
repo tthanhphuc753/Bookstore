@@ -356,6 +356,7 @@
 
         <div class="header_cart_icon" onclick="redirectToShoppingCart()">
             <i class="fas fa-shopping-cart"></i>
+            <span id="cartItemCount">0</span>
         </div>
 
         <nav class="header_navbar">
@@ -406,9 +407,12 @@
                     <h6 th:text="${book.name}"></h6>
                     <p th:text="'Author: ' + ${book.author}"></p>
                     <p th:text="'Price: $' + ${book.price}"></p>
-                    <form method="post" th:action="@{/client/add/{bookId}(bookId=${book.id})}">
-                        <button type="submit">Add to Cart</button>
-                    </form>
+<!--                    <form method="post" th:action="@{/client/add/{bookId}(bookId=${book.id})}"  onclick="openAddToCartModal()">-->
+<!--                        <button type="submit">Add to Cart</button>-->
+<!--                    </form>-->
+                    <div class="book-actions">
+                        <button class="btn-primary" th:data-book-id="${book.id}" onclick="openAddToCartModal(this.getAttribute('data-book-id'))">Add to Cart</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -439,6 +443,14 @@
             <a class="modal-link modal-link-logout" href="#" onclick="performLogout()">Đăng xuất</a>
         </div>
     </div>
+
+<div id="addToCartModal" class="modal" style="display: none; text-align: center;">
+    <div class="modal-content" style="background-color: #fff; padding: 20px; border-radius: 5px; width: 300px;">
+        <span class="modal-close" onclick="closeAddToCartModal()" style="cursor: pointer; position: absolute; top: 10px; right: 10px;">&times;</span>
+        <h2>Đã thêm vào giỏ hàng</h2>
+        <p>Sản phẩm đã được thêm vào giỏ hàng của bạn.</p>
+    </div>
+</div>
 <footer>
     <p>&copy; 2023 Bookstore. All rights reserved.</p>
 </footer>
@@ -465,6 +477,21 @@
 
     function cancelHide() {
         clearTimeout(timeoutId);
+    }
+
+    let idbookadd;
+    function openAddToCartModal(bookid) {
+        idbookadd = bookid;
+        document.getElementById("addToCartModal").style.display = "flex";
+        addBook();
+        setTimeout(()=> {
+            closeAddToCartModal();
+        },800)
+
+    }
+
+    function closeAddToCartModal() {
+        document.getElementById("addToCartModal").style.display = "none";
     }
 
     function openModal() {
@@ -541,6 +568,43 @@
         if (userEmail) {
             userEmailSpan.textContent = userEmail;
         }
+    }
+
+    function addBook() {
+
+        console.log('Đang xóa sách có ID:', idbookadd);
+        // Construct the URL for the delete request, replace '/admin/books/delete/' with your actual endpoint
+        const addUrl = `/client/add/${idbookadd}`;
+
+        // Perform the actual deletion logic here using fetch
+        fetch(addUrl, {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json',
+                // You may need to include additional headers if required by your server
+            },
+        })
+            .then(response => {
+                if (response.ok) {
+                    // Update the UI as needed (remove the deleted book element, etc.)
+                    // ...
+
+                    // Close the confirmation modal
+                    // closeAddToCartModal();
+                    // alert("aaa")
+                    // window.location.reload();
+                } else {
+                    // Handle error responses from the server
+                    // You might want to show an error message or take other actions
+                    alert('Có lỗi khi add sách. Vui lòng thử lại!')
+                }
+            })
+            .catch(error => {
+                // Handle network errors
+                alert(error);
+            });
+
     }
 </script>
 
