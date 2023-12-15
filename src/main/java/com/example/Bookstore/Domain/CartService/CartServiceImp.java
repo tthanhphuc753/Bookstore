@@ -14,7 +14,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class CartServiceImp implements CartService {
 
-    private final CartRepository cartRepository;
     private static final String SESSION_KEY_CART = "CART";
 
     @Override

@@ -1,15 +1,14 @@
 package com.example.Bookstore.Domain.Model.Order;
 
 import com.example.Bookstore.Domain.Model.Book.Book;
+import com.example.Bookstore.Domain.Model.Cart.CartItem;
 import com.example.Bookstore.Domain.Model.User.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Getter
@@ -22,8 +21,6 @@ public class Order {
     @Column(name = "orderID")
     private long id;
     private Date date;
-    private String bookName;
-    private int quantity;
 
 
     @ManyToOne
@@ -31,7 +28,7 @@ public class Order {
     private User user;
 
     @JsonIgnore
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "order_book",
             joinColumns = @JoinColumn(name = "id"),
@@ -39,12 +36,19 @@ public class Order {
     )
     private Set<Book> bookList = new HashSet<>();
 
-    public Order(Set<Book> book, Date date, String bookName, User user, int quantity) {
+    @JsonIgnore
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(
+            name = "order_cartitem",
+            joinColumns = @JoinColumn(name = "id"),
+            inverseJoinColumns = @JoinColumn(name = "cartItemID")
+    )
+    private Map<Long, CartItem> cartItemList = new HashMap<>();
+
+    public Order(Set<Book> book, Date date, User user) {
         this.bookList = book;
         this.date = date;
-        this.bookName = bookName;
         this.user = user;
-        this.quantity = quantity;
     }
 
     public Order() {
@@ -59,7 +63,6 @@ public class Order {
         return "Order{" +
                 "id=" + id +
                 ", date=" + date +
-                ", Book='" + bookName + '\'' +
                 '}';
     }
 }

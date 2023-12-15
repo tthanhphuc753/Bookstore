@@ -3,12 +3,12 @@ package com.example.Bookstore;
 import com.example.Bookstore.Domain.Model.Book.Book;
 import com.example.Bookstore.Domain.Model.Book.Categories;
 import com.example.Bookstore.Domain.Model.Order.Order;
+import com.example.Bookstore.Domain.Model.User.User;
+import com.example.Bookstore.Domain.Security.ApplicationConfig;
 import com.example.Bookstore.Persistence.DAO.BookRepository;
 import com.example.Bookstore.Persistence.DAO.CategoriesRepository;
 import com.example.Bookstore.Persistence.DAO.OrderdetailRepository;
 import com.example.Bookstore.Persistence.DAO.UserRepository;
-import com.example.Bookstore.Domain.Model.User.User;
-import com.example.Bookstore.Domain.Security.ApplicationConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -52,41 +52,39 @@ public class Bookstore {
 
 
             List<Order> orderList = new ArrayList<>();
-            Order newOrder = new Order(null, new Date(), "black sea", Phuc, 3);
+            Order newOrder = new Order(null, new Date(), Phuc);
             orderList.add(newOrder);
             orderdetailRepository.saveAll(orderList);
 
             List<Categories> lc = new ArrayList<>();
             Categories newCat = new Categories(1, "Document", null);
             lc.add(newCat);
-            Categories newCat1 = new Categories(2,"Romance",null);
+            Categories newCat1 = new Categories(2, "Romance", null);
             lc.add(newCat1);
-            Categories newCat2 = new Categories(3,"Mystery",null);
+            Categories newCat2 = new Categories(3, "Mystery", null);
             lc.add(newCat2);
-            Categories newCat3 = new Categories(4,"Fantasy & Science fiction",null);
+            Categories newCat3 = new Categories(4, "Fantasy & Science fiction", null);
             lc.add(newCat3);
-            Categories newCat4 = new Categories(5,"Thrillers & Horror",null);
+            Categories newCat4 = new Categories(5, "Thrillers & Horror", null);
             lc.add(newCat4);
-            Categories self_help = new Categories(6,"Self-help",null);
+            Categories self_help = new Categories(6, "Self-help", null);
             lc.add(self_help);
-            Categories short_stories = new Categories(7,"Short Stories",null);
+            Categories short_stories = new Categories(7, "Short Stories", null);
             lc.add(short_stories);
-            Categories cookbooks = new Categories(8,"Cookbooks",null);
+            Categories cookbooks = new Categories(8, "Cookbooks", null);
             lc.add(cookbooks);
-            Categories history = new Categories(9,"History",null);
+            Categories history = new Categories(9, "History", null);
             lc.add(history);
-            Categories science = new Categories(10,"Science",null);
+            Categories science = new Categories(10, "Science", null);
             lc.add(science);
-            Categories adventure = new Categories(11,"Adventure",null);
+            Categories adventure = new Categories(11, "Adventure", null);
             lc.add(adventure);
-            Categories humor = new Categories(12,"Humor",null);
+            Categories humor = new Categories(12, "Humor", null);
             lc.add(humor);
-            Categories biography = new Categories(13,"Biography",null);
+            Categories biography = new Categories(13, "Biography", null);
             lc.add(biography);
-            Categories memoir = new Categories(14,"Memoir",null);
+            Categories memoir = new Categories(14, "Memoir", null);
             lc.add(memoir);
-
-
 
 
             categoriesRepository.saveAll(lc);
@@ -97,8 +95,8 @@ public class Bookstore {
 
             Book ThinkAndGrowRich = new Book(24, "Think And Grow Rich", "Phuc", newSet);
             int n = 40;
-            for ( int i = 0 ; i < n ; i++ ){
-                Book book = new Book(25,"book "+i);
+            for (int i = 0; i < n; i++) {
+                Book book = new Book(25, "book " + i);
                 bookList.add(book);
             }
 

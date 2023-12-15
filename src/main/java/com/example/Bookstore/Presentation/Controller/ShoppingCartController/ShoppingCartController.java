@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 
@@ -20,6 +21,8 @@ public class ShoppingCartController {
     private final CartService cartService;
     private final ClientBookController clientBookController;
 
+
+    @Transactional
     public boolean addToCart(Long bookId, HttpServletRequest request, HttpSession session) {
         Optional<Book> optionalBook = clientBookController.findById(bookId);
         if (optionalBook.isPresent()) {
@@ -44,6 +47,11 @@ public class ShoppingCartController {
 
     public void updateCartQuantity(Long bookId, int quantity, HttpSession session) {
         cartService.updateCart(bookId, quantity, session);
+    }
+
+    public void clearCart(HttpSession session)
+    {
+        cartService.clearAll(session);
     }
 
     public int getCountItem(HttpSession session) {

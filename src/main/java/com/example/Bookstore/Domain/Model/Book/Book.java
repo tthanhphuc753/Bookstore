@@ -27,7 +27,7 @@ public class Book {
     private String description;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "bookList")
+    @ManyToMany(cascade = CascadeType.MERGE, mappedBy = "bookList")
     private Set<Order> orders = new HashSet<>();
 
 

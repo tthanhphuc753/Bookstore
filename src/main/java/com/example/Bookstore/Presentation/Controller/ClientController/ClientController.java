@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
 
@@ -39,11 +40,14 @@ public class ClientController {
         return "homePage";
     }
 
+    @Transactional
     @PostMapping("/order/add")
-    public void addOrder(HttpServletRequest request, HttpSession session, HttpServletResponse response) throws IOException {
+    public String addOrder(HttpServletRequest request, HttpSession session, HttpServletResponse response) throws IOException {
         orderController.addOrder(request, session, response);
+        return "redirect:/client/order/list";
     }
 
+    @Transactional
     @PostMapping("add/{bookId}")
     public String addToCart(@PathVariable Long bookId, HttpServletRequest request, HttpSession session, Model model) {
         if (shoppingCartController.addToCart(bookId, request, session)) {
@@ -80,6 +84,13 @@ public class ClientController {
         model.addAttribute("category", clientCategoriesServiceController.getAllCategory());
         return "homePage";
     }
+
+    @GetMapping("order/list")
+    public String getAllOrders(Model model, HttpSession session) {
+        model.addAttribute("orders", orderController.getAllOrder());
+        return "orderlist";
+    }
+
 
     @GetMapping("/cartitem/count")
     @ResponseBody
