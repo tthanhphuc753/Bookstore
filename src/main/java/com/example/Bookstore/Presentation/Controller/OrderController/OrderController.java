@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,20 +21,24 @@ import java.util.Optional;
 public class OrderController {
     private final OrderService orderService;
     private final UserController userController;
-    private JwtService jwtService;
+    private final JwtService jwtService;
 
     public List<Order> getAllOrder() {
         return orderService.getAllOrder();
     }
 
 
-    public void addOrder(HttpServletRequest request, HttpSession session) {
+    public void addOrder(HttpServletRequest request, HttpSession session, HttpServletResponse response) throws IOException {
         String token = getJwtFromCookie(request);
         Long userId = null;
         if (token != null) {
             Optional<User> optionalUser = userController.findByEmail(jwtService.extractUsername(token));
             User user = optionalUser.get();
             userId = user.getUserID();
+        }else
+        {
+            response.sendRedirect("/auth/login");
+            return;
         }
         orderService.addOrder(userId, session);
     }

@@ -13,7 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -38,8 +40,8 @@ public class ClientController {
     }
 
     @PostMapping("/order/add")
-    public void addOrder(HttpServletRequest request, HttpSession session) {
-        orderController.addOrder(request, session);
+    public void addOrder(HttpServletRequest request, HttpSession session, HttpServletResponse response) throws IOException {
+        orderController.addOrder(request, session, response);
     }
 
     @PostMapping("add/{bookId}")
