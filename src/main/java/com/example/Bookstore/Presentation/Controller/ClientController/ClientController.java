@@ -2,7 +2,6 @@ package com.example.Bookstore.Presentation.Controller.ClientController;
 
 
 import com.example.Bookstore.Domain.Model.Book.Book;
-import com.example.Bookstore.Domain.Model.User.User;
 import com.example.Bookstore.Presentation.Controller.BookController.ClientBookController;
 import com.example.Bookstore.Presentation.Controller.CategoriesController.ClientCategoriesServiceController;
 import com.example.Bookstore.Presentation.Controller.OrderController.OrderController;
@@ -28,11 +27,6 @@ public class ClientController {
     private final OrderController orderController;
     private final ShoppingCartController shoppingCartController;
 
-    @GetMapping("user/findbyid")
-    public User findByID(@ModelAttribute("userID") Long id) {
-        return userController.findUserByID(id);
-    }
-
 
     @GetMapping("/homepage")
     public String showHomePage(Model model,
@@ -43,9 +37,9 @@ public class ClientController {
         return "homePage";
     }
 
-    @PostMapping("add/{cartId}/{userId}")
-    public void addOrder(@PathVariable Long cartId, @PathVariable Long userId) {
-        orderController.addOrder(cartId, userId);
+    @PostMapping("/order/add")
+    public void addOrder(HttpServletRequest request, HttpSession session) {
+        orderController.addOrder(request, session);
     }
 
     @PostMapping("add/{bookId}")
@@ -56,7 +50,7 @@ public class ClientController {
             return "redirect:/client/list";
     }
 
-    @GetMapping("list")
+    @GetMapping("cartitem/list")
     public String getAll(Model model, HttpSession session) {
         shoppingCartController.getAll(model, session);
         return "shopping-cart";
@@ -68,14 +62,14 @@ public class ClientController {
         return "redirect:/client/list";
     }
 
-    @PostMapping("update")
+    @PostMapping("cartitem/update")
     public String updateCartQuantity(@ModelAttribute("bookId") Long bookId,
                                      @ModelAttribute("quantity") int quantity, HttpSession session) {
         shoppingCartController.updateCartQuantity(bookId, quantity, session);
         return "redirect:/client/list";
     }
 
-    @GetMapping("/search")
+    @GetMapping("book/search")
     public String searchBooks(@RequestParam(name = "keyword", required = false) String keyword, Model model) {
         List<Book> searchResults = clientBookController.searchBooks(keyword);
         model.addAttribute("books", searchResults);

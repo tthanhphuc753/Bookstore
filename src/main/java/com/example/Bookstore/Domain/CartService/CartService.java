@@ -4,9 +4,12 @@ import com.example.Bookstore.Domain.Model.Cart.CartItem;
 
 import javax.servlet.http.HttpSession;
 import java.util.Collection;
+import java.util.Map;
 
 public interface CartService {
 
+
+    Map<Long, CartItem> getCartMap(HttpSession session);
 
     void addToCart(CartItem item, HttpSession session);
 

@@ -4,7 +4,6 @@ import com.example.Bookstore.Domain.Security.JWTAuth.JwtAuthenticationFilter;
 import com.example.Bookstore.Domain.Security.JWTAuth.JwtAuthenticationSuccessHandler;
 import com.example.Bookstore.Domain.Security.JWTAuth.JwtService;
 import com.example.Bookstore.Domain.UserService.UserServices;
-import com.example.Bookstore.Persistence.DAO.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,7 +35,7 @@ public class SecurityConfig {
 
                         authorizeRequests
                                 .antMatchers("/admin/**").hasAuthority("ADMIN")
-                                .antMatchers("/auth/**","/user/**", "/shopping-cart/**", "/client/**")
+                                .antMatchers("/auth/**", "/user/**", "/shopping-cart/**", "/client/**")
                                 .permitAll()
                                 .anyRequest().authenticated()
                                 .and()

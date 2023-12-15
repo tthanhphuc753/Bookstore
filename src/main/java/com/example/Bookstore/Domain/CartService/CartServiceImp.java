@@ -17,7 +17,8 @@ public class CartServiceImp implements CartService {
     private final CartRepository cartRepository;
     private static final String SESSION_KEY_CART = "CART";
 
-    private Map<Long, CartItem> getCartMap(HttpSession session) {
+    @Override
+    public  Map<Long, CartItem> getCartMap(HttpSession session) {
         Map<Long, CartItem> cartMap = (Map<Long, CartItem>) session.getAttribute(SESSION_KEY_CART);
         if (cartMap == null) {
             cartMap = new HashMap<>();

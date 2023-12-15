@@ -1,7 +1,7 @@
 package com.example.Bookstore.Domain.Security;
 
-import com.example.Bookstore.Persistence.DAO.UserRepository;
 import com.example.Bookstore.Domain.Model.User.UserAuthDetails;
+import com.example.Bookstore.Persistence.DAO.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
