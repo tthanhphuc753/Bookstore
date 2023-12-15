@@ -46,5 +46,7 @@ public class ShoppingCartController {
         cartService.updateCart(bookId, quantity, session);
     }
 
-
+    public int getCountItem(HttpSession session) {
+        return cartService.getCountItem(session);
+    }
 }

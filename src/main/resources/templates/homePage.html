@@ -32,6 +32,7 @@
         }
 
         body {
+            position: relative;
             font-size: 100%; /* hoặc giá trị khác tùy thuộc vào thiết kế của bạn */
         }
         p{
@@ -216,7 +217,8 @@
         /*}*/
 
         /* CSS cho nút "Add to Cart" */
-        .book-info button {
+        .book-info button,
+        .book-actions button{
             margin-top: 10px;
             background-color: #4e73df;
             color: #fff;
@@ -227,7 +229,8 @@
             transition: background-color 0.3s;
         }
 
-        .book-info button:hover {
+        .book-info button,
+        .book-actions button:hover {
             background-color: #0056b3;
         }
 
@@ -322,18 +325,30 @@
             color: #fff;
             text-align: center;
             padding: 15px;
-            position: fixed;
+            position: relative;
             bottom: 0;
             left: 0;
-            width: 100%;
         }
 
         footer p{
             margin-bottom: auto;
             font-family: 'Poppins', sans-serif;
         }
-        body{
-            margin-bottom: 60px;
+
+        .cart-item-count-container {
+            position: absolute;
+            top: 12px;
+            right: 370px;
+            background-color: white;
+            color: black;
+            border-radius: 50%;
+            padding: 3px 8px;
+            font-size: 12px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
         }
     </style>
 </head>
@@ -348,15 +363,17 @@
         </div>
 
         <div class="search-form">
-            <form th:action="@{/client/search}" method="get">
+            <form th:action="@{/client/book/search}" method="get">
                 <input type="search" id="search-input" placeholder="Search here.." name="keyword">
                 <button type="submit" class="fas fa-search"></button>
             </form>
         </div>
 
-        <div class="header_cart_icon" onclick="redirectToShoppingCart()">
-            <i class="fas fa-shopping-cart"></i>
-            <span id="cartItemCount">0</span>
+        <div class="header_cart_icon">
+            <i class="fas fa-shopping-cart" onclick="redirectToShoppingCart()"></i>
+            <div class="cart-item-count-container">
+                <span id="cartItemCount" th:text="${cartItemCount}"></span>
+            </div>
         </div>
 
         <nav class="header_navbar">
@@ -387,10 +404,12 @@
 <section class="book-section">
     <div class="category-list">
         <h3>Danh mục sách</h3>
-        <button class="show-all-button">Show All</button>
+        <button class="show-all-button" onclick="showAllBooks()">Show All</button>
         <div th:each="cate: ${category}" class="category-item">
             <ul id="categoryFilterList">
-                <li><button class="category-button" th:text="${cate.name}" th:attr="data-cate-name=${cate.name}"></button> </li>
+                <li>
+                    <button class="category-button" th:text="${cate.name}"></button>
+                </li>
             </ul>
         </div>
     </div>
@@ -398,24 +417,19 @@
     <div class="book-container" id="product-list">
         <div style="display: flex; flex-wrap: wrap; justify-content: flex-start">
             <div th:each="book : ${books}" class="book-item" style="margin: 0 10px 10px 0">
-                <div class="book-info" style="min-width: 300px; height: 400px">
-                    <div style="width: 250px; height: 225px;display: flex; justify-content: center">
+                <div class="book-info" style="min-width: 290px; height: 400px">
+                    <div style="width: 250px; height: 225px;display: flex; justify-content: center" th:attr="data-book-id=${book.id}" onclick="openBookDetailModal(this.getAttribute('data-book-id'))">
                         <img src="https://th.bing.com/th/id/R.9b1f3361288e85fc0fc4c7723829fd3b?rik=BVMASTnwvJFPSA&pid=ImgRaw&r=0" alt="hinh sách">
                     </div>
-
-<!--                    <img th:src="@{/images/{image}(image=${book.image})}" th:alt="${book.name}">-->
+                    <!--                    <img th:src="@{/images/{image}(image=${book.image})}" th:alt="${book.name}">-->
                     <h6 th:text="${book.name}"></h6>
                     <p th:text="'Author: ' + ${book.author}"></p>
-                    <p th:text="'Price: $' + ${book.price}"></p>
-<!--                    <form method="post" th:action="@{/client/add/{bookId}(bookId=${book.id})}"  onclick="openAddToCartModal()">-->
-<!--                        <button type="submit">Add to Cart</button>-->
-<!--                    </form>-->
+                    <p th:text="'Price: ' + ${book.price} +'$'"></p>
                     <div class="book-actions">
                         <button class="btn-primary" th:data-book-id="${book.id}" onclick="openAddToCartModal(this.getAttribute('data-book-id'))">Add to Cart</button>
                     </div>
                 </div>
             </div>
-        </div>
 
         <nav aria-label="Page navigation example" style="display: flex; justify-content: center; width: 100%" th:if="${not #lists.isEmpty(books)}">
             <ul class="pagination" th:if="${totalPages > 1}">
@@ -432,9 +446,55 @@
             </ul>
         </nav>
     </div>
-
+</div>
 </section>
-    <div id="logoutModal" class="modal">
+<div th:each="item : ${books}" th:id="'bookDetailModal-' + ${item.id}" class="modal modal-horizontal">
+    <div class="modal-content modal-content-book" style="width: 70%">
+        <span class="modal-close" th:data-book-id="${item.id}" onclick="closeBookDetailModal(this.getAttribute('data-book-id'))">&times;</span>
+        <div class="modal-content-detail" style="display: flex">
+            <!-- Khối bên trái chứa hình ảnh (chiếm 60% của khung) -->
+            <div class="modal-content-detail-img" style="flex: 0 0 50%;">
+                <img src="https://th.bing.com/th/id/R.9b1f3361288e85fc0fc4c7723829fd3b?rik=BVMASTnwvJFPSA&pid=ImgRaw&r=0" alt="hình sách" style="width: 100%;">
+            </div>
+
+            <!-- Khối bên phải chứa thông tin sách -->
+            <div class="modal-content-detail-content" style="flex: 2; padding-left: 20px;">
+                <div style="display: flex">
+                    <p style="margin-bottom: 0">Name:</p>
+                    <p style="margin-bottom: 0; margin-left: 20px" th:text="${item.name}"></p>
+                </div>
+                <div style="display: flex">
+                    <p style="margin-bottom: 0">Author:</p>
+                    <p style="margin-bottom: 0; margin-left: 20px" th:text="${item.author}"></p>
+                </div>
+                <div style="display: flex">
+                    <p style="margin-bottom: 0">Price:</p>
+                    <p style="margin-bottom: 0; margin-left: 20px">$</p>
+                    <p style="margin-bottom: 0" th:text="${item.price}"></p>
+                </div>
+
+                <div class="modal-content-detail-content-categories" style=" margin-left: 0">
+                    <p style="text-align: start; margin-bottom: 0">Category</p>
+                    <div class="modal-content-detail-content-categories-list">
+                        <div class="modal-content-detail-content-categories-name" th:each="category : ${item.categoriesSet}">
+                            <i class="fa-solid fa-check"></i>
+                            <p th:text="${category.name}"></p>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: flex">
+                    <p style="margin-bottom: 0">Description:</p>
+                    <p style="margin-bottom: 0; margin-left: 20px"></p>
+                </div>
+            </div>
+            <div class="book-actions" style="align-self: flex-end; margin-top: auto;">
+                <button class="btn-primary" th:data-book-id="${item.id}" onclick="openAddToCartModal(this.getAttribute('data-book-id'))">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="logoutModal" class="modal">
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal()">&times;</span>
             <h2>Bạn có chắc muốn đăng xuất?</h2>
@@ -444,20 +504,20 @@
         </div>
     </div>
 
-<div id="addToCartModal" class="modal" style="display: none; text-align: center;">
-    <div class="modal-content" style="background-color: #fff; padding: 20px; border-radius: 5px; width: 300px;">
-        <span class="modal-close" onclick="closeAddToCartModal()" style="cursor: pointer; position: absolute; top: 10px; right: 10px;">&times;</span>
-        <h2>Đã thêm vào giỏ hàng</h2>
-        <p>Sản phẩm đã được thêm vào giỏ hàng của bạn.</p>
+    <div id="addToCartModal" class="modal" style="display: none; text-align: center;">
+        <div class="modal-content" style="background-color: #fff; padding: 20px; border-radius: 5px; width: 300px;">
+            <span class="modal-close" onclick="closeAddToCartModal()" style="cursor: pointer; position: absolute; top: 10px; right: 10px;">&times;</span>
+            <h2>Đã thêm vào giỏ hàng</h2>
+            <p>Sản phẩm đã được thêm vào giỏ hàng của bạn.</p>
+        </div>
     </div>
-</div>
 <footer>
     <p>&copy; 2023 Bookstore. All rights reserved.</p>
 </footer>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     function redirectToShoppingCart() {
-        window.location.href = '/client/list'; // Điều hướng đến trang giỏ hàng
+        window.location.href = '/client/cartitem/list'; // Điều hướng đến trang giỏ hàng
     }
 
     let timeoutId;
@@ -500,6 +560,15 @@
 
     function closeModal() {
         document.getElementById("logoutModal").style.display = "none";
+    }
+
+    function openBookDetailModal(index) {
+        console.log('index='+index)
+        document.getElementById('bookDetailModal-' + index).style.display = 'flex';
+    }
+    function closeBookDetailModal(index) {
+        console.log('close='+index)
+        document.getElementById('bookDetailModal-'+ index).style.display = 'none';
     }
 
     // Đóng modal nếu người dùng nhấn vào nền đen
@@ -587,16 +656,8 @@
         })
             .then(response => {
                 if (response.ok) {
-                    // Update the UI as needed (remove the deleted book element, etc.)
-                    // ...
-
-                    // Close the confirmation modal
-                    // closeAddToCartModal();
-                    // alert("aaa")
-                    // window.location.reload();
+                    updateCartCount();
                 } else {
-                    // Handle error responses from the server
-                    // You might want to show an error message or take other actions
                     alert('Có lỗi khi add sách. Vui lòng thử lại!')
                 }
             })
@@ -606,6 +667,23 @@
             });
 
     }
+    function updateCartCount() {
+        $.ajax({
+            url: '/client/cartitem/count',
+            type: 'GET',
+            success: function(response) {
+                // Update the cart count on the UI
+                $('#cartItemCount').text(response);
+            },
+            error: function(error) {
+                console.error('Error fetching cart count:', error);
+            }
+        });
+    }
+    // Gọi hàm cập nhật số lượng sản phẩm khi trang được tải
+    $(document).ready(function() {
+        updateCartCount();
+    });
 </script>
 
 </body>
