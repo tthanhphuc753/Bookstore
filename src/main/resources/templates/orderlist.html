@@ -324,9 +324,7 @@
                         <thead>
                         <tr>
                             <th>Id</th>
-                            <th>Book name</th>
                             <th>Date</th>
-                            <th>Quantity</th>
                             <th>User</th>
                             <th>Action</th>
                         </tr>
@@ -334,9 +332,7 @@
                         <tbody>
                         <tr th:each="item : ${orders}">
                             <td th:text="${item.id}"></td>
-                            <td th:text="${item.bookName}"></td>
                             <td th:text="${item.date}"></td>
-                            <td th:text="${item.quantity}"></td>
                             <td th:text="${item.user.email}"></td>
                             <td>
                                 <button class="btn btn-danger" th:data-order-id="${item.id}" onclick="openConfirmDeleteModal(this.getAttribute('data-order-id'))">Delete</button>
