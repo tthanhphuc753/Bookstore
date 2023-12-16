@@ -126,6 +126,7 @@
             color: #fff;
             cursor: pointer;
             margin: 0 4px;
+            position: relative;
         }
 
         .order{
@@ -239,8 +240,9 @@
         }
         .cart-item-count-container {
             position: absolute;
-            top: 12px;
-            right: 445px;
+            top: 15%;
+            right: -10px; /* Điều chỉnh giá trị right tùy thuộc vào vị trí bạn muốn */
+            transform: translateY(-50%);
             background-color: white;
             color: black;
             border-radius: 50%;
@@ -324,15 +326,19 @@
                 <td>
                     <button class="btn btn-danger" th:data-order-id="${order.id}" onclick="openOrderDetailModal(this.getAttribute('data-order-id'))">Xem danh sách sản phẩm</button>
                 </td>
-                <div  th:id="'orderDetailModal-' + ${order.id}" class="modal">
-                    <div class="modal-content modal-content-book" style="margin: auto">
+                <div th:id="'orderDetailModal-' + ${order.id}" class="modal">
+                    <div class="modal-content modal-content-book" style="margin: auto; text-align: center;">
                         <span class="modal-close" th:data-order-id="${order.id}" onclick="closeOrderDetailModal(this.getAttribute('data-order-id'))">&times;</span>
                         <div class="modal-content-detail">
                             <div class="modal-content-detail-content">
                                 <p class="modal-content-detail-content-categories-t">Danh sách các quyển sách đã chọn:</p>
-                                <div class="modal-content-detail-content-categories-list">
-                                    <div class="modal-content-detail-content-categories-name" th:each="book : ${order.bookList}">
-                                        <p th:text="${book.name}"></p>
+                                <div class="modal-content-detail-content-categories-list" style="display: flex; flex-direction: column; align-items: center;">
+                                    <div class="modal-content-detail-content-categories-name" th:each="item : ${order.bookList}" style="margin-bottom: 10px;">
+                                        <div style="display: flex; align-items: center;">
+                                            <p th:text="${item.name}"></p>
+                                            <p style="margin-left: 5px; margin-right: 5px;"> - $</p>
+                                            <p th:text="${item.price}"></p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
