@@ -336,7 +336,26 @@
                             <td th:text="${item.user.email}"></td>
                             <td>
                                 <button class="btn btn-danger" th:data-order-id="${item.id}" onclick="openConfirmDeleteModal(this.getAttribute('data-order-id'))">Delete</button>
+                                <button class="btn btn-danger" th:data-order-id="${item.id}" onclick="openOrderDetailModal(this.getAttribute('data-order-id'))">xem danh sách sản phẩm</button>
                             </td>
+                            <div  th:id="'orderDetailModal-' + ${item.id}" class="modal">
+                                <div class="modal-content modal-content-book">
+                                    <span class="modal-close" th:data-order-id="${item.id}" onclick="closeOrderDetailModal(this.getAttribute('data-order-id'))">&times;</span>
+                                    <div class="modal-content-detail">
+
+                                        <div class="modal-content-detail-content">
+                                            <p class="modal-content-detail-content-categories-t" style="">Danh sách các quyển sách đã chọn:</p>
+                                            <div class="modal-content-detail-content-categories-list">
+                                                <div class="modal-content-detail-content-categories-name" th:each="book : ${item.bookList}">
+                                                    <p th:text="${book.name}"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </tr>
                         </tbody>
                     </table>
@@ -369,6 +388,7 @@
             <a  class="modal-link modal-link-cancel" onclick="deleteOrder()">Xác nhận</a>
         </div>
     </div>
+
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script>
@@ -494,6 +514,15 @@
                     console.error('Logout error:', error);
                 }
             });
+        }
+
+        function openOrderDetailModal(index) {
+            console.log('index='+index)
+            document.getElementById('orderDetailModal-' + index).style.display = 'flex';
+        }
+        function closeOrderDetailModal(index) {
+            console.log('close='+index)
+            document.getElementById('orderDetailModal-'+ index).style.display = 'none';
         }
 
         let deleteOrderId;
