@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+    <title>Trang Chủ</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
           rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
@@ -338,7 +338,7 @@
         .cart-item-count-container {
             position: absolute;
             top: 12px;
-            right: 370px;
+            right: 433px;
             background-color: white;
             color: black;
             border-radius: 50%;
@@ -374,6 +374,10 @@
             <div class="cart-item-count-container">
                 <span id="cartItemCount" th:text="${cartItemCount}"></span>
             </div>
+        </div>
+
+        <div class="header_cart_icon" onclick="checkLogin()">
+            <i class="fa-solid fa-list-ul"></i>
         </div>
 
         <nav class="header_navbar">
@@ -417,7 +421,7 @@
     <div class="book-container" id="product-list">
         <div style="display: flex; flex-wrap: wrap; justify-content: flex-start">
             <div th:each="book : ${books}" class="book-item" style="margin: 0 10px 10px 0">
-                <div class="book-info" style="min-width: 290px; height: 400px">
+                <div class="book-info" style="min-width: 280px; height: 400px">
                     <div style="width: 250px; height: 225px;display: flex; justify-content: center" th:attr="data-book-id=${book.id}" onclick="openBookDetailModal(this.getAttribute('data-book-id'))">
                         <img src="https://th.bing.com/th/id/R.9b1f3361288e85fc0fc4c7723829fd3b?rik=BVMASTnwvJFPSA&pid=ImgRaw&r=0" alt="hinh sách">
                     </div>
@@ -494,6 +498,26 @@
     </div>
 </div>
 
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalTitle">Thông báo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeLoginNotice()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn cần đăng nhập để kiểm tra đơn hàng.</p>
+            </div>
+            <div class="modal-footer">
+                <a href="/auth/login" class="btn btn-Notice" style="background-color: #0d6efd; color: white; font-weight: bold;">Đăng nhập</a>
+                <button type="button" class="btn btn-closeNotice" onclick="closeLoginNotice()" style="background-color: red; color: white; font-weight: bold;" >Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="logoutModal" class="modal">
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal()">&times;</span>
@@ -515,9 +539,10 @@
     <p>&copy; 2023 Bookstore. All rights reserved.</p>
 </footer>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     function redirectToShoppingCart() {
-        window.location.href = '/client/cartitem/list'; // Điều hướng đến trang giỏ hàng
+        window.location.href = '/client/cartitem/list';
     }
 
     let timeoutId;
@@ -684,8 +709,23 @@
     $(document).ready(function() {
         updateCartCount();
     });
-</script>
 
+    function checkLogin() {
+        const token = getCookie("JWT_TOKEN");
+
+        if (token) {
+            // Nếu đã đăng nhập, mở modal thanh toán
+            window.location.href = '/client/order/list';
+        } else {
+            // Nếu chưa đăng nhập, hiển thị modal thông báo và nút đăng nhập
+            $('#loginModal').modal('show');
+        }
+    }
+
+    function closeLoginNotice() {
+        $('#loginModal').modal('hide');
+    }
+</script>
 </body>
 </html>
 

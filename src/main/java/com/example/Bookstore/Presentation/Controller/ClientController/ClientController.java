@@ -88,7 +88,7 @@ public class ClientController {
     @GetMapping("order/list")
     public String getAllOrders(Model model, HttpSession session) {
         model.addAttribute("orders", orderController.getAllOrder());
-        return "orderlist";
+        return "clientorder";
     }
 
 

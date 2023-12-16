@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+    <title>Giỏ Hàng</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
           rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
@@ -243,8 +243,8 @@
         }
         .cart-item-count-container {
             position: absolute;
-            top: 10px;
-            right: 380px;
+            top: 12px;
+            right: 445px;
             background-color: white;
             color: black;
             border-radius: 50%;
@@ -280,6 +280,10 @@
             <div class="cart-item-count-container">
                 <span id="cartItemCount" th:text="${cartItemCount}"></span>
             </div>
+        </div>
+
+        <div class="header_cart_icon" onclick="checkLogin()">
+            <i class="fa-solid fa-list-ul"></i>
         </div>
 
         <nav class="header_navbar">
@@ -334,15 +338,13 @@
                     </td>
                         <td th:text="${cartItem.book.price} +'$'">$</td>
                     <td>
-                        <form th:action="@{/client/delete/{bookId}(bookId=${cartItem.book.id})}" th:method="post">
-                            <button type="submit">Xóa</button>
-                        </form>
+                        <button class="btn-primary" th:data-book-id="${cartItem.book.id}" onclick="openConfirmDeleteModal(this.getAttribute('data-book-id'))">Xóa</button>
                     </td>
                 </tr>
                 </tbody>
             </table>
             <!-- Thêm nút thanh toán -->
-            <button type="button" class="btn btn-primary" onclick="openPaymentModal()">Thanh toán</button>
+            <button type="button" class="btn btn-primary" onclick="checkLoginBeforePayment()">Thanh toán</button>
         </th:block>
         <th:block th:unless="${not #lists.isEmpty(cartitem)}">
             <p>Giỏ hàng của bạn đang trống.</p>
@@ -361,7 +363,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                Số lượng không hợp lý. Xin vui lòng nhập lại.
+                Số lượng không hợp lệ hoặc quá số lượng cho phép. Xin vui lòng nhập lại.
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary-quatity" data-dismiss="modal" style="background-color: red; color: white; font-weight: bold;">Đóng</button>
@@ -403,31 +405,31 @@
                             <h5 class="modal-title" id="paymentModalCartLabel">Danh sách sách trong giỏ hàng</h5>
                             <table id="cartTable">
                                 <thead>
-                                <tr>
-                                    <th>STT</th>
-                                    <th>Tên sách</th>
-                                    <th>Số lượng</th>
-                                    <th>Giá tiền</th>
-                                    <th>Thành giá</th>
-                                </tr>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Tên sách</th>
+                                        <th>Số lượng</th>
+                                        <th>Giá tiền</th>
+                                        <th>Thành giá</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                 <!-- Thymeleaf: Duyệt qua danh sách sách trong giỏ hàng và hiển thị -->
-                                <tr th:each="cartItem, stat: ${cartitem}">
-                                    <td th:text="${stat.index + 1}"></td>
-                                    <td th:text="${cartItem.book.name}"></td>
-                                    <td th:text="${cartItem.quantity}"></td>
-                                    <td th:text="${cartItem.book.price} +'$'"></td>
-                                    <td th:text="${cartItem.quantity * cartItem.book.price} +'$'"></td>
-                                </tr>
+                                    <tr th:each="cartItem, stat: ${cartitem}">
+                                        <td th:text="${stat.index + 1}"></td>
+                                        <td th:text="${cartItem.book.name}"></td>
+                                        <td th:text="${cartItem.quantity}"></td>
+                                        <td th:text="${cartItem.book.price} +'$'"></td>
+                                        <td th:text="${cartItem.quantity * cartItem.book.price} +'$'"></td>
+                                    </tr>
                                 </tbody>
                                 <!-- Dòng tổng tiền -->
                                 <tfoot>
-                                <tr>
-                                    <td colspan="3"></td>
-                                    <td>Tổng cộng</td>
-                                    <td id="totalAmount"></td>
-                                </tr>
+                                    <tr>
+                                        <td colspan="3"></td>
+                                        <td>Tổng cộng</td>
+                                        <td id="totalAmount"></td>
+                                    </tr>
                                 </tfoot>
                             </table>
                         </div>
@@ -445,6 +447,57 @@
         </div>
     </div>
 </div>
+
+<div id="confirmDeleteModal" class="modal">
+    <div class="modal-content" style="margin: auto">
+        <span class="modal-close" onclick="closeConfirmDeleteModal()">&times;</span>
+        <h2>Xác nhận xóa sách</h2>
+        <p>Bạn có chắc chắn muốn xóa sách này?</p>
+        <a  class="modal-link modal-link-cancel" onclick="closeConfirmDeleteModal()">Hủy</a>
+        <a  class="modal-link modal-link-cancel" onclick="deleteBook()">Xác nhận</a>
+    </div>
+</div>
+
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalTitle">Thông báo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeLoginNotice()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn cần đăng nhập để thực hiện thanh toán.</p>
+            </div>
+            <div class="modal-footer">
+                <a href="/auth/login" class="btn btn-Notice" style="background-color: #0d6efd; color: white; font-weight: bold;">Đăng nhập</a>
+                <button type="button" class="btn btn-closeNotice" onclick="closeLoginNotice()" style="background-color: red; color: white; font-weight: bold;" >Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="orderModalTitle">Thông báo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeOrderNotice()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn cần đăng nhập để kiểm tra đơn hàng.</p>
+            </div>
+            <div class="modal-footer">
+                <a href="/auth/login" class="btn btn-Notice" style="background-color: #0d6efd; color: white; font-weight: bold;">Đăng nhập</a>
+                <button type="button" class="btn btn-closeNotice" onclick="closeOrderNotice()" style="background-color: red; color: white; font-weight: bold;" >Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
     <div id="logoutModal" class="modal1">
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal()">&times;</span>
@@ -461,7 +514,11 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     function redirectToShoppingCart() {
-        window.location.href = '/client/list'; // Điều hướng đến trang giỏ hàng
+        window.location.href = '/client/cartitem/list';
+    }
+
+    function redirectToOrderList() {
+        window.location.href = '/client/order/list';
     }
 
     let timeoutId;
@@ -540,7 +597,6 @@
         return null;
     }
 
-    // Trích xuất thông tin từ token (đây chỉ là một ví dụ, thực tế bạn cần phải thực hiện trích xuất phù hợp với định dạng của token)
     function extractEmailFromToken(token) {
         // Giả sử token có định dạng là JWT và chứa thông tin người dùng trong payload
         const payloadBase64 = token.split('.')[1];
@@ -590,6 +646,9 @@
     function closePaymentModal() {
         $('#paymentModal').modal('hide');
     }
+    function closeLoginNotice() {
+        $('#loginModal').modal('hide');
+    }
     //Total
     document.addEventListener("DOMContentLoaded", function () {
         // Tính tổng và cập nhật giá trị trong thẻ <tfoot>
@@ -626,7 +685,79 @@
         updateCartCount();
     });
 
+    function checkLoginBeforePayment() {
+        const token = getCookie("JWT_TOKEN");
 
+        if (token) {
+            // Nếu đã đăng nhập, mở modal thanh toán
+            openPaymentModal();
+        } else {
+            // Nếu chưa đăng nhập, hiển thị modal thông báo và nút đăng nhập
+            $('#loginModal').modal('show');
+        }
+    }
+
+    function checkLogin() {
+        const token = getCookie("JWT_TOKEN");
+
+        if (token) {
+            // Nếu đã đăng nhập, mở modal thanh toán
+            window.location.href = '/client/order/list';
+        } else {
+            // Nếu chưa đăng nhập, hiển thị modal thông báo và nút đăng nhập
+            $('#orderModal').modal('show');
+        }
+    }
+
+    function closeOrderNotice() {
+        $('#orderModal').modal('hide');
+    }
+
+    let deleteBookId;
+    function openConfirmDeleteModal(bookId) {
+        deleteBookId=bookId;
+        document.getElementById("confirmDeleteModal").style.display = "flex";
+    }
+
+    function closeConfirmDeleteModal() {
+        document.getElementById("confirmDeleteModal").style.display = "none";
+    }
+
+    function deleteBook() {
+
+        console.log('Đang xóa sách có ID:', deleteBookId);
+        // Construct the URL for the delete request, replace '/admin/books/delete/' with your actual endpoint
+        const deleteUrl = `/client/delete/${deleteBookId}`;
+
+        // Perform the actual deletion logic here using fetch
+        fetch(deleteUrl, {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json',
+                // You may need to include additional headers if required by your server
+            },
+        })
+            .then(response => {
+                if (response.ok) {
+                    // Update the UI as needed (remove the deleted book element, etc.)
+                    // ...
+
+                    // Close the confirmation modal
+                    closeConfirmDeleteModal();
+                    window.location.reload();
+                } else {
+                    // Handle error responses from the server
+                    // You might want to show an error message or take other actions
+                    alert('Có lỗi khi xóa sách. Vui lòng thử lại!')
+                }
+            })
+            .catch(error => {
+                // Handle network errors
+                alert(error);
+            });
+
+    }
 </script>
 </body>
 </html>

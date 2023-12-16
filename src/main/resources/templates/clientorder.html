@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Sách Đơn Hàng</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --white: #fff;
+            --black: #000000;
+            --text-color: #333333;
+            --border: 0.1rem solid rgba(0, 0, 0, 0.1);
+        }
+
+        *{
+            box-sizing: inherit;
+        }
+
+        .html{
+            font-size: 70%;
+            line-height: 1.6rem;
+            font-family: 'Poppins', sans-serif;
+            box-sizing: border-box;
+            overflow-x: auto;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.9rem 7%;
+            background-color: #4e73df;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .header_navbar {
+            display: flex;
+            margin-top: 16px;
+            justify-content: space-between;
+        }
+
+        .header_navbar_list {
+            list-style: none;
+            padding-left: 0;
+            display: flex;
+        }
+
+        .header_navbar_item{
+            margin: 0 4px;
+            font-size: 1.2rem;
+            text-decoration: none;
+            font-weight: 300;
+            display: inline-block;
+        }
+
+        .header_navbar_item a{
+            text-decoration: none;
+            color: white;
+        }
+
+        .header_navbar_item_separate::after {
+            content: "";
+            display: inline-block;
+            width: 1px;
+            height: 15px;
+            background-color: #fff;
+            margin-left: 7px;
+            vertical-align: middle;
+        }
+
+        .logo a{
+            font-size: 1.8rem;
+            color: var(--white);
+            font-weight: bolder;
+            text-decoration: none;
+        }
+
+        .search-form,
+        .search-form form {
+            width: 40rem;
+            height: 2.2rem;
+            border: var(--border);
+            overflow: hidden;
+            background-color: var(--white);
+            display: flex;
+            align-items: center;
+            border-radius: 1rem;
+        }
+
+        .search-form input {
+            font-size: 1.2rem;
+            padding: 0 1.2rem;
+            height: 100%;
+            width: 100%;
+            text-transform: none;
+            color: var(--black);
+            border: none;
+            outline: none;
+        }
+
+        .search-form button {
+            font-size: 1.3rem;
+            padding-right: 1rem;
+            color: var(--black);
+            cursor: pointer;
+            background: none;
+            border: none;
+            outline: none;
+        }
+
+        .book-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .header_cart_icon {
+            font-size: 25px;
+            color: #fff;
+            cursor: pointer;
+            margin: 0 4px;
+        }
+
+        .order{
+            flex: 1;
+            background-color: #f4f4f4;
+            padding: 40px;
+            margin-top: 10px;
+            margin-left: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .order table{
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .order th, td{
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .order th{
+            background-color: #4e73df;
+            color: white;
+        }
+
+        .order tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .modal-link-logout, .modal-link-cancel {
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 75%;
+            right: 0;
+            background-color: #fff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            display: none;
+            /*display: flex;*/
+        }
+
+        .user:hover .dropdown-menu {
+            display: block;
+
+        }
+
+        .modal1 {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            width: auto;
+        }
+
+        .modal-close {
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .user{
+            text-decoration: none;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .user-item{
+            text-decoration: none;
+            color: black;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        footer {
+            background-color: #4e73df;
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        footer p{
+            margin-bottom: auto;
+            font-family: 'Poppins', sans-serif;
+        }
+        body{
+            margin-bottom: 60px;
+        }
+        .cart-item-count-container {
+            position: absolute;
+            top: 12px;
+            right: 445px;
+            background-color: white;
+            color: black;
+            border-radius: 50%;
+            padding: 3px 8px;
+            font-size: 12px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+<div class="main">
+    <!-- header section start -->
+    <header class="header">
+        <div class="logo">
+            <a href="/client/homepage">
+                <i class="fas fa-book"></i> BOOKSTORE
+            </a>
+        </div>
+
+        <div class="search-form">
+            <form th:action="@{/client/book/search}" method="get">
+                <input type="search" id="search-input" placeholder="Search here.." name="keyword">
+                <button type="submit" class="fas fa-search"></button>
+            </form>
+        </div>
+
+        <div class="header_cart_icon">
+            <i class="fas fa-shopping-cart" onclick="redirectToShoppingCart()"></i>
+            <div class="cart-item-count-container">
+                <span id="cartItemCount" th:text="${cartItemCount}"></span>
+            </div>
+        </div>
+
+        <div class="header_cart_icon" onclick="redirectToOrderList()">
+            <i class="fa-solid fa-list-ul"></i>
+        </div>
+
+        <nav class="header_navbar">
+            <ul class="header_navbar_list">
+                <li class="header_navbar_item header_navbar_item_separate" id="registerButton"><a th:href="@{/auth/registration-form}">Đăng ký</a></li>
+                <li class="header_navbar_item" id="loginButton"><a th:href="@{/auth/login}">Đăng nhập</a></li>
+            </ul>
+        </nav>
+
+        <nav class="navbar navbar-expand ">
+            <div class="navbar-var">
+                <a class="user" onmouseover="showDropdown()" onmouseout="hideDropdown()">
+                    <span id="user-email" class="r-2 d-none d-lg-inline text-gray-600 small"></span>
+                    <div id="dropdown-menu" class="dropdown-menu" onmouseover="cancelHide()"
+                         onmouseout="hideDropdown()">
+                        <!-- Các liên kết hoặc nội dung của dropdown menu -->
+                        <a href="#" class="user-item" onclick="openModal()">
+                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                            Đăng xuất
+                        </a>
+                    </div>
+                </a>
+            </div>
+        </nav>
+    </header>
+</div>
+<section class="book-section">
+    <div class="order">
+        <h2>Danh sách đơn hàng</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Mã đơn hàng</th>
+                <th>Ngày đặt hàng</th>
+                <th>Chi tiết đơn hàng</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order : ${orders}">
+                <td th:text="${order.id}"></td>
+                <td th:text="${order.date}"></td>
+                <td>
+                    <button class="btn btn-danger" th:data-order-id="${order.id}" onclick="openOrderDetailModal(this.getAttribute('data-order-id'))">Xem danh sách sản phẩm</button>
+                </td>
+                <div  th:id="'orderDetailModal-' + ${order.id}" class="modal">
+                    <div class="modal-content modal-content-book" style="margin: auto">
+                        <span class="modal-close" th:data-order-id="${order.id}" onclick="closeOrderDetailModal(this.getAttribute('data-order-id'))">&times;</span>
+                        <div class="modal-content-detail">
+                            <div class="modal-content-detail-content">
+                                <p class="modal-content-detail-content-categories-t">Danh sách các quyển sách đã chọn:</p>
+                                <div class="modal-content-detail-content-categories-list">
+                                    <div class="modal-content-detail-content-categories-name" th:each="book : ${order.bookList}">
+                                        <p th:text="${book.name}"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</section>
+    <div id="logoutModal" class="modal1">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <h2>Bạn có chắc muốn đăng xuất?</h2>
+            <p>Chọn "Hủy" nếu bạn muốn tiếp tục phiên làm việc.</p>
+            <a class="modal-link modal-link-cancel" onclick="closeModal()">Hủy</a>
+            <a class="modal-link modal-link-logout" href="#" onclick="performLogout()">Đăng xuất</a>
+        </div>
+    </div>
+<footer>
+    <p>&copy; 2023 Bookstore. All rights reserved.</p>
+</footer>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function redirectToShoppingCart() {
+        window.location.href = '/client/cartitem/list'; // Điều hướng đến trang giỏ hàng
+    }
+
+    function redirectToOrderList() {
+        window.location.href = '/client/order/list';
+    }
+
+    function openOrderDetailModal(index) {
+        console.log('index='+index)
+        document.getElementById('orderDetailModal-' + index).style.display = 'flex';
+    }
+    function closeOrderDetailModal(index) {
+        console.log('close='+index)
+        document.getElementById('orderDetailModal-'+ index).style.display = 'none';
+    }
+
+    let timeoutId;
+
+    function showDropdown() {
+        clearTimeout(timeoutId);
+        document.getElementById('dropdown-menu').style.display = 'block';
+    }
+
+    function hideDropdown() {
+
+        timeoutId = setTimeout(() => {
+            document.getElementById('dropdown-menu').style.display = 'none';
+        }, 300);
+
+    }
+
+    function cancelHide() {
+        clearTimeout(timeoutId);
+    }
+
+    function openModal() {
+        document.getElementById("logoutModal").style.display = "flex";
+    }
+
+    function closeModal() {
+        document.getElementById("logoutModal").style.display = "none";
+    }
+
+    // Đóng modal nếu người dùng nhấn vào nền đen
+    window.onclick = function (event) {
+        if (event.target === document.getElementById("logoutModal")) {
+            closeModal();
+        }
+    };
+
+    function performLogout() {
+        $.ajax({
+            url: '/auth/logout',
+            type: 'POST',
+            success: function(response) {
+                // Xử lý thành công (nếu cần)
+                console.log('Logout successful');
+                // Chuyển hướng trang sau khi logout
+                window.location.href = '/auth/login';
+            },
+            error: function(error) {
+                // Xử lý lỗi (nếu cần)
+                console.error('Logout error:', error);
+            }
+        });
+    }
+
+    // Lấy token từ cookie
+    const token = getCookie("JWT_TOKEN"); // Thay "yourTokenCookie" bằng tên cookie bạn đã sử dụng
+    const loginButton = document.getElementById("loginButton");
+    const registerButton = document.getElementById("registerButton");
+
+    if (token) {
+        loginButton.style.display = "none";
+        registerButton.style.display = "none";
+    } else {
+        loginButton.style.display = "inline-block"; // hoặc "block" tùy thuộc vào loại phần tử
+        registerButton.style.display = "inline-block";
+    }
+
+    // Hàm để lấy giá trị của cookie
+    function getCookie(name) {
+        const nameEQ = name + "=";
+        const ca = document.cookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+
+    function extractEmailFromToken(token) {
+        // Giả sử token có định dạng là JWT và chứa thông tin người dùng trong payload
+        const payloadBase64 = token.split('.')[1];
+        const payload = JSON.parse(atob(payloadBase64));
+        return payload.sub; // Thay "email" bằng tên trường chứa email trong token của bạn
+    }
+
+    // Lấy thẻ span để hiển thị email
+    const userEmailSpan = document.getElementById('user-email');
+
+    // Trích xuất và hiển thị email trong thẻ span
+    if (token) {
+        const userEmail = extractEmailFromToken(token);
+        if (userEmail) {
+            userEmailSpan.textContent = userEmail;
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Tính tổng và cập nhật giá trị trong thẻ <tfoot>
+        updateTotalAmount();
+    });
+
+    function updateTotalAmount() {
+        // Lấy các ô chứa giá trị cần tính tổng
+        var totalCells = document.querySelectorAll("#cartTable tbody td:nth-child(5)");
+        // Tính tổng giá trị
+        var total = 0;
+        totalCells.forEach(function (cell) {
+            total += parseFloat(cell.textContent);
+        });
+        // Hiển thị tổng giá trị trong ô thích hợp trong <tfoot>
+        document.getElementById("totalAmount").textContent = total.toFixed(2) +"$"; // Giữ hai chữ số thập phân
+    }
+
+    function updateCartCount() {
+        $.ajax({
+            url: '/client/cartitem/count',
+            type: 'GET',
+            success: function(response) {
+                // Update the cart count on the UI
+                $('#cartItemCount').text(response);
+            },
+            error: function(error) {
+                console.error('Error fetching cart count:', error);
+            }
+        });
+    }
+    // Gọi hàm cập nhật số lượng sản phẩm khi trang được tải
+    $(document).ready(function() {
+        updateCartCount();
+    });
+
+</script>
+</body>
+</html>
