@@ -1,7 +1,6 @@
 package com.example.Bookstore.Domain.CartService;
 
 import com.example.Bookstore.Domain.Model.Cart.CartItem;
-import com.example.Bookstore.Persistence.DAO.CartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +16,7 @@ public class CartServiceImp implements CartService {
     private static final String SESSION_KEY_CART = "CART";
 
     @Override
-    public  Map<Long, CartItem> getCartMap(HttpSession session) {
+    public Map<Long, CartItem> getCartMap(HttpSession session) {
         Map<Long, CartItem> cartMap = (Map<Long, CartItem>) session.getAttribute(SESSION_KEY_CART);
         if (cartMap == null) {
             cartMap = new HashMap<>();

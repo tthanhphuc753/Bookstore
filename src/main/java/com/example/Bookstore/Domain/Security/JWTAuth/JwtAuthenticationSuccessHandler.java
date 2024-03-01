@@ -23,7 +23,6 @@ public class JwtAuthenticationSuccessHandler extends SavedRequestAwareAuthentica
     private final JwtService jwtService;
     private final UserServices userServices;
 
-
     @Override
     public void onAuthenticationSuccess(
             HttpServletRequest request, HttpServletResponse response,
@@ -47,7 +46,6 @@ public class JwtAuthenticationSuccessHandler extends SavedRequestAwareAuthentica
             } else {
                 setDefaultTargetUrl("/admin/homepage");
             }
-
 
             DefaultSavedRequest savedRequest = (DefaultSavedRequest) new HttpSessionRequestCache().getRequest(request, response);
             if (savedRequest != null && savedRequest.getRedirectUrl() != null) {

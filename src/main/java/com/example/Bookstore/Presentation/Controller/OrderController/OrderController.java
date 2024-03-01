@@ -52,7 +52,7 @@ public class OrderController {
         orderService.deleteOrderById(orderId);
     }
 
-    private String getJwtFromCookie(HttpServletRequest request) {
+    String getJwtFromCookie(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {

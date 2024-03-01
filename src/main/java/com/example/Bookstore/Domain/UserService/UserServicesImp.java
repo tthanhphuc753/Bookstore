@@ -6,7 +6,6 @@ import com.example.Bookstore.Domain.Model.User.User;
 import com.example.Bookstore.Domain.Model.User.UserAuthDetails;
 import com.example.Bookstore.Domain.Model.token.VerificationToken;
 import com.example.Bookstore.Domain.Security.JWTAuth.JwtService;
-import com.example.Bookstore.Persistence.DAO.BookRepository;
 import com.example.Bookstore.Persistence.DAO.UserRepository;
 import com.example.Bookstore.Persistence.DAO.VerificationTokenRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +21,6 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-
 public class UserServicesImp implements UserServices {
 
     private final UserRepository userrepos;
